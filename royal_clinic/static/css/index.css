@@ -1,0 +1,11 @@
+.text-amber-900 {
+    --tw-text-opacity: 1;
+    color: rgb(0, 0, 0);
+  }
+
+.appointment-btn {
+    background:
+  linear-gradient(45deg, #25a138, #fff);
+    transition:
+  all 0.3s ease;
+  }

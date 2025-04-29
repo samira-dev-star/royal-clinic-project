@@ -1,0 +1,10 @@
+.text-amber-800 {
+    --tw-text-opacity: 1;
+    color: rgb(0, 0, 0);
+  }
+
+
+.bg-amber-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(75, 154, 80);
+}

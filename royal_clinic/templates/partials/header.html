@@ -1,10 +1,14 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static "css/header.css" %}">
 <!-- Header -->
 <header class="bg-white shadow-md sticky top-0 z-50">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
         <div class="flex items-center">
-            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center">
-                <i class="fas fa-crown text-amber-700 text-xl"></i>
-            </div>
+            {% comment %} <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center"> {% endcomment %}
+                {% comment %} <i class="fas fa-crown text-amber-700 text-xl"></i> {% endcomment %}
+                <img class="w-16 h-16 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center" src="{{media_url}}images/index/IMG-20240528-WA0012.jpg" alt="index-icon">
+            {% comment %} </div> {% endcomment %}
             <h1 class="text-2xl font-bold text-amber-800 mr-3">کلینیک رویال</h1>
         </div>
         
