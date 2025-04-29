@@ -1,0 +1,585 @@
+{% extends "main_template.html" %}
+
+{% block title %}صفحه ی اصلی{% endblock title %}
+
+{% block content %}
+    <!-- Hero Slider -->
+     <!-- Hero Slider -->
+    <section class="relative h-screen overflow-hidden">
+        <div class="relative h-full w-full">
+            <!-- Slider Item 1 -->
+            <div class="slider-item active h-full w-full flex items-center" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1551608873-589110affaa8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;">
+                <div class="container mx-auto px-4 text-white">
+                    <h2 class="text-4xl md:text-6xl font-bold mb-6">زیبایی طبیعی، اعتماد به نفس بیشتر</h2>
+                    <p class="text-xl md:text-2xl mb-8 max-w-2xl">با جدیدترین تکنولوژی‌های روز دنیا، زیبایی طبیعی خود را کشف کنید</p>
+                    <a href="#appointment" class="appointment-btn text-amber-900 font-bold px-8 py-4 rounded-full inline-flex items-center">
+                        <span>رزرو نوبت</span>
+                        <i class="fas fa-arrow-left mr-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Slider Item 2 -->
+            <div class="slider-item h-full w-full flex items-center" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80') center/cover;">
+                <div class="container mx-auto px-4 text-white">
+                    <h2 class="text-4xl md:text-6xl font-bold mb-6">مراقبت تخصصی از پوست و مو</h2>
+                    <p class="text-xl md:text-2xl mb-8 max-w-2xl">با تیم متخصص ما، سلامت و زیبایی پوست و موی خود را تضمین کنید</p>
+                    <a href="#appointment" class="appointment-btn text-amber-900 font-bold px-8 py-4 rounded-full inline-flex items-center">
+                        <span>رزرو نوبت</span>
+                        <i class="fas fa-arrow-left mr-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Slider Item 3 -->
+            <div class="slider-item h-full w-full flex items-center" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;">
+                <div class="container mx-auto px-4 text-white">
+                    <h2 class="text-4xl md:text-6xl font-bold mb-6">محیطی آرام و حرفه‌ای</h2>
+                    <p class="text-xl md:text-2xl mb-8 max-w-2xl">در محیطی لوکس و آرام، خدمات زیبایی حرفه‌ای دریافت کنید</p>
+                    <a href="#appointment" class="appointment-btn text-amber-900 font-bold px-8 py-4 rounded-full inline-flex items-center">
+                        <span>رزرو نوبت</span>
+                        <i class="fas fa-arrow-left mr-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slider Controls -->
+        <div class="absolute bottom-10 left-0 right-0 flex justify-center space-x-3 space-x-reverse">
+            <button class="slider-dot w-3 h-3 rounded-full bg-white bg-opacity-50 focus:outline-none active"></button>
+            <button class="slider-dot w-3 h-3 rounded-full bg-white bg-opacity-50 focus:outline-none"></button>
+            <button class="slider-dot w-3 h-3 rounded-full bg-white bg-opacity-50 focus:outline-none"></button>
+        </div>
+    </section>
+
+    <!-- About Us -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">کلینیک پوست و موی زیبایی رویال</h2>
+                <div class="w-20 h-1 bg-amber-500 mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10">
+                    <img src="https://images.unsplash.com/photo-1551608873-589110affaa8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="کلینیک رویال" class="rounded-lg shadow-xl w-full h-auto">
+                </div>
+                
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">تجربه‌ای متفاوت در زیبایی</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        کلینیک پوست و موی زیبایی رویال با بیش از ۱۵ سال سابقه درخشان در زمینه ارائه خدمات تخصصی پوست، مو و زیبایی، همواره در تلاش بوده تا با بهره‌گیری از جدیدترین تکنولوژی‌های روز دنیا و کادر مجرب پزشکی، رضایت کامل مراجعین محترم را جلب نماید.
+                    </p>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        ما در کلینیک رویال به زیبایی طبیعی شما اهمیت می‌دهیم. هدف ما نه تغییر چهره، بلکه بهبود و تقویت زیبایی‌های طبیعی شماست. با استفاده از روش‌های غیرتهاجمی و کم‌عوارض، به شما کمک می‌کنیم بهترین نسخه خود باشید.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center bg-amber-50 px-4 py-2 rounded-full">
+                            <i class="fas fa-check-circle text-amber-600 mr-2"></i>
+                            <span class="text-gray-700">پزشکان متخصص</span>
+                        </div>
+                        <div class="flex items-center bg-amber-50 px-4 py-2 rounded-full">
+                            <i class="fas fa-check-circle text-amber-600 mr-2"></i>
+                            <span class="text-gray-700">تجهیزات پیشرفته</span>
+                        </div>
+                        <div class="flex items-center bg-amber-50 px-4 py-2 rounded-full">
+                            <i class="fas fa-check-circle text-amber-600 mr-2"></i>
+                            <span class="text-gray-700">محیطی آرام</span>
+                        </div>
+                        <div class="flex items-center bg-amber-50 px-4 py-2 rounded-full">
+                            <i class="fas fa-check-circle text-amber-600 mr-2"></i>
+                            <span class="text-gray-700">گارانتی خدمات</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">خدمات تخصصی ما</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">با بهره‌گیری از جدیدترین متدهای روز دنیا، زیباترین نتایج را برای شما به ارمغان می‌آوریم</p>
+                <div class="w-20 h-1 bg-amber-500 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="لیزر موهای زائد" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-amber-100 p-3 rounded-full mr-3">
+                                <i class="fas fa-burn text-amber-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">لیزر موهای زائد</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            با استفاده از پیشرفته‌ترین دستگاه‌های لیزر موهای زائد، بدون درد و با اثر دائمی از شر موهای زائد خلاص شوید.
+                        </p>
+                        <a href="#" class="text-amber-600 font-medium flex items-center">
+                            اطلاعات بیشتر
+                            <i class="fas fa-arrow-left mr-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="تزریق بوتاکس" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-amber-100 p-3 rounded-full mr-3">
+                                <i class="fas fa-syringe text-amber-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">تزریق بوتاکس</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            تزریق بوتاکس توسط متخصصین مجرب برای رفع چین و چروک صورت و جوانسازی پوست با نتایج طبیعی و بدون عارضه.
+                        </p>
+                        <a href="#" class="text-amber-600 font-medium flex items-center">
+                            اطلاعات بیشتر
+                            <i class="fas fa-arrow-left mr-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1556228578-8c2d37ba1c70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="میکرونیدلینگ" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-amber-100 p-3 rounded-full mr-3">
+                                <i class="fas fa-spa text-amber-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">میکرونیدلینگ</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            درمانی موثر برای رفع جای جوش، چین و چروک، منافذ باز پوست و جوانسازی با تحریک کلاژن سازی طبیعی پوست.
+                        </p>
+                        <a href="#" class="text-amber-600 font-medium flex items-center">
+                            اطلاعات بیشتر
+                            <i class="fas fa-arrow-left mr-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1599351430140-c70f0250bd70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="پیلینگ شیمیایی" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-amber-100 p-3 rounded-full mr-3">
+                                <i class="fas fa-leaf text-amber-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">پیلینگ شیمیایی</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            لایه برداری عمقی پوست با استفاده از مواد طبیعی برای درمان لک، جای جوش، چین و چروک و جوانسازی پوست.
+                        </p>
+                        <a href="#" class="text-amber-600 font-medium flex items-center">
+                            اطلاعات بیشتر
+                            <i class="fas fa-arrow-left mr-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="تزریق ژل" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-amber-100 p-3 rounded-full mr-3">
+                                <i class="fas fa-syringe text-amber-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">تزریق ژل</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            پر کردن خطوط صورت، فرم دهی لب و گونه با استفاده از بهترین ژل‌های تایید شده و با نتایج طبیعی و زیبا.
+                        </p>
+                        <a href="#" class="text-amber-600 font-medium flex items-center">
+                            اطلاعات بیشتر
+                            <i class="fas fa-arrow-left mr-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="درمان ریزش مو" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-amber-100 p-3 rounded-full mr-3">
+                                <i class="fas fa-cut text-amber-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800">درمان ریزش مو</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            تشخیص و درمان تخصصی انواع ریزش مو با روش‌های نوین مانند مزوتراپی، پی‌آر‌پی و کاشت مو با نتایج ماندگار.
+                        </p>
+                        <a href="#" class="text-amber-600 font-medium flex items-center">
+                            اطلاعات بیشتر
+                            <i class="fas fa-arrow-left mr-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctors -->
+    <section id="doctors" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">پزشکان متخصص ما</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">تیم متخصص و با تجربه کلینیک رویال با دانش به روز و مهارت بالا در خدمت شماست</p>
+                <div class="w-20 h-1 bg-amber-500 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Doctor 1 -->
+                <div class="doctor-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="دکتر مریم احمدی" class="w-full h-full object-cover transition-transform duration-500">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">دکتر مریم احمدی</h3>
+                        <p class="text-amber-600 mb-3">متخصص پوست و مو</p>
+                        <p class="text-gray-600 text-sm mb-4">
+                            فلوشیپ زیبایی از آمریکا با ۱۲ سال سابقه تخصصی در زمینه لیزر و تزریق‌های زیبایی
+                        </p>
+                        <div class="flex justify-center space-x-3 space-x-reverse">
+                            <a href="#" class="text-gray-400 hover:text-amber-600">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-amber-600">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-amber-600">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Doctor 2 -->
+                <div class="doctor-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="دکتر علی رضایی" class="w-full h-full object-cover transition-transform duration-500">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">دکتر علی رضایی</h3>
+                        <p class="text-amber-600 mb-3">متخصص کاشت مو</p>
+                        <p class="text-gray-600 text-sm mb-4">
+                            عضو انجمن جهانی کاشت مو با ۸ سال سابقه تخصصی در زمینه کاشت موهای طبیعی
+                        </p>
+                        <div class="flex justify-center space-x-3 space-x-reverse">
+                            <a href="#" class="text-gray-400 hover:text-amber-600">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-amber-600">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-amber-600">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Doctor 3 -->
+                <div class="doctor-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="دکتر سارا محمدی" class="w-full h-full object-cover transition-transform duration-500">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">دکتر سارا محمدی</h3>
+                        <p class="text-amber-600 mb-3">متخصص پوست و لیزر</p>
+                        <p class="text-gray-600 text-sm mb-4">
+                            متخصص پوست و لیزر با ۱۰ سال سابقه در زمینه درمان بیماری‌های پوستی و زیبایی
+                        </p>
+                        <div class="flex justify-center space-x-3 space-x-reverse">
+                            <a href="#" class="text-gray-400 hover:text-amber-600">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-amber-600">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-amber-600">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Doctor 4 -->
+                <div class="doctor-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="دکتر حسین نوروزی" class="w-full h-full object-cover transition-transform duration-500">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">دکتر حسین نوروزی</h3>
+                        <p class="text-amber-600 mb-3">متخصص تزریق‌های زیبایی</p>
+                        <p class="text-gray-600 text-sm mb-4">
+                            متخصص تزریق بوتاکس و ژل با ۷ سال سابقه در زمینه جوانسازی صورت
+                        </p>
+                        <div class="flex justify-center space-x-3 space-x-reverse">
+                            <a href="#" class="text-gray-400 hover:text-amber-600">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-amber-600">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-amber-600">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics -->
+    <section class="py-16 bg-gradient-to-r from-amber-100 to-amber-200">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="p-6">
+                    <div class="text-4xl md:text-5xl font-bold text-amber-800 mb-2">+۱۵</div>
+                    <div class="text-gray-700 font-medium">سال تجربه</div>
+                </div>
+                <div class="p-6">
+                    <div class="text-4xl md:text-5xl font-bold text-amber-800 mb-2">+۵۰۰۰</div>
+                    <div class="text-gray-700 font-medium">بیمار راضی</div>
+                </div>
+                <div class="p-6">
+                    <div class="text-4xl md:text-5xl font-bold text-amber-800 mb-2">+۲۰</div>
+                    <div class="text-gray-700 font-medium">خدمت تخصصی</div>
+                </div>
+                <div class="p-6">
+                    <div class="text-4xl md:text-5xl font-bold text-amber-800 mb-2">۱۰۰٪</div>
+                    <div class="text-gray-700 font-medium">رضایت بیماران</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">نظرات مراجعین</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">آنچه بیماران ما درباره تجربه‌شان در کلینیک رویال می‌گویند</p>
+                <div class="w-20 h-1 bg-amber-500 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-amber-500 text-2xl mr-2">★</div>
+                        <div class="text-amber-500 text-2xl mr-2">★</div>
+                        <div class="text-amber-500 text-2xl mr-2">★</div>
+                        <div class="text-amber-500 text-2xl mr-2">★</div>
+                        <div class="text-amber-500 text-2xl">★</div>
+                    </div>
+                    <p class="text-gray-600 mb-6">
+                        بهترین تجربه زیبایی من در کلینیک رویال بود. دکتر احمدی با حوصله و دقت بالا تمام توضیحات را دادند و نتیجه کار فوق‌العاده بود. محیط کلینیک هم بسیار تمیز و آرام بود.
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="نازنین محمدی" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold text-gray-800">نازنین محمدی</h4>
+                            <p class="text-gray-500 text-sm">بیمار لیزر موهای زائد</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-amber-500 text-2xl mr-2">★</div>
+                        <div class="text-amber-500 text-2xl mr-2">★</div>
+                        <div class="text-amber-500 text-2xl mr-2">★</div>
+                        <div class="text-amber-500 text-2xl mr-2">★</div>
+                        <div class="text-amber-500 text-2xl">★</div>
+                    </div>
+                    <p class="text-gray-600 mb-6">
+                        بعد از سال‌ها ریزش مو، بالاخره با کمک دکتر رضایی مشکل من حل شد. کاشت موی طبیعی با نتیجه‌ای فوق‌العاده که اصلا قابل تشخیص نیست. ممنون از تیم حرفه‌ای کلینیک رویال.
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="امیر حسینی" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold text-gray-800">امیر حسینی</h4>
+                            <p class="text-gray-500 text-sm">بیمار کاشت مو</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-amber-500 text-2xl mr-2">★</div>
+                        <div class="text-amber-500 text-2xl mr-2">★</div>
+                        <div class="text-amber-500 text-2xl mr-2">★</div>
+                        <div class="text-amber-500 text-2xl mr-2">★</div>
+                        <div class="text-amber-500 text-2xl">★</div>
+                    </div>
+                    <p class="text-gray-600 mb-6">
+                        تزریق بوتاکس من توسط دکتر نوروزی انجام شد و نتیجه‌ای کاملا طبیعی داشت. اصلا مثل بعضی کلینیک‌ها که صورت را بی‌حالت می‌کنند نبود. بسیار راضی هستم و ادامه درمان را هم با ایشان انجام خواهم داد.
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/63.jpg" alt="فاطمه کریمی" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold text-gray-800">فاطمه کریمی</h4>
+                            <p class="text-gray-500 text-sm">بیمار تزریق بوتاکس</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment -->
+    <section id="appointment" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto bg-gradient-to-r from-amber-50 to-amber-100 rounded-xl shadow-lg overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">رزرو نوبت آنلاین</h2>
+                        <p class="text-gray-600 mb-6">
+                            برای رزرو نوبت در کلینیک پوست و موی زیبایی رویال، فرم مقابل را پر کنید. همکاران ما در اسرع وقت با شما تماس خواهند گرفت.
+                        </p>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-phone text-amber-600 mr-3"></i>
+                            <span class="text-gray-700">021-12345678</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-envelope text-amber-600 mr-3"></i>
+                            <span class="text-gray-700">info@royalclinic.com</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-amber-600 mr-3"></i>
+                            <span class="text-gray-700">تهران، خیابان ولیعصر، کوچه فلان، پلاک ۱۲</span>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2 bg-white p-8 md:p-12">
+                        <form>
+                            <div class="mb-4">
+                                <label for="name" class="block text-gray-700 mb-2">نام و نام خانوادگی</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            <div class="mb-4">
+                                <label for="phone" class="block text-gray-700 mb-2">شماره تماس</label>
+                                <input type="tel" id="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            <div class="mb-4">
+                                <label for="service" class="block text-gray-700 mb-2">خدمت مورد نظر</label>
+                                <select id="service" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                    <option value="">-- انتخاب کنید --</option>
+                                    <option value="لیزر موهای زائد">لیزر موهای زائد</option>
+                                    <option value="تزریق بوتاکس">تزریق بوتاکس</option>
+                                    <option value="میکرونیدلینگ">میکرونیدلینگ</option>
+                                    <option value="پیلینگ شیمیایی">پیلینگ شیمیایی</option>
+                                    <option value="تزریق ژل">تزریق ژل</option>
+                                    <option value="درمان ریزش مو">درمان ریزش مو</option>
+                                </select>
+                            </div>
+                            <div class="mb-6">
+                                <label for="date" class="block text-gray-700 mb-2">تاریخ مراجعه</label>
+                                <input type="date" id="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            <button type="submit" class="w-full bg-amber-600 text-white py-3 px-6 rounded-lg font-bold hover:bg-amber-700 transition duration-300">
+                                ثبت درخواست نوبت
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">تماس با ما</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">برای دریافت مشاوره رایگان و پاسخ به سوالات شما در خدمتیم</p>
+                <div class="w-20 h-1 bg-amber-500 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-map-marker-alt text-amber-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">آدرس</h3>
+                    <p class="text-gray-600">تهران، خیابان ولیعصر، کوچه فلان، پلاک ۱۲</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-phone text-amber-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">تلفن</h3>
+                    <p class="text-gray-600 mb-1">021-12345678</p>
+                    <p class="text-gray-600">0912-3456789</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-envelope text-amber-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">ایمیل</h3>
+                    <p class="text-gray-600 mb-1">info@royalclinic.com</p>
+                    <p class="text-gray-600">appointment@royalclinic.com</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.676101300323!2d51.38912331527024!3d35.72825298018448!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDQzJzQxLjciTiA1McKwMjMnMjkuOSJF!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    
+                    <div class="md:w-1/2 p-8 md:p-12">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">ارسال پیام</h3>
+                        <form>
+                            <div class="mb-4">
+                                <input type="text" placeholder="نام و نام خانوادگی" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            <div class="mb-4">
+                                <input type="email" placeholder="ایمیل" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            <div class="mb-4">
+                                <input type="tel" placeholder="شماره تماس" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            <div class="mb-4">
+                                <textarea placeholder="متن پیام" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+                            </div>
+                            <button type="submit" class="bg-amber-600 text-white py-3 px-6 rounded-lg font-bold hover:bg-amber-700 transition duration-300">
+                                ارسال پیام
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}
