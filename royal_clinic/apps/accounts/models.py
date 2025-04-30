@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,PermissionsMixin
 from django.utils import timezone
 from uuid import uuid4
 # Create your models here.
@@ -43,7 +43,7 @@ class CustomUserManager(BaseUserManager):
 # 
 
 
-class Customuser(AbstractBaseUser):
+class Customuser(AbstractBaseUser,PermissionsMixin):
     mobile_number = models.CharField(max_length=11,unique=True)
     unique_code = models.UUIDField(default=uuid4,null=False,blank=False,unique=True)
     email = models.EmailField(max_length=200,blank=True)
