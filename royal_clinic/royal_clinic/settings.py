@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    'ckeditor',
+    'ckeditor_uploader', 
+    
     'apps.main.apps.MainConfig',
     'apps.accounts.apps.AccountsConfig',
 ]
@@ -53,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'royal_clinic.urls'
@@ -137,7 +141,10 @@ STATICFILES_DIRS =  (os.path.join(BASE_DIR,'static/'),)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "accounts.CustomUser"
+# ------------------------------------------------------------------------------------------
+# define CustomUser to the system
+
+AUTH_USER_MODEL = "accounts.Customuser"
 
 # ------------------------------------------------------------------------------------------
 # DjangoJazmin settings
@@ -147,3 +154,46 @@ JAZZMIN_SETTINGS = {
     "custom_css": "css/custom_admin.css",
 
 }
+
+# -----------------------------------------------------------------------------------------
+# تنظیمات سیکاادیتور
+CKEDITOR_UPLOAD_PATH = "ckeditor/uploads/"
+
+CKEDITOR_CONFIGS = {
+    
+
+    'default' :
+        {
+            
+            'toolbar' : 'Custom',
+            'toolbar_custom' : [
+                ['Bold','link','Unlink','Image'],
+            ],
+            
+        },
+    
+    'special' :
+        {
+            
+           'toolbar' : 'special', 'height' : 500, 'toolbar' : 'full',
+            'toolbar_Special' : [
+                ['Bold','link','Unlink','Image'],
+                ['CodeSnippet'],
+            ], 
+            
+            'extraPlugins' : ','.join(['codesnippet','clipboard',])
+            
+        },
+        
+    'special_an' :
+        {
+            'toolbar' : 'Special' , 'height' : 500,
+            'toolbar_Special' : 
+                [
+                    ['Bold'],
+                    ['CodeSnippet'],
+                ],
+                'extraPlugins' : ','.join(['codesnippet',])
+        }
+    
+    }

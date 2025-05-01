@@ -44,20 +44,22 @@ class CustomUserManager(BaseUserManager):
 
 
 class Customuser(AbstractBaseUser,PermissionsMixin):
-    mobile_number = models.CharField(max_length=11,unique=True)
+    mobile_number = models.CharField(max_length=13,unique=True,help_text='لطفا شماره موبایل خود را درست وارد فرمائید',verbose_name='شماره موبایل')
     unique_code = models.UUIDField(default=uuid4,null=False,blank=False,unique=True)
-    email = models.EmailField(max_length=200,blank=True)
-    name = models.CharField(max_length=50,blank=True)
-    family = models.CharField(max_length=50,blank=True)
+    email = models.EmailField(max_length=200,blank=True,verbose_name='ایمیل')
+    name = models.CharField(max_length=50,blank=True,verbose_name='نام')
+    family = models.CharField(max_length=50,blank=True,verbose_name='نام خانوادگی')
     GENDER = (
     ('', 'انتخاب نشده'),
     ('مرد', 'مرد'),
     ('زن', 'زن'),
     )
-    gender = models.CharField(max_length=50, blank=True, choices=GENDER, default='',null=True)
+    gender = models.CharField(max_length=50, blank=True, choices=GENDER, default='',null=True, verbose_name='جنسیت')
     registered_date = models.DateField(default=timezone.now)
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    
+    
     
     USERNAME_FIELD = 'mobile_number'
     REQUIRED_FIELDS = ['email','name','family']
@@ -70,6 +72,25 @@ class Customuser(AbstractBaseUser,PermissionsMixin):
     
     def __str__(self):
         return self.name+" "+self.family
+    class Meta:
+        verbose_name = "کاربران و پرسنل"
+        verbose_name_plural = "کاربران و پرسنل"
+
+
+
+from ckeditor_uploader.fields import RichTextUploadingField
+from ckeditor.fields import RichTextField
+
     
+class RulesandRegulations(models.Model):
+    rules_and_conditions = RichTextUploadingField(null=True,blank=True,verbose_name='قوانین و مقررات',config_name='special')
+    registered_date = models.DateField(auto_now_add=True,verbose_name='تاریخ ثبت')
+    last_checked = models.DateTimeField(auto_now=True,verbose_name='اخرین بازدید')
+    is_active = models.BooleanField(default=False,verbose_name='فعال/غیرفعال')
     
+    def __str__(self):
+        return str(self.registered_date)
     
+    class Meta:
+        verbose_name = "قوانین و مقررات"
+        verbose_name_plural = "قوانین و مقررات"

@@ -1,0 +1,56 @@
+{% extends "main_template_account.html" %}
+
+{% block title %}قوانین و مقررات{% endblock title %}
+
+{% block content %}
+
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="bg-white p-3 rounded-full">
+                        <i class="fas fa-heartbeat text-emerald-600 text-2xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold mr-3">کلینیک رویال</h1>
+                </div>
+                <nav>
+                    <ul class="flex space-x-6 space-x-reverse">
+                        <li><a href="#" class="hover:text-emerald-100 transition"><i class="fas fa-home ml-1"></i> صفحه اصلی</a></li>
+                        <li><a href="#" class="hover:text-emerald-100 transition"><i class="fas fa-user-plus ml-1"></i> ثبت نام</a></li>
+                        <li><a href="#" class="hover:text-emerald-100 transition"><i class="fas fa-question-circle ml-1"></i> راهنما</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <!-- Page Header -->
+            <div class="gradient-bg text-white py-8 px-6">
+                <div class="flex items-center">
+                    <i class="fas fa-file-contract text-3xl ml-4"></i>
+                    <div>
+                        <h1 class="text-3xl font-bold">قوانین و مقررات کلینیک رویال</h1>
+                        {% for r in rules %}
+                        <p class="mt-2 opacity-90">{{r.last_checked}}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Links -->
+            <div class="bg-gray-50 p-6 border-b">
+                
+                    {% autoescape off %}
+                        {{r.rules_and_conditions}}
+                    {% endautoescape %}
+                {% endfor %}
+            </div>
+
+            <div class="bg-gray-50 p-6 border-b">
+                <label class="text-emerald-600 hover:underline"  for="rule">قوانین را می پذیرم</label>
+                <input type="checkbox" name="rule" id="rule" onclick="handleAcceptRules()">
+            </div>
+{% endblock content %}

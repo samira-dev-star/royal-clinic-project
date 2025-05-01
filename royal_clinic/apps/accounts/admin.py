@@ -4,7 +4,7 @@ from django.contrib import admin
 
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Customuser
+from .models import Customuser,RulesandRegulations
 
 from .account_forms import UserCreationForm,UserChangeForm
 # Register your models here.
@@ -36,7 +36,7 @@ class CustomUserAdmin(UserAdmin):
     
     class Media:
         css = {
-            'all' : ('css/admin_style.css',)
+            'all' : ('css/admin_style_apps.css',)
         }
     
         js = (
@@ -46,3 +46,10 @@ class CustomUserAdmin(UserAdmin):
     
     
 admin.site.register(Customuser,CustomUserAdmin)
+
+
+
+@admin.register(RulesandRegulations)
+class RulesandRegulationsAmin(admin.ModelAdmin):
+    list_display = ['registered_date','is_active']
+    list_editable = ['is_active']
