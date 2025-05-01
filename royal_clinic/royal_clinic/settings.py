@@ -32,7 +32,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
+    
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -136,3 +138,12 @@ STATICFILES_DIRS =  (os.path.join(BASE_DIR,'static/'),)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+# ------------------------------------------------------------------------------------------
+# DjangoJazmin settings
+
+JAZZMIN_SETTINGS = {
+
+    "custom_css": "css/custom_admin.css",
+
+}

@@ -24,3 +24,8 @@ urlpatterns = [
     path('',include('apps.main.main_urls' , namespace='main')),
     path('accounts/',include('apps.accounts.account_urls', namespace='account'))
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+
+admin.site.site_header = 'پنل مدیریت کلینیک رویال'
+admin.site.site_title = 'Royal Clinic'
+admin.site.index_title = 'Royal Clinic'

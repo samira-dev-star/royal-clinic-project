@@ -1,0 +1,17 @@
+.brand-link {
+    background-color: #61b94e85;
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: #61b94e85;
+    color: #fff;
+  }
+
+.brand-link .pushmenu:hover, [class*="sidebar-dark"] .brand-link:hover {
+    color: #000;
+  }
+
+  [class*="accent-"] a.btn-info {
+    color: #fff;
+    background-color: rgb(135, 205, 223);
+  }
