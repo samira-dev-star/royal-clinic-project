@@ -22,7 +22,11 @@
                 
 
 
-
+                {% if form.errors %}
+                    <div class="text-red-500 text-sm mb-4">
+                        لطفاً خطاهای فرم را بررسی کنید.
+                    </div>
+                {% endif %}
 
 
                 <form id="registerForm" class="space-y-4" method='post'>
@@ -32,17 +36,22 @@
                         {{form.mobile_number}}
                     </div>
 
-                    {% if form.mobile_number.errors %}
-                    <div id="phoneError" class="error-message hidden">لطفا شماره موبایل معتبر وارد کنید</div>
-                    {% endif %}
+                    {% comment %} {% if form.mobile_number.errors %}
+                    <div id="phoneError">لطفا شماره موبایل معتبر وارد کنید</div>
+                    {% endif %} {% endcomment %}
 
                     <label for="password" class="block text-sm font-medium text-gray-700 mb-1"> رمز عبور :</label>
                         {{form.password1}}
+                        {% for error in form.password1.errors %}
+                        <div class="error-message text-red-500 text-sm">{{ error }}</div>
+                        {% endfor %}
                     
                     <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-1"> تکرار رمز عبور :</label>
                         {{form.password2}}
-
-
+                        {% for error in form.password2.errors %}
+                        <div class="error-message text-red-500 text-sm">{{ error }}</div>
+                        {% endfor %}
+                        
                     {% comment %} موافقت با قوانین سایت {% endcomment %}
                     <div class="flex items-start">
                         {{ form.accept_rules }}  <!-- فقط چک‌باکس -->

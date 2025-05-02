@@ -30,7 +30,7 @@ class RegisterUserView(View):
                     password = user['password1'],
                 )
                 
-                messages.success(request,"ثبت نام با موفقیت انجام شد شماره موبایل و پسورد خود را وارد کنید",'success')
+                messages.success(request,"ثبت نام با موفقیت انجام شد برای ورود شماره موبایل و پسورد خود را وارد کنید",'success')
                 return redirect('main:index')
                 
             else:
