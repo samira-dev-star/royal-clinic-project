@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% comment %} <!DOCTYPE html>
 {% load static %}
 <html lang="en">
 <head>
@@ -168,4 +168,38 @@
         });
     </script>
 </body>
-</html>
+</html> {% endcomment %}
+{% load static %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="message 
+            {% if 'success' in message.tags %}message-success
+            {% elif 'error' in message.tags %}message-error
+            {% elif 'warning' in message.tags %}message-warning
+            {% else %}message-info{% endif %}">
+            <i class="fas 
+                {% if 'success' in message.tags %}fa-check-circle
+                {% elif 'error' in message.tags %}fa-exclamation-circle
+                {% elif 'warning' in message.tags %}fa-exclamation-triangle
+                {% else %}fa-info-circle{% endif %} text-lg"></i>
+            <div class="flex-1">
+                <p><strong>{{ message }}</strong></p>
+            </div>
+            <button onclick="dismissMessage(this.parentElement)">
+                <i class="fas fa-times"></i>
+            </button>
+
+
+            
+            
+            <script src="{% static "js/messages.js" %}"></script>
+
+
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+
+<link rel="stylesheet" href="{% static "css/messages.css" %}">
