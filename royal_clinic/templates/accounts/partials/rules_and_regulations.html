@@ -16,8 +16,8 @@
                 </div>
                 <nav>
                     <ul class="flex space-x-6 space-x-reverse">
-                        <li><a href="#" class="hover:text-emerald-100 transition"><i class="fas fa-home ml-1"></i> صفحه اصلی</a></li>
-                        <li><a href="#" class="hover:text-emerald-100 transition"><i class="fas fa-user-plus ml-1"></i> ثبت نام</a></li>
+                        <li><a href="{% url "main:index" %}" class="hover:text-emerald-100 transition"><i class="fas fa-home ml-1"></i> صفحه اصلی</a></li>
+                        <li><a href="{% url "account:register" %}" class="hover:text-emerald-100 transition"><i class="fas fa-user-plus ml-1"></i> ثبت نام</a></li>
                         <li><a href="#" class="hover:text-emerald-100 transition"><i class="fas fa-question-circle ml-1"></i> راهنما</a></li>
                     </ul>
                 </nav>

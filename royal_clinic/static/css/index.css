@@ -5,7 +5,7 @@
 
 .appointment-btn {
     background:
-  linear-gradient(45deg, #25a138, #fff);
+  linear-gradient(45deg, rgb(75, 154, 80), rgb(75, 154, 80));
     transition:
   all 0.3s ease;
   }

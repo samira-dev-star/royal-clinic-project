@@ -103,3 +103,13 @@ class LogoutUserView(View):
         logout(request)
         messages.success(request,'از حساب کاربری خود خارج شدید','success')
         return redirect('main:index')
+    
+    
+#----------------------------------------------------------------------------------------------------------------
+# user_panel
+
+class UserPanelView(View,LoginRequiredMixin):
+    template_name = 'accounts/user_panel.html'
+    def get(self,request,*args, **kwarg):
+        return render(request,self.template_name)
+    

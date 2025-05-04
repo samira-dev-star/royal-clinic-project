@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل بیمار - کلینیک رویال</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .form-input:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+        }
+        
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-error {
+            border-color: #ef4444;
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .pr-16 {
+            padding-right: 0;
+        }
+        
+        /* Terms and conditions */
+        .terms-container {
+            scroll-behavior: smooth;
+        }
+        
+        .terms-section {
+            scroll-margin-top: 100px;
+        }
+        
+        .highlight-box {
+            border-right: 4px solid #10b981;
+            background-color: #f0fdf4;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 4px;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background-color: #10b981;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background-color: #059669;
+        }
+        
+        /* Custom styles for user panel */
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .active-link {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-right: 3px solid white;
+        }
+        
+        .appointment-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .prescription-badge {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="gradient-bg text-white w-64 flex-shrink-0 hidden md:flex flex-col">
+            <div class="p-4 flex items-center justify-center border-b border-white/20">
+                <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mr-3">
+                    <i class="fas fa-hospital text-green-600 text-xl"></i>
+                </div>
+                <h1 class="text-xl font-bold">کلینیک رویال</h1>
+            </div>
+            
+            <div class="p-4 flex items-center border-b border-white/20">
+                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white mr-3">
+                    <i class="fas fa-user-injured"></i>
+                </div>
+                <div>
+                    <p class="font-medium">علی محمدی</p>
+                    <p class="text-xs text-white/80">بیمار</p>
+                </div>
+            </div>
+            
+            <nav class="flex-1 overflow-y-auto py-4">
+                <a href="#" class="sidebar-link active-link flex items-center px-4 py-3 text-white">
+                    <i class="fas fa-home ml-3"></i>
+                    <span>داشبورد</span>
+                </a>
+                
+                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
+                    <i class="fas fa-calendar-check ml-3"></i>
+                    <span>نوبت‌های من</span>
+                </a>
+                
+                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
+                    <i class="fas fa-file-prescription ml-3"></i>
+                    <span>نسخه‌ها</span>
+                    <div class="prescription-badge">3</div>
+                </a>
+                
+                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
+                    <i class="fas fa-file-medical ml-3"></i>
+                    <span>پرونده پزشکی</span>
+                </a>
+                
+                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
+                    <i class="fas fa-comment-medical ml-3"></i>
+                    <span>مشاوره آنلاین</span>
+                </a>
+                
+                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
+                    <i class="fas fa-user-edit ml-3"></i>
+                    <span>پروفایل</span>
+                </a>
+            </nav>
+            
+            <div class="p-4 border-t border-white/20">
+                <a href="#" class="flex items-center text-white/80 hover:text-white">
+                    <i class="fas fa-sign-out-alt ml-3"></i>
+                    <span>خروج از سیستم</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Mobile sidebar toggle -->
+        <div class="md:hidden fixed bottom-4 left-4 z-50">
+            <button id="sidebarToggle" class="gradient-bg text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile sidebar -->
+        <div id="mobileSidebar" class="gradient-bg text-white w-64 h-full fixed top-0 right-0 transform translate-x-full z-40 transition-transform duration-300 ease-in-out md:hidden">
+            <div class="p-4 flex items-center justify-between border-b border-white/20">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center mr-3">
+                        <i class="fas fa-hospital text-green-600"></i>
+                    </div>
+                    <h1 class="text-lg font-bold">کلینیک رویال</h1>
+                </div>
+                <button id="closeSidebar" class="text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-4 flex items-center border-b border-white/20">
+                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white mr-3">
+                    <i class="fas fa-user-injured"></i>
+                </div>
+                <div>
+                    <p class="font-medium">علی محمدی</p>
+                    <p class="text-xs text-white/80">بیمار</p>
+                </div>
+            </div>
+            
+            <nav class="py-4">
+                <a href="#" class="sidebar-link active-link flex items-center px-4 py-3 text-white">
+                    <i class="fas fa-home ml-3"></i>
+                    <span>داشبورد</span>
+                </a>
+                
+                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
+                    <i class="fas fa-calendar-check ml-3"></i>
+                    <span>نوبت‌های من</span>
+                </a>
+                
+                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white relative">
+                    <i class="fas fa-file-prescription ml-3"></i>
+                    <span>نسخه‌ها</span>
+                    <div class="prescription-badge">3</div>
+                </a>
+                
+                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
+                    <i class="fas fa-file-medical ml-3"></i>
+                    <span>پرونده پزشکی</span>
+                </a>
+                
+                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
+                    <i class="fas fa-comment-medical ml-3"></i>
+                    <span>مشاوره آنلاین</span>
+                </a>
+                
+                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
+                    <i class="fas fa-user-edit ml-3"></i>
+                    <span>پروفایل</span>
+                </a>
+                
+                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white mt-4">
+                    <i class="fas fa-sign-out-alt ml-3"></i>
+                    <span>خروج از سیستم</span>
+                </a>
+            </nav>
+        </div>
+        
+        <!-- Main content -->
+        <div class="flex-1 overflow-auto">
+            <!-- Top navigation -->
+            <header class="bg-white shadow-sm py-4 px-6 flex items-center justify-between">
+                <div class="flex items-center">
+                    <h2 class="text-xl font-bold text-gray-800">داشبورد بیمار</h2>
+                </div>
+                
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="relative">
+                        <button class="text-gray-600 hover:text-gray-900">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                        </button>
+                    </div>
+                    
+                    <div class="relative">
+                        <button class="flex items-center text-gray-600 hover:text-gray-900">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-2">
+                                <i class="fas fa-user-injured"></i>
+                            </div>
+                            <span class="hidden md:inline">علی محمدی</span>
+                            <i class="fas fa-chevron-down mr-2 text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Main content area -->
+            <main class="p-6">
+                <!-- Stats cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow p-6 flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-4">
+                            <i class="fas fa-calendar-day text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">نوبت‌های فعال</p>
+                            <p class="text-2xl font-bold">2</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow p-6 flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
+                            <i class="fas fa-file-prescription text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">نسخه‌های جدید</p>
+                            <p class="text-2xl font-bold">3</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow p-6 flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-4">
+                            <i class="fas fa-user-md text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">پزشک معالج</p>
+                            <p class="text-2xl font-bold">دکتر محمدی</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow p-6 flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 mr-4">
+                            <i class="fas fa-clock text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 text-sm">آخرین ویزیت</p>
+                            <p class="text-2xl font-bold">1403/01/12</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Appointments section -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2">
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                                <h3 class="font-bold text-lg">نوبت‌های آینده</h3>
+                                <button class="gradient-bg text-white px-4 py-2 rounded-md text-sm btn-hover">
+                                    <i class="fas fa-plus ml-2"></i>
+                                    نوبت جدید
+                                </button>
+                            </div>
+                            
+                            <div class="divide-y divide-gray-200">
+                                <div class="appointment-card p-4 hover:bg-gray-50 transition duration-200 cursor-pointer">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3">
+                                                <i class="fas fa-user-md"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">دکتر محمدی</p>
+                                                <p class="text-sm text-gray-500">متخصص قلب و عروق</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-left">
+                                            <p class="font-medium">1403/01/15 - 10:30</p>
+                                            <p class="text-sm text-gray-500">ویزیت پیگیری</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="appointment-card p-4 hover:bg-gray-50 transition duration-200 cursor-pointer">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-3">
+                                                <i class="fas fa-user-md"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">دکتر احمدی</p>
+                                                <p class="text-sm text-gray-500">متخصص داخلی</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-left">
+                                            <p class="font-medium">1403/01/20 - 14:00</p>
+                                            <p class="text-sm text-gray-500">آزمایش خون</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="appointment-card p-4 hover:bg-gray-50 transition duration-200 cursor-pointer bg-green-50">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3">
+                                                <i class="fas fa-user-md"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">دکتر محمدی</p>
+                                                <p class="text-sm text-gray-500">متخصص قلب و عروق</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-left">
+                                            <p class="font-medium">1403/01/12 - 11:00</p>
+                                            <p class="text-sm text-gray-500">ویزیت انجام شده</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Prescriptions section -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden mt-6">
+                            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                                <h3 class="font-bold text-lg">آخرین نسخه‌ها</h3>
+                                <a href="#" class="text-green-600 hover:text-green-800 text-sm">مشاهده همه</a>
+                            </div>
+                            
+                            <div class="divide-y divide-gray-200">
+                                <div class="appointment-card p-4 hover:bg-gray-50 transition duration-200 cursor-pointer">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3">
+                                                <i class="fas fa-file-prescription"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">نسخه شماره ۱۴۰۳۰۱۱۲۱</p>
+                                                <p class="text-sm text-gray-500">تاریخ: 1403/01/12</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-left">
+                                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">فعال</span>
+                                            <p class="text-sm text-gray-500 mt-1">دکتر محمدی</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="appointment-card p-4 hover:bg-gray-50 transition duration-200 cursor-pointer">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-3">
+                                                <i class="fas fa-file-prescription"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">نسخه شماره ۱۴۰۲۱۲۲۵۱</p>
+                                                <p class="text-sm text-gray-500">تاریخ: 1402/12/25</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-left">
+                                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">در حال بررسی</span>
+                                            <p class="text-sm text-gray-500 mt-1">دکتر احمدی</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="appointment-card p-4 hover:bg-gray-50 transition duration-200 cursor-pointer">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3">
+                                                <i class="fas fa-file-prescription"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium">نسخه شماره ۱۴۰۲۱۱۱۵۱</p>
+                                                <p class="text-sm text-gray-500">تاریخ: 1402/11/15</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-left">
+                                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">منقضی شده</span>
+                                            <p class="text-sm text-gray-500 mt-1">دکتر محمدی</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick actions section -->
+                    <div>
+                        <div class="bg-white rounded-lg shadow overflow-hidden">
+                            <div class="px-6 py-4 border-b border-gray-200">
+                                <h3 class="font-bold text-lg">اقدامات سریع</h3>
+                            </div>
+                            
+                            <div class="p-4 grid grid-cols-2 gap-4">
+                                <button class="gradient-bg text-white p-4 rounded-lg flex flex-col items-center justify-center btn-hover">
+                                    <i class="fas fa-calendar-plus text-2xl mb-2"></i>
+                                    <span class="text-sm">رزرو نوبت</span>
+                                </button>
+                                
+                                <button class="bg-blue-500 text-white p-4 rounded-lg flex flex-col items-center justify-center btn-hover">
+                                    <i class="fas fa-comment-medical text-2xl mb-2"></i>
+                                    <span class="text-sm">مشاوره آنلاین</span>
+                                </button>
+                                
+                                <button class="bg-purple-500 text-white p-4 rounded-lg flex flex-col items-center justify-center btn-hover">
+                                    <i class="fas fa-file-download text-2xl mb-2"></i>
+                                    <span class="text-sm">دریافت نسخه</span>
+                                </button>
+                                
+                                <button class="bg-yellow-500 text-white p-4 rounded-lg flex flex-col items-center justify-center btn-hover">
+                                    <i class="fas fa-file-medical text-2xl mb-2"></i>
+                                    <span class="text-sm">پرونده پزشکی</span>
+                                </button>
+                            </div>
+                            
+                            <div class="px-6 py-4 border-t border-gray-200">
+                                <h4 class="font-medium mb-2">اطلاعیه‌ها</h4>
+                                <div class="space-y-3">
+                                    <div class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-2"></div>
+                                        <div>
+                                            <p class="text-sm font-medium">برنامه واکسیناسیون آنفولانزا</p>
+                                            <p class="text-xs text-gray-500">مهلت ثبت نام تا 1403/01/20</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-2"></div>
+                                        <div>
+                                            <p class="text-sm font-medium">برگزاری سمینار قلب و عروق</p>
+                                            <p class="text-xs text-gray-500">1403/02/05 - ساعت 16:00</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Health tips -->
+                        <div class="bg-white rounded-lg shadow overflow-hidden mt-6">
+                            <div class="px-6 py-4 border-b border-gray-200">
+                                <h3 class="font-bold text-lg">نکات سلامت</h3>
+                            </div>
+                            
+                            <div class="p-4">
+                                <div class="flex items-start mb-4">
+                                    <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3 flex-shrink-0">
+                                        <i class="fas fa-heartbeat"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">کنترل فشار خون</p>
+                                        <p class="text-xs text-gray-500">فشار خون خود را روزانه اندازه‌گیری و ثبت نمایید.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start mb-4">
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3 flex-shrink-0">
+                                        <i class="fas fa-dumbbell"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">فعالیت بدنی</p>
+                                        <p class="text-xs text-gray-500">حداقل 30 دقیقه پیاده‌روی روزانه داشته باشید.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 mr-3 flex-shrink-0">
+                                        <i class="fas fa-utensils"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">رژیم غذایی</p>
+                                        <p class="text-xs text-gray-500">مصرف نمک و چربی‌های اشباع را کاهش دهید.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Back to top button -->
+    <div class="back-to-top hidden">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <script>
+        // Mobile sidebar toggle
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const mobileSidebar = document.getElementById('mobileSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        
+        sidebarToggle.addEventListener('click', () => {
+            mobileSidebar.classList.toggle('translate-x-full');
+        });
+        
+        closeSidebar.addEventListener('click', () => {
+            mobileSidebar.classList.add('translate-x-full');
+        });
+        
+        // Back to top button
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('hidden');
+            } else {
+                backToTopButton.classList.add('hidden');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

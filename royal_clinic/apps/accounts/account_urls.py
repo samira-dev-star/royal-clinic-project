@@ -8,4 +8,5 @@ urlpatterns =[
     path('rules/',views.show_rules_and_regulations,name='rules'),
     path('login/',views.LoginUser.as_view(),name='login'),
     path('logout/',views.LogoutUserView.as_view(),name='logout'),
+    path('userpanel/',views.UserPanelView.as_view(),name='userpanel'),
 ]
