@@ -1,0 +1,21 @@
+.bg-gray-900 {
+  --tw-bg-opacity: 1;
+  /* background-color: rgb(75, 154, 80); */
+  background-color: #c5c5c5;
+}
+
+
+.bg-amber-600 {
+  background-color: rgb(37, 124, 67);
+}
+
+
+.hover\:bg-amber-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(73, 185, 57);
+}
+
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(0, 0, 0);
+}
