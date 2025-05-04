@@ -85,4 +85,55 @@ class RegisterUserForm(ModelForm):
 
             
 # -----------------------------------------------------------------------------------------------
+# فرم لاگین
 
+class LoginUserForm(forms.Form):
+    mobile_number = forms.CharField(label="",
+                                    error_messages={"required":"لطفا شماره موبایل خود را وارد کنید"},
+                                    widget=forms.TextInput(attrs={
+                                        'class':'form-control',
+                                        'placeholder':'09xxxxxxxxx',
+                                        'type':'tel',
+                                        'id':'mobile'}))
+    
+    
+
+    password = forms.CharField(label="",
+                               min_length=4, 
+                               max_length=8, 
+                               error_messages={"required":"لطفا پسورد خود را وارد کنید","min_length": "رمز عبور باید حداقل 4 کاراکتر باشد.", "max_length": "رمز عبور نمی‌تواند بیش از 8 کاراکتر باشد."},
+                               widget=forms.PasswordInput(attrs={
+                                   'class':'form-control',
+                                   'placeholder':'پسوردی که باآن ثبت نام کردید را وارد کنید',
+                                   'type':'password','id':'password',
+                                   }))
+    
+    def clean_mobile_number(self):
+        number = self.cleaned_data.get('mobile_number')
+
+        if " " in number:
+            raise ValidationError("شماره موبایل نباید فاصله داشته باشد.") 
+
+        if not number.replace('+', '').isdigit():
+            raise ValidationError("شماره موبایل فقط باید شامل عدد باشد.")
+
+        if not (number.startswith('09') or number.startswith('+989') or number.startswith('989')):
+            raise ValidationError("شماره موبایل باید با 09 یا +989 یا 989 شروع شود.")
+
+        # تبدیل به فرمت بین‌المللی
+        if number.startswith('09'):
+            number = '+98' + number[1:]  # 0912... => +98912...
+        elif number.startswith('989'):
+            number = '+' + number  # 98912... => +98912...
+        
+        # بررسی طول
+        if len(number) != 13:
+            raise ValidationError("تعداد ارقام شماره موبایل صحیح نمی‌باشد.")
+
+        return number
+
+
+
+
+        
+            

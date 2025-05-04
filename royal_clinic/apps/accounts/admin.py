@@ -53,3 +53,12 @@ admin.site.register(Customuser,CustomUserAdmin)
 class RulesandRegulationsAmin(admin.ModelAdmin):
     list_display = ['registered_date','is_active']
     list_editable = ['is_active']
+    
+    
+    
+    
+# --------------------------------------------------------------------------------------------
+
+# from allauth.socialaccount.models import SocialApp
+
+# admin.site.register(SocialApp)

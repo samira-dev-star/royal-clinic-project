@@ -1,0 +1,75 @@
+{% extends "main_login.html" %}
+
+{% block content %}
+
+
+
+<div class="login-container">
+    <div class="login-header">
+        <h1>ورود به حساب کاربری</h1>
+        <p>لطفا شماره موبایل و رمز عبور خود را وارد کنید</p>
+    </div>
+    
+    <div class="login-form">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="mobile">شماره موبایل</label>
+                <i class="fas fa-mobile-alt form-icon"></i>
+                {% comment %} <input 
+                    type="tel" 
+                    id="mobile" 
+                    class="form-control" 
+                    placeholder="09123456789"
+                    required
+                > {% endcomment %}
+                <div>
+                    {{ form.mobile_number }}
+                    {% for error in form.mobile_number.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">رمز عبور</label>
+                <i class="fas fa-lock form-icon"></i>
+                {% comment %} <input 
+                    type="password" 
+                    id="password" 
+                    class="form-control" 
+                    placeholder="رمز عبور خود را وارد کنید"
+                    required
+                > {% endcomment %}
+                <div>
+                    {{ form.password }}
+                    {% for error in form.password.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="remember-forgot">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">مرا به خاطر بسپار</label>
+                </div>
+                <a href="#" class="forgot-password">رمز عبور را فراموش کرده‌اید؟</a>
+            </div>
+            
+            <button type="submit" class="login-btn">
+                <i class="fas fa-sign-in-alt"></i>
+                ورود به حساب
+            </button>
+            
+
+            
+            <div class="register-link">
+                حساب کاربری ندارید؟ <a href="#">ثبت نام کنید</a>
+            </div>
+        </form>
+    </div>
+</div>
+  
+
+{% endblock content %}

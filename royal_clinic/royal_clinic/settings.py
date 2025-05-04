@@ -57,6 +57,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
+
+    
 ]
 
 ROOT_URLCONF = 'royal_clinic.urls'
@@ -74,6 +76,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'apps.main.views.media_admin',
                 'django.contrib.messages.context_processors.messages',
+                
             ],
         },
     },
@@ -87,7 +90,7 @@ WSGI_APPLICATION = 'royal_clinic.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE' : 'mysql.connector.django',
+        'ENGINE' : 'django.db.backends.mysql',
         'NAME' : 'royal_clinic',
         'USER' : 'root',
         'PASSWORD' : '1375sunny1375',
@@ -146,7 +149,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # define CustomUser to the system
 
 AUTH_USER_MODEL = "accounts.Customuser"
-
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 # ------------------------------------------------------------------------------------------
 # DjangoJazmin settings
 
@@ -155,6 +158,7 @@ JAZZMIN_SETTINGS = {
     "custom_css": "css/custom_admin.css",
 
 }
+
 
 # -----------------------------------------------------------------------------------------
 # تنظیمات سیکاادیتور
@@ -198,3 +202,5 @@ CKEDITOR_CONFIGS = {
         }
     
     }
+
+# ------------------------------------------------------------------------

@@ -19,6 +19,7 @@
             <a href="#about" class="nav-link text-gray-700 hover:text-amber-700 font-medium">درباره ما</a>
             <a href="#contact" class="nav-link text-gray-700 hover:text-amber-700 font-medium">تماس با ما</a>
             <a href="{% url "account:register" %}" class="nav-link text-gray-700 hover:text-amber-700 font-medium">ایجاد حساب کاربری</a>
+            <a href="{% url "account:login" %}" class="nav-link text-gray-700 hover:text-amber-700 font-medium">ورود</a>
 
             {% comment %} {% if user.is_authenticated %}
             <a href="#account" class="nav-link text-gray-700 hover:text-amber-700 font-medium">خروج</a>

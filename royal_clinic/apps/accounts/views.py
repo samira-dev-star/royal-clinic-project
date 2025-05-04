@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.views import View
-from .account_forms import RegisterUserForm
+from .account_forms import RegisterUserForm,LoginUserForm
 from .models import Customuser,RulesandRegulations
 from django.contrib import messages
 # Create your views here.
@@ -25,13 +25,18 @@ class RegisterUserView(View):
             
             if user['accept_rules']:
             
-                Customuser.objects.create_user (
+                new_user = Customuser.objects.create_user (
                     mobile_number = user['mobile_number'],
                     password = user['password1'],
                 )
                 
+                
                 messages.success(request,"ثبت نام با موفقیت انجام شد برای ورود شماره موبایل و پسورد خود را وارد کنید",'success')
+                new_user.is_active = True
+                new_user.save()
                 return redirect('main:index')
+            
+            
                 
             else:
                 messages.error(request,'با قوانین و مقررات موافقت نکردید','error')
@@ -50,3 +55,47 @@ def show_rules_and_regulations(request):
         'rules' : rules,
     }
     return render(request,template_name,context)
+
+#----------------------------------------------------------------------------------------------------------------
+# ورود کاربر
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import login,logout,authenticate
+            
+class LoginUser(View):
+    template_name = "accounts/login.html"
+    
+    def get(self, request, *args, **kwargs):
+        form = LoginUserForm()
+        return render(request, self.template_name, {'form': form})
+    
+    def post(self, request, *args, **kwargs):
+        form = LoginUserForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            print(data['mobile_number'])
+            user = authenticate(
+                username=data['mobile_number'],  # مطمئن شوید USERNAME_FIELD='mobile_number' در مدل کاربر
+                password=data['password']
+            )
+            if user is not None:
+                if user.is_admin:  # اگر is_admin نشاندهنده کاربر مدیر است
+                    messages.error(request, 'کاربر ادمین نمی‌تواند از این فرم وارد شود', 'error')
+                    return render(request, self.template_name, {'form': form})
+                
+                # بررسی وضعیت فعال بودن کاربر
+                if not user.is_active:
+                    messages.error(request, 'حساب کاربری شما فعال نمیباشد', 'error')
+                    return render(request, self.template_name, {'form': form})
+                    
+                user.save()  # ذخیره تغییرات is_active
+                messages.success(request, 'حساب کاربری شما فعال شد', 'success')
+                login(request, user)
+                next_url = request.GET.get('next', 'main:index')  # پیشفرض به صفحه اصلی
+                return redirect(next_url)
+            
+            else:
+                messages.error(request, 'شماره موبایل یا رمز عبور اشتباه است', 'error')
+        else:
+            messages.error(request, 'لطفا اطلاعات را به درستی وارد کنید', 'error')
+        
+        return render(request, self.template_name, {'form': form})
