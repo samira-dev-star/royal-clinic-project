@@ -82,12 +82,7 @@ class LoginUser(View):
                     messages.error(request, 'کاربر ادمین نمی‌تواند از این فرم وارد شود', 'error')
                     return render(request, self.template_name, {'form': form})
                 
-                # بررسی وضعیت فعال بودن کاربر
-                if not user.is_active:
-                    messages.error(request, 'حساب کاربری شما فعال نمیباشد', 'error')
-                    return render(request, self.template_name, {'form': form})
-                    
-                user.save()  # ذخیره تغییرات is_active
+
                 messages.success(request, 'حساب کاربری شما فعال شد', 'success')
                 login(request, user)
                 next_url = request.GET.get('next', 'main:index')  # پیشفرض به صفحه اصلی
@@ -100,3 +95,11 @@ class LoginUser(View):
             messages.error(request, 'لطفا اطلاعات را به درستی وارد کنید', 'error')
             return render(request, self.template_name, {'form': form})
         
+#----------------------------------------------------------------------------------------------------------------
+# خروج - logout
+
+class LogoutUserView(View):
+    def get(self,request,*args, **kwargs):
+        logout(request)
+        messages.success(request,'از حساب کاربری خود خارج شدید','success')
+        return redirect('main:index')
