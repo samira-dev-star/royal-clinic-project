@@ -1,4 +1,21 @@
 
+body {
+    font-family: 'Vazir', Arial, sans-serif;
+    background-color: #f5f7fa;
+}
+.form-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+}
+input[type="tel"], input[type="password"] {
+    padding-right: 40px !important;
+}
+
+
+
 * {
     margin: 0;
     padding: 0;
@@ -6,26 +23,27 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body {
+/* body {
     background-color: #f5f7fa;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     color: #333;
-}
+} */
 
 .login-container {
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
     background: white;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    position: fixed;
 }
 
 .login-header {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    background: linear-gradient(135deg, #31b72f 0%, #00f2fe 100%);
     color: white;
     padding: 25px;
     text-align: center;
@@ -114,7 +132,7 @@ body {
 .login-btn {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    background: linear-gradient(135deg, #47cd2f 0%, #00f2fe 100%);
     border: none;
     border-radius: 8px;
     color: white;

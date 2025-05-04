@@ -3,14 +3,27 @@
 {% block content %}
 
 
-
-<div class="login-container">
-    <div class="login-header">
-        <h1>ورود به حساب کاربری</h1>
-        <p>لطفا شماره موبایل و رمز عبور خود را وارد کنید</p>
+<div class="min-h-screen flex flex-col items-center justify-center p-4">
+    <!-- Logo Section -->
+    <div class="mb-8 text-center">
+        <div class="w-24 h-24 mx-auto mb-4 bg-blue-100 rounded-full flex items-center justify-center shadow-md">
+            <img class="w-14 h-14 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center" src="{{media_url}}images/index/IMG-20240528-WA0012.jpg" alt="index-icon">
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800">کلینیک رویال</h2>
+        {% comment %} <p class="text-gray-600 mt-2">تجربه ای بینظیر</p> {% endcomment %}
     </div>
     
-    <div class="login-form">
+    <!-- Login Container -->
+    <div class="w-full max-w-md bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="p-8">
+            <div class="login-header text-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">ورود به حساب کاربری</h1>
+                <p class="text-gray-600 mt-2">لطفا شماره موبایل و رمز عبور خود را وارد کنید</p>
+            </div>
+            
+            <div class="login-form">
+        
+
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -65,11 +78,11 @@
 
             
             <div class="register-link">
-                حساب کاربری ندارید؟ <a href="#">ثبت نام کنید</a>
+                حساب کاربری ندارید؟ <a href="{% url "account:register" %}">ثبت نام کنید</a>
             </div>
         </form>
     </div>
 </div>
-  
-
+</div>
+</div>
 {% endblock content %}

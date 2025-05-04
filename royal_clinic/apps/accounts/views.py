@@ -72,7 +72,7 @@ class LoginUser(View):
         form = LoginUserForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            print(data['mobile_number'])
+            # print(data['mobile_number']) # تست
             user = authenticate(
                 username=data['mobile_number'],  # مطمئن شوید USERNAME_FIELD='mobile_number' در مدل کاربر
                 password=data['password']
@@ -95,7 +95,8 @@ class LoginUser(View):
             
             else:
                 messages.error(request, 'شماره موبایل یا رمز عبور اشتباه است', 'error')
+                return render(request, self.template_name, {'form': form})
         else:
             messages.error(request, 'لطفا اطلاعات را به درستی وارد کنید', 'error')
+            return render(request, self.template_name, {'form': form})
         
-        return render(request, self.template_name, {'form': form})

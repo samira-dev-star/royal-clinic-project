@@ -97,15 +97,16 @@ class LoginUserForm(forms.Form):
                                         'id':'mobile'}))
     
     
-
+# min_length=4, 
+# max_length=8, 
+# اینا رو بذارم توی کرفیلد دیگه پیام های کلید دیتا ولیدیشن ارور ها رو نمایش نمیده
     password = forms.CharField(label="",
-                               min_length=4, 
-                               max_length=8, 
-                               error_messages={"required":"لطفا پسورد خود را وارد کنید","min_length": "رمز عبور باید حداقل 4 کاراکتر باشد.", "max_length": "رمز عبور نمی‌تواند بیش از 8 کاراکتر باشد."},
+                               error_messages={"required":"لطفا پسورد خود را وارد کنید"},
                                widget=forms.PasswordInput(attrs={
                                    'class':'form-control',
                                    'placeholder':'پسوردی که باآن ثبت نام کردید را وارد کنید',
-                                   'type':'password','id':'password',
+                                   'type':'password',
+                                   'id':'password',
                                    }))
     
     def clean_mobile_number(self):
@@ -132,6 +133,14 @@ class LoginUserForm(forms.Form):
 
         return number
 
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+        if len(password) < 4 :
+            raise ValidationError('پسورد باید حداقل 4 کاراکتر داشته باشد')
+        if len(password) > 8 :
+            raise ValidationError('پسورد باید حداکثر 8 کاراکتر داشته باشد')
+        return password
 
 
 
