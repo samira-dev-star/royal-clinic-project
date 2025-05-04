@@ -9,10 +9,11 @@ from django.contrib import messages
 class RegisterUserView(View):
     template_name = 'accounts/register.html'
     
-    # def dispatch(self, request, *args, **kwargs):
-    #     if request.user.is_authenticated:
-    #         return redirect('main:index')
-    #     return super().dispatch(request, *args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            messages.info(request,'شما در حال حاضر لاگین هستید و نمی توانید مجددا ثبت نام کنید','info')
+            return redirect("main:index")
+        return super().dispatch(request, *args, **kwargs)
     
     def get(self,request,*args, **kwargs):
         form = RegisterUserForm()
@@ -64,6 +65,12 @@ from django.contrib.auth import login,logout,authenticate
 class LoginUser(View):
     template_name = "accounts/login.html"
     
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            messages.info(request,'شما در حال حاضر لاگین هستید و نمی توانید دوباره لاگین کنید','info')
+            return redirect("main:index")
+        return super().dispatch(request, *args, **kwargs)
+    
     def get(self, request, *args, **kwargs):
         form = LoginUserForm()
         return render(request, self.template_name, {'form': form})
@@ -99,6 +106,12 @@ class LoginUser(View):
 # خروج - logout
 
 class LogoutUserView(View):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.info(request,'شما در حال حاضر لاگین نمی باشید','info')
+            return redirect("main:index")
+        
+        return super().dispatch(request, *args, **kwargs)
     def get(self,request,*args, **kwargs):
         logout(request)
         messages.success(request,'از حساب کاربری خود خارج شدید','success')
@@ -110,6 +123,7 @@ class LogoutUserView(View):
 
 class UserPanelView(View,LoginRequiredMixin):
     template_name = 'accounts/user_panel.html'
+    
     def get(self,request,*args, **kwarg):
         return render(request,self.template_name)
     
