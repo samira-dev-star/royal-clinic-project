@@ -31,6 +31,11 @@ class RegisterUserView(View):
                     password = user['password1'],
                 )
                 
+                # request.session['current_user'] = {
+                #     'mobile_number' : user['mobile_number'],
+                #     'password' : user['password1'],
+                # }
+                
                 
                 messages.success(request,"ثبت نام با موفقیت انجام شد برای ورود شماره موبایل و پسورد خود را وارد کنید",'success')
                 new_user.is_active = True
@@ -58,6 +63,15 @@ def show_rules_and_regulations(request):
     return render(request,template_name,context)
 
 #----------------------------------------------------------------------------------------------------------------
+
+# def get_client_ip(request):
+#     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+#     if x_forwarded_for:
+#         ip = x_forwarded_for.split(',')[0]
+#     else:
+#         ip = request.META.get('REMOTE_ADDR')
+#     return ip
+
 # ورود کاربر
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login,logout,authenticate
@@ -72,8 +86,15 @@ class LoginUser(View):
         return super().dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
-        form = LoginUserForm()
-        return render(request, self.template_name, {'form': form})
+        initial_dict = {}
+        if 'remember_mobile' in request.COOKIES:
+            initial_dict['mobile_number'] = request.COOKIES['remember_mobile']
+        else:
+            form = LoginUserForm()
+        form = LoginUserForm(initial=initial_dict)
+        return render(request, self.template_name, {'form': form})  
+
+        
     
     def post(self, request, *args, **kwargs):
         form = LoginUserForm(request.POST)
@@ -92,8 +113,32 @@ class LoginUser(View):
 
                 messages.success(request, 'حساب کاربری شما فعال شد', 'success')
                 login(request, user)
+                
+                # امنیت
+                # request.session['ip_address'] = get_client_ip(request)
+                # request.session['user_agent'] = request.META.get('HTTP_USER_AGENT')
+                
+                # بررسی شرط قبل انتقال کاربر به صفحه ی بعدی
+                if not request.POST.get('remember_me'):
+                    request.session.set_expiry(0)
+                else:
+                    # اگر تیک خورده بود، session برای 2 هفته فعال باشد
+                    request.session.set_expiry(1209600)  
+                    
+                    # print(request.session.get_expiry_age())
+                    # print(request.session.get_expiry_date())
+                    next_url = request.GET.get('next', 'main:index') 
+                    response = redirect(next_url)
+                    response.set_cookie('remember_mobile', data['mobile_number'], max_age=1209600)
+                    response.set_cookie('remember_password', data['password'], max_age=1209600)
+                    return response
+                
+                
+                
                 next_url = request.GET.get('next', 'main:index')  # پیشفرض به صفحه اصلی
                 return redirect(next_url)
+                
+            
             
             else:
                 messages.error(request, 'شماره موبایل یا رمز عبور اشتباه است', 'error')
@@ -102,13 +147,15 @@ class LoginUser(View):
             messages.error(request, 'لطفا اطلاعات را به درستی وارد کنید', 'error')
             return render(request, self.template_name, {'form': form})
         
+
+
 #----------------------------------------------------------------------------------------------------------------
 # خروج - logout
 
 class LogoutUserView(View):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            messages.info(request,'شما در حال حاضر لاگین نمی باشید','info')
+            messages.info(request,'شما در حال حاضر لاگین نمی باشید برای ورود فرم لاگین را پر کنید','info')
             return redirect("main:index")
         
         return super().dispatch(request, *args, **kwargs)
@@ -123,6 +170,11 @@ class LogoutUserView(View):
 
 class UserPanelView(View,LoginRequiredMixin):
     template_name = 'accounts/user_panel.html'
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.info(request,'شما در حال حاضر لاگین نمی باشید برای دسترسی به پنل کاربری وارد شوید','warning')
+            return redirect("account:login")
+        return super().dispatch(request, *args, **kwargs)
     
     def get(self,request,*args, **kwarg):
         return render(request,self.template_name)
