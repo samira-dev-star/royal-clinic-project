@@ -98,3 +98,17 @@ class RulesandRegulations(models.Model):
         
 # ----------------------------------------------------------------------------------------------------------------------------
 
+from datetime import timedelta
+from django.conf import settings
+
+class ActivationCode(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='activation_codes')
+    code = models.CharField(max_length=100,null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_used = models.BooleanField(default=False)
+    
+    def is_expired(self):
+        return timezone.now() > self.created_at + timedelta(minutes=5)  # انقضا بعد از 5 دقیقه
+
+    def __str__(self):
+        return f"{self.user.mobile_number} - {self.code}"

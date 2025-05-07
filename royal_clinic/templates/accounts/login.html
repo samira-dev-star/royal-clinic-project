@@ -1,5 +1,5 @@
 {% extends "main_login.html" %}
-
+{% block title %}فرم ورود - شماره موبایل و رمز عبور{% endblock title %}
 {% block content %}
 
 
@@ -68,8 +68,9 @@
                     <label for="remember">مرا به خاطر بسپار</label>
                 </div>
 
+
+                <a href="{% url "account:forgotpass" %}" class="forgot-password">رمز عبور را فراموش کرده‌اید؟</a>
                 
-                <a href="#" class="forgot-password">رمز عبور را فراموش کرده‌اید؟</a>
             </div>
             
             <button type="submit" class="login-btn">

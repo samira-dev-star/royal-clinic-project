@@ -1,0 +1,50 @@
+{% extends "main_login.html" %}
+
+{% block title %}کد فعال سازی{% endblock title %}
+
+{% block content %}
+    <div class="min-h-screen flex flex-col items-center justify-center p-4">
+        <!-- Logo Section -->
+        <div class="clinic-header">
+            <div class="clinic-logo">
+                <img src="{{ media_url }}images/index/IMG-20240528-WA0012.jpg" alt="index-icon">
+            </div>
+            <h2 class="clinic-title">کلینیک رویال</h2>
+        </div>
+
+        <!-- Password Reset Container -->
+        <div class="w-full max-w-md bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="p-8">
+                <div class="login-header text-center mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800"> اعتبار سنجی </h1>
+                    <p class="text-gray-600 mt-2">جهت تغییر رمز عبور کد ارسالی را وارد کنید</p>
+                </div>
+
+                <div class="login-form">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        
+                        <div class="form-group">
+                            <label for="mobile">کد دریافتی</label>
+                            <i class="fas fa-mobile-alt form-icon"></i>
+                            
+                            <div>
+                                {{ form }}
+                                
+                            </div>
+                        </div>
+
+                        <button type="submit" class="login-btn">
+                            <i class="fas fa-paper-plane ml-2"></i>
+                            تایید
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}

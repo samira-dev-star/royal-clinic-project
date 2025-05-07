@@ -145,4 +145,84 @@ class LoginUserForm(forms.Form):
 
 
         
-            
+# --------------------------------------------------------------------------------------------------------
+
+class ChangePassword(forms.Form):
+    password1 = forms.CharField(
+                                label='رمز عبور',
+                                error_messages={"required":"لطفا پسورد خود را وارد کنید"},
+                                validators=[MaxLengthValidator(8),MinLengthValidator(4)],
+                                help_text='حداقل 4 کاراکتر و حداکثر 8 کاراکتر',
+                                widget=forms.PasswordInput(attrs={
+                                   'class':'form-control',
+                                   'placeholder':'پسورد جدید را وارد کنید',
+                                   'type':'password',
+                                   'id':'password',
+                                   }))
+    
+    password2 = forms.CharField(
+                                label='تکرار رمز عبور',
+                                error_messages={"required":"لطفا پسورد خود را مجددا وارد کنید"},
+                                validators=[MaxLengthValidator(8),MinLengthValidator(4)],
+                                help_text='حداقل 4 کاراکتر و حداکثر 8 کاراکتر',
+                                widget=forms.PasswordInput(attrs={
+                                   'class':'form-control',
+                                   'placeholder':'تکرار پسورد جدید را وارد کنید',
+                                   'type':'password',
+                                   'id':'password',
+                                   }))
+                            
+    
+    def clean_password2(self):
+        pass1 = self.cleaned_data.get('password1')
+        pass2 = self.cleaned_data.get('password2')
+        if pass1 and pass2 and pass1 != pass2:
+            raise ValidationError('پسورد و تکرار آن باهم مغایرت دارند')
+        return pass2
+    
+
+# --------------------------------------------------------------------------------------------------------
+
+class ForgotPassword(forms.Form):
+    mobile_number = forms.CharField(label="",
+                                    error_messages={"required":"لطفا شماره موبایل خود را وارد کنید"},
+                                    widget=forms.TextInput(attrs={
+                                        'class':'form-control',
+                                        'placeholder':'09xxxxxxxxx',
+                                        'type':'tel',
+                                        'id':'mobile'}))
+    
+    
+    def clean_mobile_number(self):
+        number = self.cleaned_data.get('mobile_number')
+
+        if " " in number:
+            raise ValidationError("شماره موبایل نباید فاصله داشته باشد.") 
+
+        if not number.replace('+', '').isdigit():
+            raise ValidationError("شماره موبایل فقط باید شامل عدد باشد.")
+
+        if not (number.startswith('09') or number.startswith('+989') or number.startswith('989')):
+            raise ValidationError("شماره موبایل باید با 09 یا +989 یا 989 شروع شود.")
+
+        # تبدیل به فرمت بین‌المللی
+        if number.startswith('09'):
+            number = '+98' + number[1:]  # 0912... => +98912...
+        elif number.startswith('989'):
+            number = '+' + number  # 98912... => +98912...
+        
+        # بررسی طول
+        if len(number) != 13:
+            raise ValidationError("تعداد ارقام شماره موبایل صحیح نمی‌باشد.")
+
+        return number
+    
+# --------------------------------------------------------------------------------------------------------
+
+class VerifyForm(forms.Form):
+    active_code = forms.CharField(label='',
+                                      error_messages={"required":"این فیلد نمی تواند خالی باشد"},
+                                      widget=forms.TextInput(attrs={'class':'form-control','placeholder':'کد دریافتی را وارد کنید'})) 
+
+# --------------------------------------------------------------------------------------------------------
+

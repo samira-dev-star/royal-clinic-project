@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.views import View
-from .account_forms import RegisterUserForm,LoginUserForm
-from .models import Customuser,RulesandRegulations
+from .account_forms import RegisterUserForm,LoginUserForm,ChangePassword,ForgotPassword,VerifyForm
+from .models import Customuser,RulesandRegulations,ActivationCode
 from django.contrib import messages
 # Create your views here.
 
@@ -156,7 +156,7 @@ class LogoutUserView(View):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             messages.info(request,'شما در حال حاضر لاگین نمی باشید برای ورود فرم لاگین را پر کنید','info')
-            return redirect("main:index")
+            return redirect("account:login")
         
         return super().dispatch(request, *args, **kwargs)
     def get(self,request,*args, **kwargs):
@@ -179,3 +179,137 @@ class UserPanelView(View,LoginRequiredMixin):
     def get(self,request,*args, **kwarg):
         return render(request,self.template_name)
     
+#----------------------------------------------------------------------------------------------------------------
+# Forgot Password
+
+from utils import random_code_generatore,send_sms
+
+
+class ForgotPasswordView(View):
+    template_name = 'accounts/forgot_password.html'
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect("main:index")
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get(self,request,*args, **kwarg):
+        form = ForgotPassword()
+        return render(request,self.template_name,{'form':form})
+    def post(self,request,*args, **kwarg):
+        form = ForgotPassword(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            
+            try:
+                current_user = Customuser.objects.get(mobile_number = data['mobile_number'])
+ 
+                active_code = random_code_generatore(6)
+                current_user_activation_code = ActivationCode.objects.create(
+                    user = current_user,
+                    code = active_code,
+                )
+                current_user_activation_code.save()
+
+                send_sms(data['mobile_number'],f'کد ارسال شده را برای تغییر رمز عبور وارد کنید . کد شما :{active_code}')
+                request.session['user_session'] = {
+                    'active_code' : str(active_code),
+                    'mobile_number' : data['mobile_number'],
+                    'remember_password' : True,
+                }
+                messages.success(request,'جهت تغییر رمز عبور کد دریافتی را ارسال کنید','success')
+                return redirect('account:verifypass')
+            
+            except Customuser.DoesNotExist:
+                messages.error(request, 'کاربری با این شماره موبایل یافت نشد')
+                return render(request,self.template_name,{'form':form})
+        
+#----------------------------------------------------------------------------------------------------------------            
+class VerifyUserView(View):
+    template_name = 'accounts/verify_user.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect("main:index")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        form = VerifyForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = VerifyForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+
+            user_session = request.session.get('user_session')
+            if not user_session:
+                messages.error(request, 'دسترسی غیرمجاز! لطفاً مجدداً تلاش کنید.')
+                return redirect('account:forgotpass')
+
+            # مطمئن شو کد وارد شده با کد داخل سشن برابره
+            if data['active_code'] != user_session.get('active_code'):
+                messages.error(request, 'کد اعتبارسنجی اشتباه است.')
+                return render(request, self.template_name, {'form': form})
+
+            try:
+                code_instance = ActivationCode.objects.filter(
+                    user__mobile_number=user_session['mobile_number'],
+                    code=data['active_code'],
+                    is_used=False,
+                ).latest('created_at')
+
+            except ActivationCode.DoesNotExist:
+                messages.error(request, 'کد وارد شده صحیح نیست یا قبلاً استفاده شده.')
+                return render(request, self.template_name, {'form': form})
+
+            # بررسی انقضا
+            if code_instance.is_expired():
+                messages.error(request, 'کد وارد شده منقضی شده است. لطفاً مجدداً درخواست دهید.', 'error')
+                return redirect('account:forgotpass')
+
+            # موفقیت در اعتبارسنجی
+            code_instance.is_used = True
+            code_instance.save()
+
+            if user_session.get('remember_password') is True:
+                messages.success(request, 'کد تایید شد. لطفاً رمز عبور جدید را وارد کنید.', 'success')
+                return redirect('account:changepass')
+
+            # fallback در صورتی که remember_password نباشه
+            messages.info(request, 'کد تایید شد.')
+            return redirect('account:login')  # یا مسیر دیگه‌ای که مدنظرته
+
+        # اگر فرم نامعتبر بود
+        messages.error(request, 'اطلاعات وارد شده نامعتبر است.')
+        return render(request, self.template_name, {'form': form})
+
+
+#----------------------------------------------------------------------------------------------------------------
+# change password
+
+class ChangePasswordView(View):
+    template_name = 'accounts/change_password.html'
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect("main:index")
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get(self,request,*args, **kwarg):
+        form = ChangePassword()
+        return render(request,self.template_name,{'form':form})
+    
+    def post(self,request,*args, **kwarg):
+        form = ChangePassword(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user_session = request.session['user_session']
+            user = Customuser.objects.get(mobile_number=user_session['mobile_number'])
+            
+            user.set_password(data['password1'])
+            user.save()
+            
+            messages.success(request,'رمز عبور شما با موفقیت تغییر کرد','success')
+            return redirect('account:login')
+        else:
+            messages.error(request,'اطلاعات وارد شده معتبر نمی باشد','danger')
+            return render(request,self.template_name,{'form':form})
