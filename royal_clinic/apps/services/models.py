@@ -26,6 +26,7 @@ class Services(models.Model):
     finish_reservation_date =  models.DateTimeField(default=timezone.now,verbose_name='تاریخ پایان نوبت دهی')
     capacity = models.IntegerField(verbose_name='ظرفیت نوبت',null=True,blank=True)
     proper_candidate_description = RichTextField(verbose_name='شرح شرایط کاندید',null=True,blank=True,config_name='special')
+    procedure_یثسزقهحفهخد = RichTextField(verbose_name='شرح مراحل این سرویس ',null=True,blank=True,config_name='special')
     
     def get_absolute_url(self):
         return reverse("services:service_detail", kwargs={"slug": self.slug})
@@ -106,3 +107,23 @@ class ServiceCandidateCondition(models.Model):
     class Meta:
         verbose_name = "شرایط استفاده از این خدمات"
         verbose_name_plural = "شرایط استفاده از این خدمات"
+        
+# -----------------------------------------------------------------------------------
+
+class ServiceProcedures(models.Model):
+    service = models.ForeignKey(
+        Services,
+        on_delete=models.CASCADE,
+        related_name='procedures',
+        verbose_name='پروسه'
+    )
+    process = models.CharField(max_length=500, verbose_name='مراحل')
+    
+    
+
+    def __str__(self):
+        return f"{self.process}"
+
+    class Meta:
+        verbose_name = "مراحل استفاده از این خدمات"
+        verbose_name_plural = "مراحل استفاده از این خدمات"
