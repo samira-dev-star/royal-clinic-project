@@ -59,7 +59,15 @@ class Customuser(AbstractBaseUser,PermissionsMixin):
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     
-    
+    # null has no effect on ManyToManyField.
+    # services = models.ManyToManyField(
+    #     'services.Services',
+    #     through='UserServiceInteraction',
+    #     related_name='interested_users',
+    #     blank=True,
+    #     verbose_name="سرویس‌های مرتبط"
+    # )
+
     
     USERNAME_FIELD = 'mobile_number'
     REQUIRED_FIELDS = ['email','name','family']

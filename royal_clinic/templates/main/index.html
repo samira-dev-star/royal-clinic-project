@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load render_partial %}
+
 {% block title %}صفحه ی اصلی{% endblock title %}
 
 
@@ -101,151 +103,10 @@
         </div>
     </section>
 
-    <!-- Services -->
-    <section id="services" class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">خدمات تخصصی ما</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">با بهره‌گیری از جدیدترین متدهای روز دنیا، زیباترین نتایج را برای شما به ارمغان می‌آوریم</p>
-                <div class="w-20 h-1 bg-amber-500 mx-auto mt-4"></div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Service 1 -->
-                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="لیزر موهای زائد" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-4">
-                            <div class="bg-amber-100 p-3 rounded-full mr-3">
-                                <i class="fas fa-burn text-amber-600 text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-800">لیزر موهای زائد</h3>
-                        </div>
-                        <p class="text-gray-600 mb-4">
-                            با استفاده از پیشرفته‌ترین دستگاه‌های لیزر موهای زائد، بدون درد و با اثر دائمی از شر موهای زائد خلاص شوید.
-                        </p>
-                        <a href="#" class="text-amber-600 font-medium flex items-center">
-                            اطلاعات بیشتر
-                            <i class="fas fa-arrow-left mr-2"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Service 2 -->
-                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="تزریق بوتاکس" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-4">
-                            <div class="bg-amber-100 p-3 rounded-full mr-3">
-                                <i class="fas fa-syringe text-amber-600 text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-800">تزریق بوتاکس</h3>
-                        </div>
-                        <p class="text-gray-600 mb-4">
-                            تزریق بوتاکس توسط متخصصین مجرب برای رفع چین و چروک صورت و جوانسازی پوست با نتایج طبیعی و بدون عارضه.
-                        </p>
-                        <a href="#" class="text-amber-600 font-medium flex items-center">
-                            اطلاعات بیشتر
-                            <i class="fas fa-arrow-left mr-2"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Service 3 -->
-                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1556228578-8c2d37ba1c70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="میکرونیدلینگ" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-4">
-                            <div class="bg-amber-100 p-3 rounded-full mr-3">
-                                <i class="fas fa-spa text-amber-600 text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-800">میکرونیدلینگ</h3>
-                        </div>
-                        <p class="text-gray-600 mb-4">
-                            درمانی موثر برای رفع جای جوش، چین و چروک، منافذ باز پوست و جوانسازی با تحریک کلاژن سازی طبیعی پوست.
-                        </p>
-                        <a href="#" class="text-amber-600 font-medium flex items-center">
-                            اطلاعات بیشتر
-                            <i class="fas fa-arrow-left mr-2"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Service 4 -->
-                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1599351430140-c70f0250bd70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="پیلینگ شیمیایی" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-4">
-                            <div class="bg-amber-100 p-3 rounded-full mr-3">
-                                <i class="fas fa-leaf text-amber-600 text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-800">پیلینگ شیمیایی</h3>
-                        </div>
-                        <p class="text-gray-600 mb-4">
-                            لایه برداری عمقی پوست با استفاده از مواد طبیعی برای درمان لک، جای جوش، چین و چروک و جوانسازی پوست.
-                        </p>
-                        <a href="#" class="text-amber-600 font-medium flex items-center">
-                            اطلاعات بیشتر
-                            <i class="fas fa-arrow-left mr-2"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Service 5 -->
-                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1600334129128-685c5582fd35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="تزریق ژل" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-4">
-                            <div class="bg-amber-100 p-3 rounded-full mr-3">
-                                <i class="fas fa-syringe text-amber-600 text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-800">تزریق ژل</h3>
-                        </div>
-                        <p class="text-gray-600 mb-4">
-                            پر کردن خطوط صورت، فرم دهی لب و گونه با استفاده از بهترین ژل‌های تایید شده و با نتایج طبیعی و زیبا.
-                        </p>
-                        <a href="#" class="text-amber-600 font-medium flex items-center">
-                            اطلاعات بیشتر
-                            <i class="fas fa-arrow-left mr-2"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Service 6 -->
-                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="درمان ریزش مو" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-4">
-                            <div class="bg-amber-100 p-3 rounded-full mr-3">
-                                <i class="fas fa-cut text-amber-600 text-xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-800">درمان ریزش مو</h3>
-                        </div>
-                        <p class="text-gray-600 mb-4">
-                            تشخیص و درمان تخصصی انواع ریزش مو با روش‌های نوین مانند مزوتراپی، پی‌آر‌پی و کاشت مو با نتایج ماندگار.
-                        </p>
-                        <a href="#" class="text-amber-600 font-medium flex items-center">
-                            اطلاعات بیشتر
-                            <i class="fas fa-arrow-left mr-2"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    <!-- servicess -->
+   {% render_partial "services:show_all_active_services" %}
+   
+    
     <!-- Doctors -->
     <section id="doctors" class="py-16 bg-white">
         <div class="container mx-auto px-4">

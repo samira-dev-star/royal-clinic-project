@@ -1,0 +1,50 @@
+.container {
+    background-color: rgb(65, 145, 72);
+    border-radius: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+/*   
+  .service-hero {
+    background: url('') center/cover;
+  } */
+  
+  .benefit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .procedure-step {
+    position: relative;
+    padding-right: 2rem;
+  }
+  
+  .procedure-step:not(:last-child):after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 2.5rem;
+    height: calc(100% - 2.5rem);
+    width: 2px;
+    background: #f59e0b;
+  }
+  
+  .tab-content {
+    display: none;
+  }
+  
+  .tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .text-gray-600 {
+    --tw-text-opacity: 1;
+    color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+  }
+

@@ -1,4 +1,6 @@
 import random
+from uuid import uuid4
+from os.path import splitext
 
 def random_code_generatore(number_of_digits):
     number_of_digits-=1
@@ -20,4 +22,15 @@ def send_sms(mobile_number,message):
         print(f'error2:{error}')
         
         
-# --------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------
+
+class FileUpload:
+    def __init__(self,root_dir,prefix):
+        self.root_dir = root_dir
+        self.prefix = prefix
+        
+    def create_address(self,instance,file_name):
+        
+        file_name,ext = splitext(file_name)
+        
+        return f"{self.root_dir}/{self.prefix}/{uuid4()}{ext}"

@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
+    # 'jazzmin',
     'django.contrib.admin',
     
     'django.contrib.auth',
@@ -41,12 +41,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    'django_admin_listfilter_dropdown',
+    
     'ckeditor',
-    'ckeditor_uploader', 
+    'ckeditor_uploader',
+    
+    'jalali_date', 
+    
+    'django_render_partial', 
     
     'apps.main.apps.MainConfig',
     'apps.accounts.apps.AccountsConfig',
     'apps.services.apps.ServicesConfig',
+    'apps.user_services.apps.UserServicesConfig',
 ]
 
 MIDDLEWARE = [
@@ -158,6 +165,9 @@ AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 JAZZMIN_SETTINGS = {
 
     "custom_css": "css/custom_admin.css",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "changeform_format": "horizontal_tabs",  # یا 'collapsible' یا 'single'
 
 }
 

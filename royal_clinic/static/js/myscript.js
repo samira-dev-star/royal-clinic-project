@@ -48,3 +48,49 @@ setInterval(nextSlide, 5000);
 // Show first slide initially
 showSlide(currentSlide);
     
+
+// ----------------------------------------------------------------
+// service detail js
+
+
+// Tab functionality
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const tabId = button.getAttribute('data-tab');
+        
+        // Remove active class from all buttons and contents
+        tabButtons.forEach(btn => {
+            btn.classList.remove('border-amber-500', 'text-gray-800');
+            btn.classList.add('border-transparent', 'text-gray-500');
+        });
+        
+        tabContents.forEach(content => {
+            content.classList.remove('active');
+        });
+        
+        // Add active class to clicked button and corresponding content
+        button.classList.add('border-amber-500', 'text-gray-800');
+        button.classList.remove('border-transparent', 'text-gray-500');
+        
+        document.getElementById(tabId).classList.add('active');
+    });
+});
+
+// FAQ accordion
+const faqButtons = document.querySelectorAll('.faq-btn');
+
+faqButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const answer = button.nextElementSibling;
+        const icon = button.querySelector('i');
+        
+        // Toggle answer visibility
+        answer.classList.toggle('hidden');
+        
+        // Rotate icon
+        icon.classList.toggle('rotate-180');
+    });
+});

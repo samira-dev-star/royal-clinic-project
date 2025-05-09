@@ -1,0 +1,13 @@
+<div class="grid md:grid-cols-2 gap-6 mb-10">
+    {% for advantage in service_advantages %}
+    <div class="benefit-card bg-gray-50 p-6 rounded-lg transition duration-300">
+        <div class="flex items-center mb-3">
+            <div class="bg-amber-100 w-10 h-10 rounded-full flex items-center justify-center mr-3">
+                <i class="fas fa-check text-amber-400"></i>
+            </div>
+            <h4 class="font-bold text-gray-800">{{advantage.advantage_name}}</h4>
+        </div>
+        <p class="text-gray-600">{{advantage.advantage_value}}</p>
+    </div>
+    {% endfor %}
+</div>
