@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Services,ServiceFeatures,ServiceAdvantages,ServiceCandidateCondition
+from .models import Services,ServiceFeatures,ServiceAdvantages,ServiceCandidateCondition,ServiceProcedures
 from jalali_date.admin import ModelAdminJalaliMixin
 from django_admin_listfilter_dropdown.filters import DropdownFilter
 from django.contrib.admin import SimpleListFilter
@@ -49,6 +49,9 @@ class ServiceConditionInline(admin.StackedInline):
     model = ServiceCandidateCondition
     extra = 3
 
+class ServiceProcedureInline(admin.StackedInline):
+    model = ServiceProcedures
+    extra = 3
 
 @admin.register(Services)
 class ServicesAdmin(ModelAdminJalaliMixin , admin.ModelAdmin):
@@ -58,7 +61,7 @@ class ServicesAdmin(ModelAdminJalaliMixin , admin.ModelAdmin):
     ordering = ['updated_at']
     list_editable = ['is_available',]
     actions = [de_active_service , active_service]
-    inlines = [ServiceFeatureInline,ServiceAdvantageline,ServiceConditionInline]
+    inlines = [ServiceFeatureInline,ServiceAdvantageline,ServiceConditionInline,ServiceProcedureInline]
     
 # ------------------------------------------------------------------------------------------
 
@@ -84,3 +87,11 @@ class ServiceCandidateConditionAdmin(admin.ModelAdmin):
     list_display = ['service','condition']
     list_filter = [('condition',DropdownFilter)]
     search_fields = ['condition']
+    
+# ------------------------------------------------------------------------------------------   
+    
+@admin.register(ServiceProcedures)  
+class ServiceProceduresAdmin(admin.ModelAdmin):
+    list_display = ['process_name']
+    list_filter = [('process_name',DropdownFilter)]
+    search_fields = ['process_name']

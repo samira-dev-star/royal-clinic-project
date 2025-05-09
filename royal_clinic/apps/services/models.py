@@ -26,7 +26,9 @@ class Services(models.Model):
     finish_reservation_date =  models.DateTimeField(default=timezone.now,verbose_name='تاریخ پایان نوبت دهی')
     capacity = models.IntegerField(verbose_name='ظرفیت نوبت',null=True,blank=True)
     proper_candidate_description = RichTextField(verbose_name='شرح شرایط کاندید',null=True,blank=True,config_name='special')
-    procedure_یثسزقهحفهخد = RichTextField(verbose_name='شرح مراحل این سرویس ',null=True,blank=True,config_name='special')
+    
+    
+    procedure_description = RichTextField(verbose_name='شرح کلی پروسه این سرویس ',null=True,blank=True,config_name='special')
     
     def get_absolute_url(self):
         return reverse("services:service_detail", kwargs={"slug": self.slug})
@@ -55,8 +57,8 @@ class ServiceFeatures(models.Model):
         related_name='features',
         verbose_name='خدمات مرتبط'
     )
-    feature_name = models.CharField(max_length=100, verbose_name='نام ویژگی')
-    feature_value = models.CharField(max_length=255, verbose_name='مقدار ویژگی')
+    feature_name = models.CharField(max_length=100, verbose_name='نام ویژگی',null=True,blank=True)
+    feature_value = models.CharField(max_length=255, verbose_name='مقدار ویژگی',null=True,blank=True)
 
     def __str__(self):
         return f"{self.feature_name}: {self.feature_value}"
@@ -75,8 +77,8 @@ class ServiceAdvantages(models.Model):
         related_name='advantages',
         verbose_name='مزایای این سرویس'
     )
-    advantage_name = models.CharField(max_length=100, verbose_name='نام مزیت')
-    advantage_value = models.CharField(max_length=255, verbose_name='صفت مزیت')
+    advantage_name = models.CharField(max_length=100, verbose_name='نام مزیت',null=True,blank=True)
+    advantage_value = models.CharField(max_length=255, verbose_name='صفت مزیت',null=True,blank=True)
     
     
 
@@ -97,7 +99,7 @@ class ServiceCandidateCondition(models.Model):
         related_name='conditions',
         verbose_name='شرایط استفاده کننده از این سرویس'
     )
-    condition = models.CharField(max_length=400, verbose_name='شرایط')
+    condition = models.CharField(max_length=400, verbose_name='شرایط',null=True,blank=True)
     
     
 
@@ -117,13 +119,18 @@ class ServiceProcedures(models.Model):
         related_name='procedures',
         verbose_name='پروسه'
     )
-    process = models.CharField(max_length=500, verbose_name='مراحل')
+    process_name = models.CharField(max_length=200, verbose_name='نام مراحل',null=True,blank=True)
+    process = models.CharField(max_length=500, verbose_name='توضیح مراحل',null=True,blank=True)
     
     
 
     def __str__(self):
-        return f"{self.process}"
+        return f"{self.process_name}"
 
     class Meta:
         verbose_name = "مراحل استفاده از این خدمات"
         verbose_name_plural = "مراحل استفاده از این خدمات"
+        
+# -----------------------------------------------------------------------------------
+
+# class QuestionAnswerbox()

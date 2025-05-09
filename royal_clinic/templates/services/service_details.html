@@ -73,12 +73,12 @@
                         
                         
                         <h3 class="text-2xl font-bold text-gray-800 mt-10 mb-4">چه افرادی کاندید مناسبی هستند؟</h3>
-                        <p class="text-gray-800 mb-4 leading-relaxed">
+                        
+                        <p class="text-gray-800 mb-4 leading-relaxed">  
                             {% autoescape off %}
-                                {{specific_service_clicked.proper_candidate_description}}
+                                {{specific_service_clicked.proper_candidate_description}} 
                             {% endautoescape %}
                         </p>
-
                         {% render_partial "services:service_conditions" slug=specific_service_clicked.slug %}
                         
                         
@@ -86,81 +86,20 @@
                     </div>
                     
                     <div  id="procedure">
-                        <h2 class="text-3xl font-bold text-gray-800 mb-6">روش انجام لیزر موهای زائد</h2>
-                        <p class="text-gray-600 mb-8 leading-relaxed">
-                            لیزر موهای زائد در کلینیک رویال طی چند جلسه با فاصله زمانی مشخص انجام می‌شود. در اینجا مراحل انجام این روش را بررسی می‌کنیم:
+                        
+                        {% if specific_service_clicked.procedure_description %}
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6">روش {{specific_service_clicked.service_title}}</h2>
+                        {% endif %}
+                        <p class="text-gray-800 mb-8 leading-relaxed">
+                            {% autoescape off %}
+                            {{specific_service_clicked.procedure_description}}
+                            {% endautoescape %}
                         </p>
                         
                         <div class="space-y-8">
-                            <div class="procedure-step">
-                                <div class="flex items-start">
-                                    <div class="bg-amber-600 text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
-                                        <span class="font-bold">1</span>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-gray-800 mb-2">مشاوره اولیه</h3>
-                                        <p class="text-gray-600">
-                                            در اولین جلسه، متخصص پوست شما را معاینه کرده و تاریخچه پزشکی شما را بررسی می‌کند. نوع پوست و موی شما ارزیابی شده و مناسب‌ترین دستگاه لیزر انتخاب می‌شود.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
                             
-                            <div class="procedure-step">
-                                <div class="flex items-start">
-                                    <div class="bg-amber-600 text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
-                                        <span class="font-bold">2</span>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-gray-800 mb-2">آماده سازی پوست</h3>
-                                        <p class="text-gray-600">
-                                            قبل از جلسه لیزر، باید از تیغ زدن یا کرم‌های موبر حداقل 24 ساعت قبل خودداری کنید. در روز جلسه، پوست شما تمیز شده و در صورت نیاز، موهای بلند با دستگاه مخصوص کوتاه می‌شوند.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="procedure-step">
-                                <div class="flex items-start">
-                                    <div class="bg-amber-600 text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
-                                        <span class="font-bold">3</span>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-gray-800 mb-2">انجام لیزر</h3>
-                                        <p class="text-gray-600">
-                                            متخصص با دستگاه لیزر شروع به تابش پرتوها به ناحیه مورد نظر می‌کند. ممکن است احساس سوزش خفیف یا گرما داشته باشید که طبیعی است. برای کاهش ناراحتی، از سیستم خنک‌کننده پوست استفاده می‌شود.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="procedure-step">
-                                <div class="flex items-start">
-                                    <div class="bg-amber-600 text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
-                                        <span class="font-bold">4</span>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-gray-800 mb-2">مراقبت‌های پس از لیزر</h3>
-                                        <p class="text-gray-600">
-                                            پس از جلسه، ممکن است قرمزی خفیفی مشاهده کنید که معمولاً پس از چند ساعت برطرف می‌شود. از کرم مرطوب کننده و ضد آفتاب استفاده کنید و تا 48 ساعت از قرار گرفتن در معرض آفتاب خودداری نمایید.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="procedure-step">
-                                <div class="flex items-start">
-                                    <div class="bg-amber-600 text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mr-4">
-                                        <span class="font-bold">5</span>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-bold text-gray-800 mb-2">جلسات بعدی</h3>
-                                        <p class="text-gray-600">
-                                            معمولاً بین 6 تا 8 جلسه با فاصله 4 تا 6 هفته نیاز است تا به نتیجه مطلوب برسید. پس از تکمیل جلسات، ممکن است هر 6 تا 12 ماه یک جلسه تثبیت نتیجه نیاز باشد.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            {% render_partial "services:service_procedures" slug=specific_service_clicked.slug %}
+
                         </div>
                     </div>
                     

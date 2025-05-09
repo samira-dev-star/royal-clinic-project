@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404
-from .models import Services,ServiceFeatures,ServiceAdvantages,ServiceCandidateCondition
+from .models import Services,ServiceFeatures,ServiceAdvantages,ServiceCandidateCondition,ServiceProcedures
 from django.db.models import Q
 from django.views import View
 # Create your views here.
@@ -13,7 +13,7 @@ def render_service_related_partial(request, slug, model, template_name, context_
 
 # show services
 def ShowServices(request):
-    template_name = 'services/partials/services_feature_values.html'
+    template_name = 'services/partials/sevices.html'
     
     services = Services.objects.filter(Q(is_available=True))
     context = {
@@ -57,9 +57,28 @@ def show_service_conditions(request, slug):
     )
     
     
+# def show_service_procedures(request, slug):
+#     return render_service_related_partial(
+#         request,
+#         slug,
+#         ServiceProcedures,
+#         'services/partials/service_procedures.html',
+#         'service_procedures',
+#     )
+    
+def show_service_procedures(request,slug):
+    template_name = 'services/partials/service_procedures.html'
+    
+    service = get_object_or_404(Services,slug=slug)
+    service_procedures = ServiceProcedures.objects.filter(service=service)
+    
+    context = {
+        'service' : service,
+        'service_procedures' : service_procedures,
+    }
+    return render(request,template_name,context)
 
-
-
+    
     
 
 class ShowSpecificServiceDetailsView(View):
