@@ -25,7 +25,7 @@ urlpatterns = [
     path('accounts/',include('apps.accounts.account_urls', namespace='account')),
     path('services/',include('apps.services.services_urls', namespace='services')),
     path('user_services/',include('apps.user_services.user_services_urls', namespace='user_services')),
-    path('csf/', include('apps.comments_scores_favourites.csf.urls' , namespace='csf')),
+    path('csf/', include('apps.comments_scores_favourites.csf_urls' , namespace='csf')),
     
     path('ckeditor/', include('ckeditor_uploader.urls')),
     

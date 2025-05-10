@@ -48,12 +48,15 @@
                     <!-- Tabs -->
                     <div class="mb-8 border-b border-gray-200">
                         <div class="flex space-x-8 space-x-reverse">
-                            <button class="tab-btn py-3 px-1 font-medium text-gray-500 hover:text-gray-800 border-b-2 border-transparent hover:border-amber-500" data-tab="overview">معرفی خدمت</button>
-                            <button class="tab-btn py-3 px-1 font-medium text-gray-500 hover:text-gray-800 border-b-2 border-transparent hover:border-amber-500" data-tab="procedure">روش انجام</button>
-                            <button class="tab-btn py-3 px-1 font-medium text-gray-500 hover:text-gray-800 border-b-2 border-transparent hover:border-amber-500" data-tab="faq">سوالات متداول</button>
+                            <button class="tab-btn py-3 px-1 font-medium text-gray-700 hover:text-gray-800 border-b-2 border-transparent hover:border-amber-500" data-tab="overview">معرفی خدمت</button>
+                            <button class="tab-btn py-3 px-1 font-medium text-gray-700 hover:text-gray-800 border-b-2 border-transparent hover:border-amber-500" data-tab="procedure">روش انجام</button>
+                            <button class="tab-btn py-3 px-1 font-medium text-gray-700 hover:text-gray-800 border-b-2 border-transparent hover:border-amber-500" data-tab="faq">سوالات متداول</button>
                         </div>
                     </div>
                     
+
+
+
                     <!-- Tab Contents -->
                     <div class="tab-content active" id="overview">
                         <h2 class="text-3xl font-bold text-gray-800 mb-6">{{specific_service_clicked.service_title}}</h2>
@@ -183,6 +186,38 @@
             </div>
         </div>
     </section>
+                
+    
+
+
+    
+                    {% if user.is_authenticated %}
+						<h3 class="reviews-view__header">دیدگاه هاخود را بنویسید</h3>
+
+										<div class="row">
+											<div class="col-12 col-lg-9 col-xl-8">
+												{% render_partial "csf:create_comment" slug=specific_service_clicked.slug %}
+												</div>
+											</div>
+										</div>
+					{% else %}
+
+						<h5> 
+							برای درج دیدگاه خود باید 
+							{% comment %} <a href="{% url "account:login" %}?next=/products/{{product.slug}}/">ورود</a>  {% endcomment %}
+							<a href="{% url "account:login" %}?next={% url 'services:service_detail' specific_service_clicked.slug %}">ورود</a> 
+							یا 
+							{% comment %} <a href="{% url "account:register" %}?next=/products/{{product.slug}}/">ثبت نام</a>  {% endcomment %}
+							<a href="{% url "account:register" %}?next={% url 'services:service_detail' specific_service_clicked.slug %}">ثبت نام</a>
+
+							کنید
+						</h5>
+
+					{% endif %}
+
+
+
+
 
     <!-- Related Services -->
     <section class="py-16 bg-gray-50">
@@ -231,7 +266,11 @@
                 </div>
             </div>
         </div>
+
     </section>
+
+
+    
 
     <!-- Appointment CTA -->
     <section id="appointment" class="py-16 bg-gradient-to-r from-amber-100 to-amber-200">
@@ -255,5 +294,13 @@
 
 
 
+
+
+
+
+
+    {% block extra_js %}
+    <script src="{% static "js/service_details.js" %}"></script>
+    {% endblock extra_js %}
     
 {% endblock content %}
