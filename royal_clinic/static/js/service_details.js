@@ -46,13 +46,14 @@ faqButtons.forEach(button => {
 
 // ----------------------------------------------------------------------
 // comment
-function showCreateCommentForm(ServiceId, commentId, slug) {
+function showCreateCommentForm(ServiceId, commentId, commentingUser, slug) {
     $.ajax({
         type: "GET",
         url: "/csf/create_comment/" + slug,
         data: {
             ServiceId: ServiceId,
             commentId: commentId,
+            commentingUser : commentingUser,
         },
         success: function(res) {
             $("#btn_" + commentId).hide(); // دکمه پاسخ مخفی بشه
