@@ -24,11 +24,11 @@ urlpatterns = [
     path('',include('apps.main.main_urls' , namespace='main')),
     path('accounts/',include('apps.accounts.account_urls', namespace='account')),
     path('services/',include('apps.services.services_urls', namespace='services')),
-    
     path('user_services/',include('apps.user_services.user_services_urls', namespace='user_services')),
+    path('csf/', include('apps.comments_scores_favourites.csf.urls' , namespace='csf')),
     
     path('ckeditor/', include('ckeditor_uploader.urls')),
-
+    
     
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
