@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404
-from .models import Services,ServiceFeatures,ServiceAdvantages,ServiceCandidateCondition,ServiceProcedures
+from .models import Services,ServiceFeatures,ServiceAdvantages,ServiceCandidateCondition,ServiceProcedures,ServiceRecurringQuestion
 from django.db.models import Q
 from django.views import View
 # Create your views here.
@@ -57,14 +57,7 @@ def show_service_conditions(request, slug):
     )
     
     
-# def show_service_procedures(request, slug):
-#     return render_service_related_partial(
-#         request,
-#         slug,
-#         ServiceProcedures,
-#         'services/partials/service_procedures.html',
-#         'service_procedures',
-#     )
+
     
 def show_service_procedures(request,slug):
     template_name = 'services/partials/service_procedures.html'
@@ -79,7 +72,31 @@ def show_service_procedures(request,slug):
     return render(request,template_name,context)
 
     
+# find other related services:
+def show_other_services(request, slug):
+    template_name = 'services/partials/sevices.html'
+    current_service = get_object_or_404(Services, slug=slug)
     
+    related_services = Services.objects.filter(Q(is_available=True) & ~Q(slug=current_service.slug))[:3]
+    
+    context = {
+        'services': related_services,
+    }
+    
+    return render(request, template_name, context)
+
+
+
+def service_repetative_questions(request,slug):
+    return render_service_related_partial(
+        request,
+        slug,
+        ServiceRecurringQuestion,
+        'services/partials/service_recurring_questions.html',
+        'service_questions',
+    )
+
+
 
 class ShowSpecificServiceDetailsView(View):
     template_name = 'services/service_details.html'

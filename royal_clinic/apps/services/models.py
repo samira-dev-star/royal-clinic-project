@@ -134,4 +134,19 @@ class ServiceProcedures(models.Model):
 # -----------------------------------------------------------------------------------
 
 
-    
+class ServiceRecurringQuestion(models.Model):
+    service = models.ForeignKey(
+        Services,
+        on_delete=models.CASCADE,
+        related_name='recurring_questions',
+        verbose_name='سوالات متداول درباره ی این سرویس'
+    )
+    question = models.CharField(max_length=200, verbose_name='سوال')
+    answer = RichTextField(verbose_name='پاسخ',null=True,blank=True,config_name='special')
+
+    def __str__(self):
+        return f"{self.service} - {self.question}"
+
+    class Meta:
+        verbose_name = "سوال متداول سرویس"
+        verbose_name_plural = "سوالات متداول سرویس"

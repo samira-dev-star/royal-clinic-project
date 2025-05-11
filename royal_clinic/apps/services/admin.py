@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Services,ServiceFeatures,ServiceAdvantages,ServiceCandidateCondition,ServiceProcedures
+from .models import Services,ServiceFeatures,ServiceAdvantages,ServiceCandidateCondition,ServiceProcedures,ServiceRecurringQuestion
 from jalali_date.admin import ModelAdminJalaliMixin
 from django_admin_listfilter_dropdown.filters import DropdownFilter
 from django.contrib.admin import SimpleListFilter
@@ -53,6 +53,10 @@ class ServiceProcedureInline(admin.StackedInline):
     model = ServiceProcedures
     extra = 3
 
+class ServiceRecurringQuestionInline(admin.StackedInline):
+    model = ServiceRecurringQuestion
+    extra = 3
+
 @admin.register(Services)
 class ServicesAdmin(ModelAdminJalaliMixin , admin.ModelAdmin):
     list_display = ['service_title','slug','is_available']
@@ -61,7 +65,7 @@ class ServicesAdmin(ModelAdminJalaliMixin , admin.ModelAdmin):
     ordering = ['updated_at']
     list_editable = ['is_available',]
     actions = [de_active_service , active_service]
-    inlines = [ServiceFeatureInline,ServiceAdvantageline,ServiceConditionInline,ServiceProcedureInline]
+    inlines = [ServiceFeatureInline,ServiceAdvantageline,ServiceConditionInline,ServiceProcedureInline,ServiceRecurringQuestionInline]
     
 # ------------------------------------------------------------------------------------------
 
@@ -95,3 +99,11 @@ class ServiceProceduresAdmin(admin.ModelAdmin):
     list_display = ['process_name']
     list_filter = [('process_name',DropdownFilter)]
     search_fields = ['process_name']
+    
+# ------------------------------------------------------------------------------------------   
+
+@admin.register(ServiceRecurringQuestion)
+class ServiceRecurringQuestionAdmin(admin.ModelAdmin):
+    list_display = ['service','question']
+    list_filter = [('question',DropdownFilter)]
+    search_fields = ['service']

@@ -94,9 +94,15 @@
                         <h2 class="text-3xl font-bold text-gray-800 mb-6">روش {{specific_service_clicked.service_title}}</h2>
                         {% endif %}
                         <p class="text-gray-800 mb-8 leading-relaxed">
+
+                            {% if specific_service_clicked.procedure_description %}
                             {% autoescape off %}
                             {{specific_service_clicked.procedure_description}}
                             {% endautoescape %}
+                            {% else %}
+                            
+                            {% endif %}
+                            
                         </p>
                         
                         <div class="space-y-8">
@@ -105,68 +111,20 @@
 
                         </div>
                     </div>
+
+                    
                     
                     <div  id="faq">
-                        <h2 class="text-3xl font-bold text-gray-800 mb-6">سوالات متداول درباره لیزر موهای زائد</h2>
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6">سوالات متداول درباره ی {{specific_service_clicked.service_title}}</h2>
                         
                         <div class="space-y-4">
-                            <div class="border border-gray-200 rounded-lg overflow-hidden">
-                                <button class="faq-btn w-full flex justify-between items-center p-4 text-right focus:outline-none">
-                                    <span class="font-medium text-gray-800">آیا لیزر موهای زائد درد دارد؟</span>
-                                    <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
-                                </button>
-                                <div class="faq-answer px-4 pb-4 text-gray-600 hidden">
-                                    لیزر موهای زائد ممکن است باعث احساس سوزش خفیف یا نیشگون گرفتن شود، اما درد آن قابل تحمل است. در کلینیک رویال از سیستم خنک‌کننده پوست استفاده می‌شود که ناراحتی را به حداقل می‌رساند. میزان درد بستگی به حساسیت فرد و ناحیه تحت درمان دارد.
-                                </div>
-                            </div>
-                            
-                            <div class="border border-gray-200 rounded-lg overflow-hidden">
-                                <button class="faq-btn w-full flex justify-between items-center p-4 text-right focus:outline-none">
-                                    <span class="font-medium text-gray-800">چند جلسه لیزر نیاز است؟</span>
-                                    <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
-                                </button>
-                                <div class="faq-answer px-4 pb-4 text-gray-600 hidden">
-                                    معمولاً بین 6 تا 8 جلسه با فاصله 4 تا 6 هفته نیاز است. تعداد جلسات بستگی به عوامل مختلفی مانند رنگ پوست، رنگ مو، ضخامت مو و ناحیه تحت درمان دارد. پس از جلسات اولیه، رشد موها به طور قابل توجهی کاهش می‌یابد.
-                                </div>
-                            </div>
-                            
-                            <div class="border border-gray-200 rounded-lg overflow-hidden">
-                                <button class="faq-btn w-full flex justify-between items-center p-4 text-right focus:outline-none">
-                                    <span class="font-medium text-gray-800">آیا لیزر موهای زائد عوارض دارد؟</span>
-                                    <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
-                                </button>
-                                <div class="faq-answer px-4 pb-4 text-gray-600 hidden">
-                                    در صورت انجام توسط متخصص و با دستگاه مناسب، عوارض جانبی بسیار نادر است. ممکن است قرمزی و تورم خفیف بلافاصله پس از درمان مشاهده شود که معمولاً طی چند ساعت برطرف می‌شود. در موارد نادر ممکن است تغییر رنگ موقت پوست یا تاول ایجاد شود.
-                                </div>
-                            </div>
-                            
-                            <div class="border border-gray-200 rounded-lg overflow-hidden">
-                                <button class="faq-btn w-full flex justify-between items-center p-4 text-right focus:outline-none">
-                                    <span class="font-medium text-gray-800">آیا لیزر برای پوست‌های تیره هم مناسب است؟</span>
-                                    <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
-                                </button>
-                                <div class="faq-answer px-4 pb-4 text-gray-600 hidden">
-                                    بله، در کلینیک رویال از دستگاه‌های لیزر دیود و الکساندرایت استفاده می‌شود که برای انواع پوست‌ها از جمله پوست‌های تیره مناسب هستند. در مشاوره اولیه، متخصص پوست مناسب‌ترین دستگاه را برای نوع پوست شما انتخاب می‌کند.
-                                </div>
-                            </div>
-                            
-                            <div class="border border-gray-200 rounded-lg overflow-hidden">
-                                <button class="faq-btn w-full flex justify-between items-center p-4 text-right focus:outline-none">
-                                    <span class="font-medium text-gray-800">چه مراقبت‌هایی قبل و بعد از لیزر لازم است؟</span>
-                                    <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
-                                </button>
-                                <div class="faq-answer px-4 pb-4 text-gray-600 hidden">
-                                    <ul class="list-disc pr-5 space-y-2">
-                                        <li>قبل از جلسه لیزر از تیغ زدن یا وکس خودداری کنید</li>
-                                        <li>از قرار گرفتن در معرض آفتاب حداقل 2 هفته قبل و بعد از لیزر خودداری کنید</li>
-                                        <li>در روز جلسه از کرم‌های مرطوب کننده یا آرایشی استفاده نکنید</li>
-                                        <li>پس از لیزر از کرم مرطوب کننده و ضد آفتاب با SPF بالا استفاده کنید</li>
-                                        <li>تا 48 ساعت پس از لیزر از ورزش شدید و تعریق زیاد خودداری کنید</li>
-                                    </ul>
-                                </div>
-                            </div>
+
+                            {% render_partial "services:service_questions" slug=specific_service_clicked.slug %}
+
                         </div>
                     </div>
+
+
                     
                 </div>
                 
@@ -174,6 +132,7 @@
                 <div class="lg:w-1/3">
                     <div class="bg-gray-50 p-6 rounded-lg sticky top-8">
                         <h3 class="text-xl font-bold text-gray-800 mb-6">جزئیات خدمت</h3>
+
                         
                         {% render_partial "services:service_feature_values" slug=specific_service_clicked.slug %}
                         
@@ -297,41 +256,10 @@
             </div>
             
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80" alt="تزریق بوتاکس" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">تزریق بوتاکس</h3>
-                        <p class="text-gray-600 mb-4">روشی ایمن برای کاهش چین و چروک‌های صورت و جوانسازی پوست</p>
-                        <a href="#" class="text-amber-600 font-medium flex items-center">
-                            <span>جزئیات بیشتر</span>
-                            <i class="fas fa-arrow-left mr-2"></i>
-                        </a>
-                    </div>
-                </div>
+
+                {% render_partial "services:service_related" slug=specific_service_clicked.slug %}
+
                 
-                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="میکرونیدلینگ" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">میکرونیدلینگ</h3>
-                        <p class="text-gray-600 mb-4">تحریک کلاژن سازی برای بهبود جای جوش، چین و چروک و جوانسازی پوست</p>
-                        <a href="#" class="text-amber-600 font-medium flex items-center">
-                            <span>جزئیات بیشتر</span>
-                            <i class="fas fa-arrow-left mr-2"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="درمان ریزش مو" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">درمان ریزش مو</h3>
-                        <p class="text-gray-600 mb-4">روش‌های نوین برای جلوگیری از ریزش مو و تحریک رشد مجدد موها</p>
-                        <a href="#" class="text-amber-600 font-medium flex items-center">
-                            <span>جزئیات بیشتر</span>
-                            <i class="fas fa-arrow-left mr-2"></i>
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
 

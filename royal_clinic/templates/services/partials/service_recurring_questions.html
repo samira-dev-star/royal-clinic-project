@@ -1,0 +1,14 @@
+
+{% for q in service_questions %}
+<div class="border border-gray-200 rounded-lg overflow-hidden">
+    <button class="faq-btn w-full flex justify-between items-center p-4 text-right focus:outline-none">
+        <span class="font-medium text-gray-800">{{q.question}}</span>
+        <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
+    </button>
+    <div class="faq-answer px-4 pb-4 text-gray-700 hidden">
+        {% autoescape off %}
+        {{q.answer}}
+        {% endautoescape %}
+    </div>
+</div>
+{% endfor %}

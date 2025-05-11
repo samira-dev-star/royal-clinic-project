@@ -1,18 +1,11 @@
- <!-- Services -->
- <section id="services" class="py-16 bg-gray-50">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">خدمات تخصصی ما</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">با بهره‌گیری از جدیدترین متدهای روز دنیا، زیباترین نتایج را برای شما به ارمغان می‌آوریم</p>
-            <div class="w-20 h-1 bg-amber-500 mx-auto mt-4"></div>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+
+
             {% for service in services %}
-            <!-- Service 1 -->
+            <!-- Services -->
             <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
                 <div class="h-48 overflow-hidden">
-                    <img src="{{media_url}}{{service.service_image}}" alt="لیزر موهای زائد" class="w-full h-full object-cover">
+                    <img src="{{media_url}}{{service.service_image}}" alt="{{service.service_title}}" class="w-full h-full object-cover">
                 </div>
                 <div class="p-6">
                     <div class="flex items-center mb-4">
@@ -35,6 +28,3 @@
             </div>
             {% endfor %}
         
-        </div>
-    </div>
-</section>

@@ -10,4 +10,6 @@ urlpatterns = [
     path('service_advantages/<str:slug>/',views.show_service_advantages,name='service_advantages'),
     path('service_conditions/<str:slug>/',views.show_service_conditions,name='service_conditions'),
     path('service_procedures/<str:slug>/',views.show_service_procedures,name='service_procedures'),
+    path('service_related/<str:slug>/',views.show_other_services,name='service_related'),
+    path('service_questions/<str:slug>/',views.service_repetative_questions,name='service_questions'),
 ]
