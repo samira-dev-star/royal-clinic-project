@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'apps.services.apps.ServicesConfig',
     'apps.user_services.apps.UserServicesConfig',
     'apps.comments_scores_favourites.apps.CommentsScoresFavouritesConfig',
-    
+    'apps.contacts.apps.ContactsConfig',
 ]
 
 MIDDLEWARE = [
