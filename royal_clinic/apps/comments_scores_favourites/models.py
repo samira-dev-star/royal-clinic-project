@@ -34,6 +34,9 @@ class Comment(models.Model):
         blank=True,
         verbose_name='والد نظر',
         related_name='comment_child')
+    
+    is_admin_comment = models.BooleanField(default=False, verbose_name='نظر توسط ادمین')
+
     # --------------------------------------------------------------
     # اگه فقط خواست که کاربر ادمین بتونه پاسخ کامنت ها رو بده
     
@@ -46,6 +49,8 @@ class Comment(models.Model):
     #     self.clean()  # فراخوانی دستی clean قبل از ذخیره
     #     super().save(*args, **kwargs)
     # --------------------------------------------------------------
+    
+    
     
     def __str__(self):
         return f"{self.service} - {self.commenting_user}"

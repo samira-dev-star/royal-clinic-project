@@ -51,3 +51,104 @@
 .space-y-8 {
   padding-top: 30px;
 }
+
+/* ------------------------------------------------------------------------------ */
+/* کامنت ها */
+.reviews-view {
+  margin-top: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.reviews-view__header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: right;
+}
+
+.reviews-list__item {
+  list-style: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: #ffffff;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease;
+}
+
+.reviews-list__item:hover {
+  transform: translateY(-2px);
+}
+
+.review__avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #42a95f;
+}
+
+.review__content {
+  flex: 1;
+}
+
+.review__author {
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.review__text {
+  font-size: 0.95rem;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.review__date {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  text-align: left;
+}
+
+.reviews-list__item.reply {
+  background-color: #fef9c3;
+  margin-right: 2rem;
+  border-left: 4px solid #f59e0b;
+}
+
+.btn-info {
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  transition: background-color 0.2s ease;
+  display: inline-block;
+}
+
+.btn-info:hover {
+  background-color: #2563eb;
+}
+
+#comment_form_ {
+  margin-top: 1rem;
+}
+
+.form-control {
+  padding-bottom: 111px;
+  padding-left: 111px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+
+}

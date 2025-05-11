@@ -55,12 +55,13 @@ class CommentView(View):
                 service = service,
                 commenting_user = request.user,
                 comment_text = cd['comment_text'],
-                comment_parent = parent
+                comment_parent = parent,
+                is_admin_comment = request.user.is_staff
             )
             
             if request.user.is_staff:
                 comment.is_active = True
-            comment.save()
+                comment.save()
                 
             
             messages.success(request, "نظر شما با موفقیت ثبت شد", "success")
