@@ -129,3 +129,7 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"پیام از {self.name}"
+    
+    class Meta:
+        verbose_name = 'پیام های بازدیدکنندگان و کاربران'
+        verbose_name_plural = 'پیام های بازدیدکنندگان و کاربران'

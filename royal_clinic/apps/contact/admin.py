@@ -1,6 +1,6 @@
 from django.contrib import admin
 from jalali_date.admin import ModelAdminJalaliMixin
-from .models import Contact,WorkingTimesType1,WorkingTimeType2
+from .models import Contact,WorkingTimesType1,WorkingTimeType2,ContactMessage
 # Register your models here.
 
 @admin.register(Contact)
@@ -26,3 +26,12 @@ class WorkingTimeAdmin2(admin.ModelAdmin):
     list_filter = ['day']
     search_fields = ['day']
     ordering = ['day']
+
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'phone', 'message', 'created_at']
+    list_filter = ['created_at']
+    search_fields = ['name', 'email', 'phone', 'message']
+    ordering = ['-created_at']
+    
