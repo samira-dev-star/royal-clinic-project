@@ -1,0 +1,15 @@
+
+
+<div class="md:w-1/2 p-8 md:p-12">
+    <h3 class="text-2xl font-bold text-gray-800 mb-6">ارسال پیام</h3>
+    <form method="post">
+        {% csrf_token %}
+        
+        {{contact_form}}
+
+        <button type="submit" class="bg-amber-600 text-white py-3 px-6 rounded-lg font-bold hover:bg-amber-700 transition duration-300">
+            ارسال پیام
+        </button>
+
+    </form>
+</div>

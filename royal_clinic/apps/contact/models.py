@@ -115,3 +115,17 @@ class WorkingTimeType2(models.Model):
     class Meta:
         verbose_name = 'ساعت کاری مدل 2'
         verbose_name_plural = 'ساعات کاری مدل 2'
+
+# --------------------------------------------------------------------------------------------
+
+# users public messages to clinic
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=100,verbose_name='نام و نام خانوادگی')
+    email = models.EmailField(verbose_name='ایمیل',null=True,blank=True)
+    phone = models.CharField(max_length=20,verbose_name='شماره موبایل')
+    message = models.TextField(verbose_name='پیام')
+    created_at = models.DateTimeField(auto_now_add=True,verbose_name='تاریخ ارسال')
+
+    def __str__(self):
+        return f"پیام از {self.name}"

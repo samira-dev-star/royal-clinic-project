@@ -1,4 +1,5 @@
 from django.contrib import admin
+from jalali_date.admin import ModelAdminJalaliMixin
 from .models import Contact,WorkingTimesType1,WorkingTimeType2
 # Register your models here.
 
@@ -11,7 +12,7 @@ class ContactAdmin(admin.ModelAdmin):
     
     
 @admin.register(WorkingTimesType1)
-class WorkingTimesAdmin(admin.ModelAdmin):
+class WorkingTimesAdmin(ModelAdminJalaliMixin,admin.ModelAdmin):
     list_display = ['day', 'start_time', 'end_time']
     list_filter = ['day']
     search_fields = ['day']
