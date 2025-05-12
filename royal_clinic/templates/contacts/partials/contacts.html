@@ -1,0 +1,34 @@
+
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+{% for data in contacts %}
+    <div class="bg-white p-8 rounded-lg shadow-md text-center">
+        <div class="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-map-marker-alt text-amber-600 text-xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">آدرس</h3>
+        <p class="text-gray-600">{{ data.address }}</p>
+    </div>
+    
+    <div class="bg-white p-8 rounded-lg shadow-md text-center">
+        <div class="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-phone text-amber-600 text-xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">تلفن</h3>
+        <p class="text-gray-600 mb-1">{{data.mobile_number1}}</p>
+        <p class="text-gray-600">{{data.mobile_number2}}</p>
+    </div>
+    
+    <div class="bg-white p-8 rounded-lg shadow-md text-center">
+        <div class="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-envelope text-amber-600 text-xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">ایمیل</h3>
+        <p class="text-gray-600 mb-1">{{data.email1}}</p>
+        <p class="text-gray-600">{{data.email2}}</p>
+    </div>
+{% endfor %}
+
+</div>
+

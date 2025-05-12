@@ -1,0 +1,12 @@
+{% comment %} 
+{% for wt in working_times %}
+    <li class="flex justify-between">
+        <span>{{wt.day}}</span>
+        
+        {% if wt.start_time %}
+        <span>{{wt.start_time}} صبح تا {{wt.end_time}} شب</span>
+        {% endif %}
+
+        <span>{{wt.off_day_message}}</span>
+    </li>
+{% endfor %} {% endcomment %}

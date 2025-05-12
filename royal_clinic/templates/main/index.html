@@ -404,35 +404,11 @@
                 <p class="text-gray-600 max-w-2xl mx-auto">برای دریافت مشاوره رایگان و پاسخ به سوالات شما در خدمتیم</p>
                 <div class="w-20 h-1 bg-amber-500 mx-auto mt-4"></div>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-lg shadow-md text-center">
-                    <div class="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-map-marker-alt text-amber-600 text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">آدرس</h3>
-                    <p class="text-gray-600">تهران، خیابان ولیعصر، کوچه فلان، پلاک ۱۲</p>
-                </div>
-                
-                <div class="bg-white p-8 rounded-lg shadow-md text-center">
-                    <div class="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-phone text-amber-600 text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">تلفن</h3>
-                    <p class="text-gray-600 mb-1">021-12345678</p>
-                    <p class="text-gray-600">0912-3456789</p>
-                </div>
-                
-                <div class="bg-white p-8 rounded-lg shadow-md text-center">
-                    <div class="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-envelope text-amber-600 text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">ایمیل</h3>
-                    <p class="text-gray-600 mb-1">info@royalclinic.com</p>
-                    <p class="text-gray-600">appointment@royalclinic.com</p>
-                </div>
-            </div>
-            
+
+
+                {% render_partial "contacts:show_contacts" %}
+
+
             <div class="mt-16 bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="md:flex">
                     <div class="md:w-1/2">

@@ -1,4 +1,5 @@
 {% load static %}
+{% load render_partial %}
 <link rel="stylesheet" href="{% static "css/footer.css" %}">
 <!-- Footer -->
 <footer class="bg-gray-900 text-white py-12">
@@ -58,7 +59,10 @@
             <div>
                 <h4 class="text-lg font-bold mb-4 border-b border-gray-700 pb-2">ساعات کاری</h4>
                 <ul class="space-y-2 text-gray-400">
-                    <li class="flex justify-between">
+
+                    
+                    {% comment %} <li class="flex justify-between">
+                        
                         <span>شنبه تا چهارشنبه:</span>
                         <span>۸ صبح تا ۸ شب</span>
                     </li>
@@ -69,8 +73,15 @@
                     <li class="flex justify-between">
                         <span>جمعه:</span>
                         <span>تعطیل</span>
-                    </li>
+                    </li> {% endcomment %}
+
+                    {% comment %} {% render_partial "contacts:show_working_time2" %} {% endcomment %}
+                    
                 </ul>
+
+
+
+
                 <div class="mt-6">
                     <a href="tel:+982112345678" class="bg-amber-600 text-white px-6 py-3 rounded-lg font-bold inline-flex items-center hover:bg-amber-700 transition duration-300">
                         <i class="fas fa-phone ml-2"></i>
