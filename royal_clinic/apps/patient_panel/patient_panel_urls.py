@@ -4,5 +4,5 @@ from . import views
 app_name = 'patient'
 
 urlpatterns = [
-    # path('', views.patient_panel, name='patient_panel'),
+    path('patient_profile/', views.CompletePatientProfileView.as_view(), name='patient_profile'),
 ]

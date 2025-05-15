@@ -1,0 +1,209 @@
+{% extends "main_template.html" %}
+{% load static %}
+    
+{% block title %}ویرایش و تکمیل پروفایل{% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "css/patient_profile.css" %}">
+{% endblock extra_css %}
+
+{% block content %}
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-green-500 to-green-600 p-6 text-white">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold">ویرایش پروفایل کاربری</h1>
+                        <p class="mt-2 opacity-90">اطلاعات شخصی و پزشکی خود را تکمیل کنید</p>
+                    </div>
+                    <div class="bg-white/20 p-3 rounded-full">
+                        <i class="fas fa-user-edit text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Form -->
+            <form method="post" enctype="multipart/form-data" class="p-6">
+                {% csrf_token %}
+                <!-- Profile Image -->
+                <div class="mb-8 text-center">
+                    <div class="profile-image-container">
+
+                        {% comment %} show user images and set default image if no image is selected {% endcomment %}
+                        {% if form.instance.image_name %}
+                            <img id="profile-preview" src="{{ form.instance.image_name.url }}" alt="تصویر پروفایل" class="profile-image">
+                        {% else %}
+                            <img id="profile-preview" src="{{media_url}}images/patients/user.png" alt="تصویر پروفایل" class="default-profile-image">
+                        {% endif %}
+
+                        
+                   <div class="upload-icon" onclick="document.getElementById('id_image_name').click()">
+                       <i class="fas fa-camera"></i>
+                   </div>
+                        {{form.image_name}}
+                    </div>
+                    <p class="mt-3 text-gray-600">برای تغییر تصویر کلیک کنید</p>
+                </div>
+                
+                <!-- Personal Information -->
+                <div class="form-section bg-gray-50 p-6 rounded-lg mb-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-user-circle text-green-500 ml-2 text-xl"></i>
+                        <h2 class="text-xl font-semibold text-gray-800">اطلاعات شخصی</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="id_first_name" class="block text-sm font-medium text-gray-700 mb-1">نام</label>
+                            {{form.name}}
+                        </div>
+                        
+                        <div>
+                            <label for="id_last_name" class="block text-sm font-medium text-gray-700 mb-1">نام خانوادگی</label>
+                            {{form.family}}
+                        </div>
+                        
+                        <div>
+                            <label for="id_birth_date" class="block text-sm font-medium text-gray-700 mb-1">تاریخ تولد</label>
+                            {{form.birth_date}}
+                        </div>
+                        
+                        <div>
+                            <label for="id_gender" class="block text-sm font-medium text-gray-700 mb-1">جنسیت</label>
+
+                            {{form.gender}}
+                            {% comment %} <select id="id_gender" name="gender" class="form-input w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-200">
+                                <option value="">انتخاب کنید</option>
+                                <option value="M">مرد</option>
+                                <option value="F">زن</option>
+                            </select> {% endcomment %}
+
+                        </div>
+
+                        <div>
+                            <label for="id_blood_type" class="block text-sm font-medium text-gray-700 mb-1">گروه خونی</label>
+                            {{form.blood_type}}
+                        </div>
+
+                        <div>
+                            <label for="id_weight" class="block text-sm font-medium text-gray-700 mb-1">وزن</label>
+                            {{form.weight}}
+                        </div>
+
+                        <div>
+                            <label for="id_height" class="block text-sm font-medium text-gray-700 mb-1">قد</label>
+                            {{form.height}}
+                        </div>
+                        
+                        <div>
+                            <label for="id_phone" class="block text-sm font-medium text-gray-700 mb-1">شماره تلفن</label>
+                            {{form.mobile_number}}
+                        </div>
+                        
+                        <div>
+                            <label for="id_emergency_contact" class="block text-sm font-medium text-gray-700 mb-1">شماره تلفن اضطراری</label>
+                            {{form.emergency_contact}}
+                            <span class="help-text">{{ form.emergency_contact.help_text }}</span>
+                        </div>
+
+                        <div>
+                            <label for="id_email" class="block text-sm font-medium text-gray-700 mb-1">ایمیل</label>
+                            {{form.email}}
+                        </div>
+                        
+
+
+                        <div>
+                            <label for="id_address" class="block text-sm font-medium text-gray-700 mb-1">آدرس</label>
+                            {{form.address}}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- بخش حساسیت‌ها -->
+                <div class="form-section bg-gray-50 p-6 rounded-lg mb-6" id="allergies-section">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-allergies text-red-500 ml-2 text-xl"></i>
+                            <h2 class="text-xl font-semibold text-gray-800">حساسیت‌ها</h2>
+                        </div>
+                        <button type="button" onclick="addAllergyForm()" class="add-btn bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm flex items-center">
+                            <i class="fas fa-plus ml-1"></i> افزودن حساسیت
+                        </button>
+                    </div>
+                    
+                    {{ allergy_formset.management_form }}
+                    <div id="allergy-fields">
+                        {% for form in allergy_formset %}
+                        <div class="allergy-form mb-4 flex items-center gap-2">
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+                            {{ form.title }}
+                            <button type="button" onclick="removeForm(this, 'allergy')" class="bg-red-500 text-white px-3 py-2 rounded-lg">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- بخش سوابق پزشکی -->
+                <div class="form-section bg-gray-50 p-6 rounded-lg mb-6" id="history-section">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-file-medical text-purple-500 ml-2 text-xl"></i>
+                            <h2 class="text-xl font-semibold text-gray-800">سوابق پزشکی</h2>
+                        </div>
+                        <button type="button" onclick="addMedicalHistoryForm()" class="add-btn bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm flex items-center">
+                            <i class="fas fa-plus ml-1"></i> افزودن سابقه
+                        </button>
+                    </div>
+                    
+                    {{ history_formset.management_form }}
+                    <div id="history-fields">
+                        {% for form in history_formset %}
+                        <div class="history-form mb-4 border rounded p-4 shadow-sm">
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                                <div>
+                                    {{ form.title }}
+                                </div>
+                                <div>
+                                    {{ form.diagnosis_year }}
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                {{ form.description }}
+                                <button type="button" onclick="removeForm(this, 'history')" class="bg-red-500 text-white px-3 py-2 rounded-lg">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-8">
+                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg text-lg flex items-center justify-center gap-2 shadow-md transition duration-300">
+                        <i class="fas fa-save"></i> ذخیره تغییرات
+                    </button>
+                    <a href="{% url 'account:userpanel' %}" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-3 px-6 rounded-lg text-lg flex items-center justify-center gap-2 shadow-md transition duration-300">
+                        <i class="fas fa-arrow-right"></i> برگشت به پنل
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% block extra_js %}<script src="{% static "js/patient_panel.js" %}"></script>{% endblock extra_js %}
+
+
+{% comment %} --------------------------------------------------------------------------------------------- {% endcomment %}
+
+{% endblock content %}
+

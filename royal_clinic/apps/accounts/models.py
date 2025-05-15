@@ -49,12 +49,14 @@ class Customuser(AbstractBaseUser,PermissionsMixin):
     email = models.EmailField(max_length=200,blank=True,verbose_name='ایمیل')
     name = models.CharField(max_length=50,blank=True,verbose_name='نام')
     family = models.CharField(max_length=50,blank=True,verbose_name='نام خانوادگی')
+    
     GENDER = (
     ('', 'انتخاب نشده'),
     ('مرد', 'مرد'),
     ('زن', 'زن'),
     )
     gender = models.CharField(max_length=50, blank=True, choices=GENDER, default='',null=True, verbose_name='جنسیت')
+    
     registered_date = models.DateField(default=timezone.now)
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
