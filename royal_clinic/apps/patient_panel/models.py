@@ -16,7 +16,7 @@ class CustomPatient(models.Model):
     height = models.PositiveIntegerField(
     null=True,
     blank=True,
-    verbose_name='قد (سانتی‌متر)',  # بهتره واحد هم بنویسی
+    verbose_name='قد (سانتی‌متر)',   
     help_text='قد بیمار به سانتی‌متر'
     )
 
@@ -45,7 +45,7 @@ class CustomPatient(models.Model):
 
 class Allergy(models.Model):
     patient = models.ForeignKey(CustomPatient, on_delete=models.CASCADE, related_name='allergies', verbose_name='بیمار')
-    title = models.CharField(max_length=100, verbose_name='عنوان حساسیت')
+    title = models.CharField(max_length=100, verbose_name='عنوان حساسیت',null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -57,7 +57,7 @@ class Allergy(models.Model):
 
 class MedicalHistoryItem(models.Model):
     patient = models.ForeignKey(CustomPatient, on_delete=models.CASCADE, related_name='medical_history_items', verbose_name='بیمار')
-    title = models.CharField(max_length=200, verbose_name='عنوان بیماری یا سابقه')
+    title = models.CharField(max_length=200, verbose_name='عنوان بیماری یا سابقه',null=True, blank=True)
     description = models.TextField(blank=True, null=True, verbose_name='توضیحات')
     diagnosis_year = models.IntegerField(default=timezone.now,blank=True, null=True, verbose_name='تاریخ تشخیص')
 
