@@ -216,7 +216,7 @@ class ForgotPasswordView(View):
                     'mobile_number' : data['mobile_number'],
                     'remember_password' : True,
                 }
-                messages.success(request,'جهت تغییر رمز عبور کد دریافتی را ارسال کنید','success')
+                messages.success(request,f'{active_code}جهت تغییر رمز عبور کد دریافتی را ارسال کنید:کدفعال سازی','success')
                 return redirect('account:verifypass')
             
             except Customuser.DoesNotExist:
