@@ -133,7 +133,6 @@ class ServiceProcedures(models.Model):
         
 # -----------------------------------------------------------------------------------
 
-
 class ServiceRecurringQuestion(models.Model):
     service = models.ForeignKey(
         Services,
@@ -150,3 +149,6 @@ class ServiceRecurringQuestion(models.Model):
     class Meta:
         verbose_name = "سوال متداول سرویس"
         verbose_name_plural = "سوالات متداول سرویس"
+
+# ---------------------------------------------------------------------------
+

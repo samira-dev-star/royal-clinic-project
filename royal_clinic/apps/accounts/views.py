@@ -3,6 +3,7 @@ from django.views import View
 from .account_forms import RegisterUserForm,LoginUserForm,ChangePassword,ForgotPassword,VerifyForm
 from .models import Customuser,RulesandRegulations,ActivationCode
 from django.contrib import messages
+from apps.patient_panel.models import CustomPatient
 # Create your views here.
 
 
@@ -177,7 +178,14 @@ class UserPanelView(View,LoginRequiredMixin):
         return super().dispatch(request, *args, **kwargs)
     
     def get(self,request,*args, **kwarg):
-        return render(request,self.template_name)
+        patient_data = CustomPatient.objects.get(user = request.user)
+        
+        print(patient_data)
+        
+        context = {
+            'patient_data':patient_data,
+        }
+        return render(request,self.template_name,context)
     
 #----------------------------------------------------------------------------------------------------------------
 # Forgot Password

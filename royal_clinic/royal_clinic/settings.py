@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'apps.comments_scores_favourites.apps.CommentsScoresFavouritesConfig',
     'apps.contact.apps.ContactConfig',
     'apps.patient_panel.apps.PatientPanelConfig',
+    'apps.appointment_reservation.apps.AppointmentReservationConfig',
 ]
 
 MIDDLEWARE = [
