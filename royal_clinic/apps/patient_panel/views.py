@@ -4,16 +4,13 @@ from django.contrib import messages
 from django.db import transaction
 from .models import CustomPatient
 from .patient_panel_form import CustomPatientForm, AllergyFormSet, MedicalHistoryFormSet
+from django.contrib.auth.mixins import LoginRequiredMixin     
         
-        
-class CompletePatientProfileView(View):
+class CompletePatientProfileView(LoginRequiredMixin,View):
     template_name = 'patient_panel/patient_profile.html'
     def get(self, request):
-        try:
-            patient = request.user.patient
-        except CustomPatient.DoesNotExist:
-            patient = CustomPatient(user=request.user)
-
+        patient, created = CustomPatient.objects.get_or_create(user=request.user)
+    
         form = CustomPatientForm(instance=patient)
         allergy_formset = AllergyFormSet(
             instance=patient,
@@ -23,7 +20,7 @@ class CompletePatientProfileView(View):
             instance=patient,
             prefix='history'
         )
-
+    
         return render(request, self.template_name, {
             'form': form,
             'allergy_formset': allergy_formset,

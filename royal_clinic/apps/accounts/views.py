@@ -4,6 +4,7 @@ from .account_forms import RegisterUserForm,LoginUserForm,ChangePassword,ForgotP
 from .models import Customuser,RulesandRegulations,ActivationCode
 from django.contrib import messages
 from apps.patient_panel.models import CustomPatient
+from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 
@@ -178,9 +179,11 @@ class UserPanelView(View,LoginRequiredMixin):
         return super().dispatch(request, *args, **kwargs)
     
     def get(self,request,*args, **kwarg):
-        patient_data = CustomPatient.objects.get(user = request.user)
         
-        print(patient_data)
+        try:
+            patient_data = CustomPatient.objects.get(user=request.user)
+        except CustomPatient.DoesNotExist:
+            patient_data = None
         
         context = {
             'patient_data':patient_data,

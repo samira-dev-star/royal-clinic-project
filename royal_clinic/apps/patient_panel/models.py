@@ -3,6 +3,7 @@ from apps.accounts.models import Customuser
 from utils import FileUpload
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib import admin
 # Create your models here.
 
 class CustomPatient(models.Model):
@@ -35,6 +36,14 @@ class CustomPatient(models.Model):
 
     def __str__(self):
         return f"{self.user}"
+    
+    @admin.display(description='سن')
+    def get_age(self):
+        if self.birth_date:
+            return (timezone.now().date() - self.birth_date).days // 365
+        return None
+    
+
     
     class Meta:
         verbose_name = 'بیمار'
