@@ -346,20 +346,33 @@
                         <p class="text-gray-600 mb-6">
                             برای رزرو نوبت در کلینیک پوست و موی زیبایی رویال، فرم مقابل را پر کنید. همکاران ما در اسرع وقت با شما تماس خواهند گرفت.
                         </p>
+                        {% for data in contacts %}
+
                         <div class="flex items-center mb-2">
                             <i class="fas fa-phone text-amber-600 mr-3"></i>
-                            <span class="text-gray-700">021-12345678</span>
+                            <span class="text-gray-700">{{data.mobile_number1}}</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-phone text-amber-600 mr-3"></i>
+                            <span class="text-gray-700">{{data.mobile_number2}}</span>
+                        </div>
+
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-envelope text-amber-600 mr-3"></i>
+                            <span class="text-gray-700">{{data.email1}}</span>
                         </div>
                         <div class="flex items-center mb-2">
                             <i class="fas fa-envelope text-amber-600 mr-3"></i>
-                            <span class="text-gray-700">info@royalclinic.com</span>
+                            <span class="text-gray-700">{{data.email2}}</span>
                         </div>
+                        
+
                         <div class="flex items-center">
                             <i class="fas fa-map-marker-alt text-amber-600 mr-3"></i>
-                            <span class="text-gray-700">تهران، خیابان ولیعصر، کوچه فلان، پلاک ۱۲</span>
+                            <span class="text-gray-700">{{data.address}}</span>
                         </div>
                     </div>
-
+                    {% endfor %}
 
                     {% render_partial "reservation:reserve" %}
 
