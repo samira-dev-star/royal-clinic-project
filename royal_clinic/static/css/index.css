@@ -12,3 +12,8 @@
 
   /* ------------------------------------------------------------------------------- */
   /* service detail */
+
+  .service_capacity {
+    background-color: rgba(154, 248, 157, 0.56);
+    border-radius: 5px;
+  }

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Services,ServiceFeatures,ServiceAdvantages,ServiceCandidateCondition,ServiceProcedures,ServiceRecurringQuestion
-from jalali_date.admin import ModelAdminJalaliMixin
+# from jalali_date.admin import ModelAdminJalaliMixin
 from django_admin_listfilter_dropdown.filters import DropdownFilter
 from django.contrib.admin import SimpleListFilter
 from django.db.models import Q
@@ -58,8 +58,8 @@ class ServiceRecurringQuestionInline(admin.StackedInline):
     extra = 3
 
 @admin.register(Services)
-class ServicesAdmin(ModelAdminJalaliMixin , admin.ModelAdmin):
-    list_display = ['service_title','slug','is_available']
+class ServicesAdmin(admin.ModelAdmin):
+    list_display = ['service_title','slug','is_available','start_reservation_date','finish_reservation_date','capacity']
     list_filter = [('service_title',DropdownFilter),('slug',DropdownFilter),('updated_at',DropdownFilter)]
     search_fields = ['service_title','slug']
     ordering = ['updated_at']

@@ -22,8 +22,10 @@ class Services(models.Model):
     service_image = models.ImageField(upload_to=image_uploader.create_address,verbose_name='تصویر خدمات',null=True,blank=True)
     
     is_available = models.BooleanField(verbose_name='فعال/غیرفعال',null=True,blank=True)
+    
     start_reservation_date =  models.DateTimeField(default=timezone.now,verbose_name='تاریخ شروع نوبت دهی')
     finish_reservation_date =  models.DateTimeField(default=timezone.now,verbose_name='تاریخ پایان نوبت دهی')
+    
     capacity = models.IntegerField(verbose_name='ظرفیت نوبت',null=True,blank=True)
     proper_candidate_description = RichTextField(verbose_name='شرح شرایط کاندید',null=True,blank=True,config_name='special')
     

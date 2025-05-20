@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'apps.comments_scores_favourites.apps.CommentsScoresFavouritesConfig',
     'apps.contact.apps.ContactConfig',
     'apps.patient_panel.apps.PatientPanelConfig',
-    'apps.appointment_reservation.apps.AppointmentReservationConfig',
+    'apps.reservation.apps.ReservationConfig',
 ]
 
 MIDDLEWARE = [
@@ -137,7 +137,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
+USE_TZ = True
 
 USE_I18N = True
 

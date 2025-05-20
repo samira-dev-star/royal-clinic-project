@@ -1,0 +1,10 @@
+{% extends "main_template.html" %}
+{% load render_partial %}
+
+{% block title %}رزرو نوبت به صورت آنلاین{% endblock title %}
+
+{% block content %}
+
+{% render_partial "reservation:reserve" %}
+
+{% endblock content %}

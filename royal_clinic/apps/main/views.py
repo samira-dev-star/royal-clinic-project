@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.conf import settings
+from apps.services.models import Services
 
 # Create your views here.
 
@@ -8,5 +9,9 @@ def media_admin(request):
 
 
 def index(request):
-    return render(request,'main/index.html')
+    services = Services.objects.all()
+    context = {
+        "services" : services
+    }
+    return render(request,'main/index.html',context)
 

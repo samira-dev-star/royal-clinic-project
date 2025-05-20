@@ -79,6 +79,8 @@ class CustomPatientForm(forms.ModelForm):
             'placeholder': 'ایمیل خود را وارد کنید'
         })
     )
+    
+    
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
