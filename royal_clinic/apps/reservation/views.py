@@ -96,3 +96,7 @@ def reservation(request, *args, **kwargs):
         return JsonResponse({'form_html': rendered_html})
 
     return render(request, template_name, {'form': form, 'service': service})
+
+
+
+# --------------------------------------------------------------------------------------------------------------------------------

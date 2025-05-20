@@ -34,29 +34,29 @@ class ReserveAppointment(models.Model):
     
     from django.core.exceptions import ValidationError
 
-def save(self, *args, **kwargs):
-    is_new_appointment = self._state.adding  # بررسی اینکه شی جدید است یا نه
+    def save(self, *args, **kwargs):
+        is_new_appointment = self._state.adding  # بررسی اینکه شی جدید است یا نه
+    
+        # اگر نوبت جدید باشد، اول چک می‌کنیم که ظرفیت پر نباشد
+        if is_new_appointment:
+            if self.service.capacity is not None and self.service.capacity <= 0:
+                raise ValidationError("ظرفیت این سرویس پر شده است.")
+    
+        super().save(*args, **kwargs)  # ذخیره‌ی اصلی
+    
+        # حالا اگر نوبت جدید بود و سرویس ظرفیت داشت، یکی از ظرفیت کم کنیم
+        if is_new_appointment and self.service.capacity is not None:
+            self.service.capacity = max(self.service.capacity - 1, 0)
+            self.service.save()
 
-    # اگر نوبت جدید باشد، اول چک می‌کنیم که ظرفیت پر نباشد
-    if is_new_appointment:
-        if self.service.capacity is not None and self.service.capacity <= 0:
-            raise ValidationError("ظرفیت این سرویس پر شده است.")
 
-    super().save(*args, **kwargs)  # ذخیره‌ی اصلی
+    def delete(self, *args, **kwargs):
+        # اگر ظرفیت سرویس محدود بود، یکی بهش اضافه کنیم
+        if self.service.capacity is not None:
+            self.service.capacity += 1
+            self.service.save()
 
-    # حالا اگر نوبت جدید بود و سرویس ظرفیت داشت، یکی از ظرفیت کم کنیم
-    if is_new_appointment and self.service.capacity is not None:
-        self.service.capacity = max(self.service.capacity - 1, 0)
-        self.service.save()
-
-
-def delete(self, *args, **kwargs):
-    # اگر ظرفیت سرویس محدود بود، یکی بهش اضافه کنیم
-    if self.service.capacity is not None:
-        self.service.capacity += 1
-        self.service.save()
-
-    super().delete(*args, **kwargs)  # حذف نهایی شیء
+        super().delete(*args, **kwargs)  # حذف نهایی شیء
 
 
     def calq_reservation_capacity(self):
