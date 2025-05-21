@@ -8,8 +8,8 @@
 
 {% block content %}
 
-</head>
-<body class="bg-gray-100">
+
+<body class="bg-gray-100" id="reservation_page">
     
     <div class="container mx-auto px-4 py-8">
         <div class="form-container">
@@ -127,13 +127,10 @@ function ReservePageServiceIdSender(service_id) {
     $.ajax({
         type: "GET",
         url: "/reservation/reservation_main_page/",
-        data: { service_id: id_service },
+        data: { service_id: service_id }, // Corrected variable name
         dataType: "json", // تضمین می‌کند پاسخ JSON است
         success: function(response) {
-            // پردازش پاسخ
-            //updateDateChoices(response.date_choices);
-            //updateCapacity(response.capacity);
-            alert("پاسخ پیگیری شد")
+            $("#reservation_page").html(response); 
         },
         error: function(xhr) {
             console.error("خطا در دریافت داده:", xhr.responseText);
