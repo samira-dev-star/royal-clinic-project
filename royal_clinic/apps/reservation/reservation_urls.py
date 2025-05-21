@@ -5,6 +5,6 @@ app_name = 'reservation'
 
 urlpatterns = [
         # path('reserve/', views.GeneralReservationView.as_view(), name='reserve'),
-        # path('get_available_times/', views.get_available_times, name='get_available_times'),
+        path('reservation_main_page/', views.AppointmentReservationView.as_view(), name='reservation_main_page'),
         path('reserve/', views.reservation, name='reserve'),
 ]

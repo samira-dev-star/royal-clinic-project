@@ -54,6 +54,7 @@ def public_user_messages(request):
             initial_data = {
                 'name': user.name,
                 'email': user.email,
+                'phone': user.mobile_number
             }
         except Customuser.DoesNotExist:
             initial_data = {}
@@ -90,3 +91,6 @@ def public_user_messages(request):
             messages.error(request,'یکی از اطلاعات شما نامعتبر است',context)
             return redirect('main:index')
     return render(request, template_name, context)
+
+
+

@@ -1,10 +1,149 @@
 {% extends "main_template.html" %}
-{% load render_partial %}
+
+{% load static %}
 
 {% block title %}رزرو نوبت به صورت آنلاین{% endblock title %}
 
+{% block extra_css %}<link rel="stylesheet" href="{% static "css/reservation_form_page.css" %}">{% endblock extra_css %}
+
 {% block content %}
 
-{% render_partial "reservation:reserve" %}
+</head>
+<body class="bg-gray-100">
+    
+    <div class="container mx-auto px-4 py-8">
+        <div class="form-container">
+            <div class="flex items-center">
+            {% comment %} <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center">
+                <i class="fas fa-crown text-amber-700 text-xl"></i>  {% endcomment %}
+                <img class="w-14 h-14 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center" src="{{media_url}}images/index/IMG-20240528-WA0012.jpg" alt="index-icon">
+            {% comment %} </div>  {% endcomment %}
+            <h1 class="text-2xl font-bold text-amber-800 mr-3">کلینیک رویال</h1>
+            
+            </div>
+            <div class="flex items-center">
+            
+                <i class="fas fa-crown text-green-700 text-xl"></i>  
+               
+            <h2 class="font-bold text-gray-600 mr-3">رزرو نوبت</h2>
+            </div>
+            
+            <!-- پیام‌های سیستم -->
+            <div id="message-box" class="message-box"></div>
+            
+            <!-- فرم رزرواسیون -->
+            <form id="reservationForm" method="post" class="space-y-4">
+                {% csrf_token %}
+                
+                {% comment %} ----------------------------------------------------------------------------- {% endcomment %}
+                <!-- فیلد نام -->
+                <div class="mb-4">
+                    <label for="{{ form.name.id_for_label }}" class="block text-gray-700 mb-2">نام</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                        <p class="text-red-600 text-sm">{{ form.name.errors }}</p>
+                    {% endif %}
+                </div>
+            
+                <!-- فیلد نام خانوادگی -->
+                <div class="mb-4">
+                    <label for="{{ form.family.id_for_label }}" class="block text-gray-700 mb-2">نام خانوادگی</label>
+                    {{ form.family }}
+                    {% if form.family.errors %}
+                        <p class="text-red-600 text-sm">{{ form.family.errors }}</p>
+                    {% endif %}
+                </div>
+            
+                <!-- فیلد شماره تماس -->
+                <div class="mb-4">
+                    <label for="{{ form.mobile_number.id_for_label }}" class="block text-gray-700 mb-2">شماره تماس</label>
+                    {{ form.mobile_number }}
+                    {% if form.mobile_number.errors %}
+                        <p class="text-red-600 text-sm">{{ form.mobile_number.errors }}</p>
+                    {% endif %}
+                </div>
+                {% comment %} ----------------------------------------------------------------------------- {% endcomment %}
+                
+                <div class="mb-4">
+                    <label for="id_service" class="block text-sm font-medium text-gray-700 mb-1">سرویس</label>
+                    {{ form.service }}
+                </div>
+                {% comment %} ----------------------------------------------------------------------------- {% endcomment %}
+                
+                <!-- فیلد تاریخ -->
+        <div class="mb-4">
+            <label for="{{ form.selected_date.id_for_label }}">تاریخ مورد نظر</label>
+            {{ form.selected_date }}
+            {% if not form.selected_date.field.choices %}
+                <p class="text-gray-500 italic mt-2">لطفاً ابتدا یک خدمت معتبر انتخاب کنید.</p>
+            {% endif %}
+            {% if form.selected_date.errors %}
+                <p class="text-red-600 text-sm">{{ form.selected_date.errors }}</p>
+            {% endif %}
+        </div>
+
+                {% if service.capacity > 0 %}
+                <div class="mb-4 service_capacity">
+                    <label > ظرفیت جاری نوبت برای سرویس مورد نظر :</label>
+                <span class="text-green-600">{{service.capacity}}</span>
+                </div>
+                {% elif service.capacity == 0 %}
+                <div class="mb-4 service_capacity">
+                    <label > ظرفیت جاری نوبت برای سرویس مورد نظر :</label>
+                <span class="text-red-800">{{service.capacity}}</span>
+                    <p class="text-red-600">در حال حاضر امکان نوبت دهی برای این سرویس موجود نمی باشد</p>
+                </div>
+                {% endif %}
+            
+                <!-- دکمه ثبت -->
+                 {% if service.capacity <= 0 %}
+            
+                 {% else %}
+                <button type="submit" class="w-full bg-amber-600 text-white py-3 px-6 rounded-lg font-bold hover:bg-amber-700 transition  duration-300">
+                    ثبت درخواست نوبت
+                </button>
+                
+                {% endif %}
+
+            </form>
+        </div>
+    </div>
+
+    
+
 
 {% endblock content %}
+
+
+{% block extra_js %}
+
+<script src="{% static 'js/reservation_form_page.js' %}"></script>
+
+
+<script>
+
+// reservation_form_page.js
+function ReservePageServiceIdSender(service_id) {
+    $.ajax({
+        type: "GET",
+        url: "/reservation/reservation_main_page/",
+        data: { service_id: id_service },
+        dataType: "json", // تضمین می‌کند پاسخ JSON است
+        success: function(response) {
+            // پردازش پاسخ
+            //updateDateChoices(response.date_choices);
+            //updateCapacity(response.capacity);
+            alert("پاسخ پیگیری شد")
+        },
+        error: function(xhr) {
+            console.error("خطا در دریافت داده:", xhr.responseText);
+            alert("خطا در ارتباط با سرور");
+        }
+    });
+}
+</script>
+{% endblock extra_js %}  
+
+
+
+

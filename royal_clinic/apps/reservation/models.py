@@ -2,6 +2,7 @@ from django.db import models
 from apps.accounts.models import Customuser
 from apps.services.models import Services
 from django.core.exceptions import ValidationError
+from django.db.models import F
 
 # Create your models here.
 
@@ -23,16 +24,7 @@ class ReserveAppointment(models.Model):
     def __str__(self):
         return f"{self.user.name} {self.user.family} - {self.service.service_title}"
     
-    # def save(self, *args, **kwargs):
-    #     is_new = self._state.adding  # بررسی اینکه شیء تازه ساخته شده یا خیر
-        
-    #     super().save(*args, **kwargs)
-        
-    #     if is_new and self.service.capacity is not None:
-    #         self.service.capacity = max(self.service.capacity - 1, 0)
-    #         self.service.save()
-    
-    from django.core.exceptions import ValidationError
+   
 
     def save(self, *args, **kwargs):
         is_new_appointment = self._state.adding  # بررسی اینکه شی جدید است یا نه
@@ -41,8 +33,15 @@ class ReserveAppointment(models.Model):
         if is_new_appointment:
             if self.service.capacity is not None and self.service.capacity <= 0:
                 raise ValidationError("ظرفیت این سرویس پر شده است.")
+            
+            Services.objects.filter(id=self.service.id).update(
+                capacity=F('capacity') - 1
+            )
+            self.service.refresh_from_db() 
     
         super().save(*args, **kwargs)  # ذخیره‌ی اصلی
+        
+        
     
         # حالا اگر نوبت جدید بود و سرویس ظرفیت داشت، یکی از ظرفیت کم کنیم
         if is_new_appointment and self.service.capacity is not None:
@@ -70,7 +69,6 @@ class ReserveAppointment(models.Model):
     class Meta:
         verbose_name = "نوبت رزرو شده"
         verbose_name_plural = "نوبت‌های رزرو شده"
-        
         
         
         
