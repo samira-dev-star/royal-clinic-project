@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'apps.contact.apps.ContactConfig',
     'apps.patient_panel.apps.PatientPanelConfig',
     'apps.reservation.apps.ReservationConfig',
+    'apps.realtime_chat.apps.RealtimeChatConfig',
 ]
 
 MIDDLEWARE = [
