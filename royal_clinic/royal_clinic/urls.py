@@ -29,6 +29,7 @@ urlpatterns = [
     path('contact/', include('apps.contact.contact_urls' , namespace='contact')),
     path('patient_panel/', include('apps.patient_panel.patient_panel_urls' , namespace='patient')),
     path('reservation/', include('apps.reservation.reservation_urls' , namespace='reservation')),
+    path('realtime_chat/', include('apps.realtime_chat.realtime_chat_urls' , namespace='realtime_chat')),
     
     path('ckeditor/', include('ckeditor_uploader.urls')),
     
