@@ -173,6 +173,9 @@ class LogoutUserView(View):
 class UserPanelView(View,LoginRequiredMixin):
     template_name = 'accounts/user_panel.html'
     def dispatch(self, request, *args, **kwargs):
+        if request.user.is_admin:
+            messages.warning(request,'شما مدیر سایت هستید و نمی توانید دسترسی به پنل کاربری داشته باشید','warning')
+            return redirect("main:index")
         if not request.user.is_authenticated:
             messages.info(request,'شما در حال حاضر لاگین نمی باشید برای دسترسی به پنل کاربری وارد شوید','warning')
             return redirect("account:login")
