@@ -1,6 +1,7 @@
 from tabnanny import verbose
 from django.db import models
 
+# دلیل ساختنش اینه که جنگو فقط چیزهایی رو توی پنل ادمین نشون می‌ده که مدل باشن.
 class CrispEntryPoint(models.Model):
     class Meta:
         verbose_name = "مشاهده ی پیام ها"
