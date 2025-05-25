@@ -43,3 +43,25 @@ def string_to_jalali(value, date_format="%Y-%m-%d"):
         return jalali_date.strftime("%Y/%m/%d")
     except Exception:
         return ""
+
+
+# وقتی یک فولدر شامل فایل __init__.py باشه، پایتون اون فولدر رو به‌عنوان یک پکیج قابل ایمپورت می‌شناسه.
+# ✅ ۳. تعریف alias برای importهای داخلی
+
+# اگه ساختار پکیجت پیچیده باشه، می‌تونی مسیرهای import رو ساده‌سازی کنی.
+# 📦 مثال:
+
+# 📁 tools/__init__.py:
+
+# from .math_utils import calculate_price
+# from .text_utils import normalize_text
+
+# 📁 فایل دیگه در پروژه:
+
+# from tools import calculate_price, normalize_text
+
+# دیگه لازم نیست توی پروژه بنویسی:
+
+# from tools.math_utils import calculate_price
+
+# فقط می‌نویسی from tools import ... و کار راحت‌تره.

@@ -22,6 +22,8 @@ def reservation(request, *args, **kwargs):
     date_choices = []
     service_id = request.POST.get('service') if request.method == 'POST' else request.GET.get('service_id')
 
+    today = datetime.now().date()  # Get current date
+
     if service_id:
         try:
             service = Services.objects.get(id=service_id)
@@ -30,11 +32,13 @@ def reservation(request, *args, **kwargs):
             if start and end and start <= end:
                 current_date = start.date() if isinstance(start, datetime) else start
                 end_date = end.date() if isinstance(end, datetime) else end
+                # Only include dates that are today or in the future
                 while current_date <= end_date:
-                    date_choices.append((
-                        current_date.strftime("%Y-%m-%d"),
-                        jdate.fromgregorian(date=current_date).strftime("%Y-%m-%d")
-                    ))
+                    if current_date >= today:
+                        date_choices.append((
+                            current_date.strftime("%Y-%m-%d"),
+                            jdate.fromgregorian(date=current_date).strftime("%Y-%m-%d")
+                        ))
                     current_date += timedelta(days=1)
             else:
                 messages.warning(request, "محدوده تاریخ معتبر نیست.")
@@ -96,7 +100,6 @@ def reservation(request, *args, **kwargs):
         return JsonResponse({'form_html': rendered_html})
 
     return render(request, template_name, {'form': form, 'service': service})
-
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
@@ -297,34 +300,34 @@ class AppointmentReservationView(LoginRequiredMixin, View):
     template_name = 'appointment_reservation/appointment_reservation_page.html'
 
     def get(self, request, *args, **kwargs):
-        # take data from ajax
         service_id = request.GET.get('service_id')
         date_choices = []
-        service = None # Initialize service
+        service = None
 
         if service_id:
             try:
                 service = Services.objects.get(id=service_id)
                 start = service.start_reservation_date
                 end = service.finish_reservation_date
+                today = datetime.now().date()
                 if start and end and start <= end:
                     current_date = start.date() if isinstance(start, datetime) else start
                     end_date = end.date() if isinstance(end, datetime) else end
                     while current_date <= end_date:
-                        date_choices.append((
-                            current_date.strftime("%Y-%m-%d"),
-                            jdate.fromgregorian(date=current_date).strftime("%Y-%m-%d")
-                        ))
+                        if current_date >= today:
+                            date_choices.append((
+                                current_date.strftime("%Y-%m-%d"),
+                                jdate.fromgregorian(date=current_date).strftime("%Y-%m-%d")
+                            ))
                         current_date += timedelta(days=1)
             except Services.DoesNotExist:
                 messages.error(request, "سرویس یافت نشد.")
-                service = None # Ensure service is None on error
-        # else: service remains None
+                service = None
 
         form = ReserveAppointmentForm(
             user_instance=request.user,
             initial={'service': service_id},
-            date_choices=date_choices # Pass date_choices to form
+            date_choices=date_choices
         )
         context = {
             'form': form,
@@ -334,48 +337,44 @@ class AppointmentReservationView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        # Need to regenerate date_choices and fetch service for form validation and context
-        service_id = request.POST.get('service') # Get service_id from POST data
+        service_id = request.POST.get('service')
         date_choices = []
-        service = None # Initialize service
+        service = None
 
         if service_id:
             try:
                 service = Services.objects.get(id=service_id)
                 start = service.start_reservation_date
                 end = service.finish_reservation_date
+                today = datetime.now().date()
                 if start and end and start <= end:
                     current_date = start.date() if isinstance(start, datetime) else start
                     end_date = end.date() if isinstance(end, datetime) else end
                     while current_date <= end_date:
-                        date_choices.append((
-                            current_date.strftime("%Y-%m-%d"),
-                            jdate.fromgregorian(date=current_date).strftime("%Y-%m-%d")
-                        ))
+                        if current_date >= today:
+                            date_choices.append((
+                                current_date.strftime("%Y-%m-%d"),
+                                jdate.fromgregorian(date=current_date).strftime("%Y-%m-%d")
+                            ))
                         current_date += timedelta(days=1)
             except Services.DoesNotExist:
-                # Handle case where service ID from POST is invalid
                 messages.error(request, "سرویس ارسالی نامعتبر است.")
-                service = None # Ensure service is None on error
-                # date_choices will remain empty
+                service = None
 
-        # Initialize form with POST data, user, and generated date_choices
         form = ReserveAppointmentForm(
             request.POST,
             user_instance=request.user,
-            date_choices=date_choices # Pass generated date_choices
+            date_choices=date_choices
         )
 
         context = {
             'form': form,
-            'date_choices': date_choices, # Include in context
-            'service': service, # Include in context
+            'date_choices': date_choices,
+            'service': service,
         }
 
         if form.is_valid():
-            # commit=False: A powerful option in ModelForm.save() that allows modification of the model instance before saving.
             reservation_obj = form.save(commit=False)
-            # In essence, it's a standard pattern for handling form submissions where you need to add data (like the user) to the model instance that isn't directly coming from the form fields themselves.
             reservation_obj.user = request.user
             reservation_obj.save()
 
@@ -387,11 +386,7 @@ class AppointmentReservationView(LoginRequiredMixin, View):
                 })
             else:
                 messages.success(request, "رزرو با موفقیت انجام شد.", 'success')
-                # Consider redirecting on success instead of rendering the same page for better UX (Post/Redirect/Get pattern)
-                # return redirect('some_success_url')
-                # For now, render the page with the form (which might be empty or reset depending on form logic)
-                return redirect('reservation:reservation_main_page') 
-            
+                return redirect('reservation:reservation_main_page')
 
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             return JsonResponse({
@@ -399,9 +394,7 @@ class AppointmentReservationView(LoginRequiredMixin, View):
                 'message': 'برخی فیلدها صحیح نیستند.',
                 'errors': form.errors.get_json_data()
             }, status=400)
-            
-    
+
         else:
-            # Form is invalid, messages.error already added by form or view logic
             messages.error(request, "رزرو با خطا مواجه شد.", 'error')
-            return render(request, self.template_name, context) # Use full context
+            return render(request, self.template_name, context)
