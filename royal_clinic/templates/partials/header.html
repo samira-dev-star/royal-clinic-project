@@ -30,10 +30,20 @@
         </nav>
         
         <div class="flex items-center space-x-3 space-x-reverse">
-            <a href="tel:+982112345678" class="bg-amber-100 text-amber-800 px-4 py-2 rounded-full flex items-center">
+            {% for data in contacts %}
+            {% if data.mobile_number1 %}
+            <a href="tel:{{data.mobile_number1}}" class="bg-amber-100 text-amber-800 px-4 py-2 rounded-full flex items-center">
                 <i class="fas fa-phone ml-2"></i>
-                <span>021-12345678</span>
+                <span>{{data.mobile_number1}}</span>    
             </a>
+            {% endif %}
+            {% if data.mobile_number2 %}
+            <a href="tel:{{data.mobile_number2}}" class="bg-amber-100 text-amber-800 px-4 py-2 rounded-full flex items-center">
+                <i class="fas fa-phone ml-2"></i>
+                <span>{{data.mobile_number2}}</span>    
+            </a>
+            {% endif %}
+            {% endfor %}
 
             {% if user.is_authenticated %}
             <a href="{% url "account:userpanel" %}" class="bg-amber-100 text-amber-800 px-4 py-2 rounded-full flex items-center">
