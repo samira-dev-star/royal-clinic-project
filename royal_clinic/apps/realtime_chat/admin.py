@@ -4,6 +4,9 @@ from .models import CrispEntryPoint
 # HttpResponse: برای اینکه خودمون یه صفحه HTML دستی بسازیم.
 from django.http import HttpResponse
 
+# changelist_view : وقتی روی اسم مدل کلیک میکنیم این چیزیه که نشون داده می شد که در حالت عادی رکورد ها مون هستند ولی اینجل یک
+# دکمه است
+
 
 @admin.register(CrispEntryPoint)
 class CrispAdmin(admin.ModelAdmin):

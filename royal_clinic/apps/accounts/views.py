@@ -4,7 +4,10 @@ from .account_forms import RegisterUserForm,LoginUserForm,ChangePassword,ForgotP
 from .models import Customuser,RulesandRegulations,ActivationCode
 from django.contrib import messages
 from apps.patient_panel.models import CustomPatient
+from apps.reservation.models import ReserveAppointment
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models.aggregates import Count
+from django.db.models import Q
 # Create your views here.
 
 
@@ -182,14 +185,24 @@ class UserPanelView(View,LoginRequiredMixin):
         return super().dispatch(request, *args, **kwargs)
     
     def get(self,request,*args, **kwarg):
+        current_user = request.user
         
         try:
             patient_data = CustomPatient.objects.get(user=request.user)
         except CustomPatient.DoesNotExist:
             patient_data = None
         
+        # شمردن تعداد نوبت هایی که فعال هستند
+        # annotate : اضافه کردن یک فیلد جدید واسه شمارش
+        # order_by : مرتب سازی بر حسب - برعکس جدید به قدیم
+        # [:3] : تای اول 3
+        reservations = ReserveAppointment.objects.filter(Q(user=current_user) & Q(is_confirmed=True)).annotate(
+            reservation_count=Count('id')
+        ).order_by("-created_at")[:3]
+        
         context = {
             'patient_data':patient_data,
+            'reservations':reservations,
         }
         return render(request,self.template_name,context)
     

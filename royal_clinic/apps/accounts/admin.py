@@ -11,7 +11,6 @@ from .account_forms import UserCreationForm,UserChangeForm
 
 
 
-
 class CustomUserAdmin(UserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm

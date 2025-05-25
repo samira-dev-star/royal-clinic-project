@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     
     'jalali_date', 
+    'django_jalali',
+    'django.contrib.humanize',
     
     'django_render_partial', 
     

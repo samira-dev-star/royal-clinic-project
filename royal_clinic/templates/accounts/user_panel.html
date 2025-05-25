@@ -1,5 +1,11 @@
 {% extends "main_template.html" %}
 {% load static %}
+{% comment %} {% load jalali_tags %} {% endcomment %}
+{% load humanize %}
+{% load jformat %}
+{% load jalali_extras %}
+
+
     {% block title %}پنل بیمار - کلینیک رویال{% endblock title %} 
 
 {% block extra_css %}
@@ -176,7 +182,9 @@
                         </div>
                         <div>
                             <p class="text-gray-500 text-sm">نوبت‌های فعال</p>
-                            <p class="text-2xl font-bold">2</p>
+                            
+                            <p class="text-2xl font-bold">{{reservations|length}}</p>
+                            
                         </div>
                     </div>
                     
@@ -224,6 +232,8 @@
                             </div>
                             
                             <div class="divide-y divide-gray-200">
+                                
+                                {% for data in reservations %}
                                 <div class="appointment-card p-4 hover:bg-gray-50 transition duration-200 cursor-pointer">
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center">
@@ -231,53 +241,29 @@
                                                 <i class="fas fa-user-md"></i>
                                             </div>
                                             <div>
-                                                <p class="font-medium">دکتر محمدی</p>
-                                                <p class="text-sm text-gray-500">متخصص قلب و عروق</p>
+                                                <p class="font-medium">{{data.name}}{{data.family}}</p>
+                                                {% comment %} <p class="text-sm text-gray-500">تاریخ ثبت نوبت : {{data.created_at}}</p> {% endcomment %}
+                                                
+                                                <p class="text-sm text-gray-500">تاریخ ثبت نوبت : {{ data.created_at|jformat:"%Y/%m/%d - %H:%M" }}
+
                                             </div>
                                         </div>
                                         <div class="text-left">
-                                            <p class="font-medium">1403/01/15 - 10:30</p>
-                                            <p class="text-sm text-gray-500">ویزیت پیگیری</p>
+                                            <p class="font-medium">تاریخ مراجعه : {{ data.selected_date|string_to_jalali:"%Y-%m-%d" }}</p>
+                                            {% if data.is_confirmed %}
+                                            <p class="text-sm text-gray-500">وضعیت نوبت : فعال</p>
+                                            {% else %}
+                                            <p class="text-sm text-gray-500">وضعیت نوبت : غیر فعال</p>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
+                                {% endfor %}
                                 
-                                <div class="appointment-card p-4 hover:bg-gray-50 transition duration-200 cursor-pointer">
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center">
-                                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-3">
-                                                <i class="fas fa-user-md"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium">دکتر احمدی</p>
-                                                <p class="text-sm text-gray-500">متخصص داخلی</p>
-                                            </div>
-                                        </div>
-                                        <div class="text-left">
-                                            <p class="font-medium">1403/01/20 - 14:00</p>
-                                            <p class="text-sm text-gray-500">آزمایش خون</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="appointment-card p-4 hover:bg-gray-50 transition duration-200 cursor-pointer bg-green-50">
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center">
-                                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3">
-                                                <i class="fas fa-user-md"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium">دکتر محمدی</p>
-                                                <p class="text-sm text-gray-500">متخصص قلب و عروق</p>
-                                            </div>
-                                        </div>
-                                        <div class="text-left">
-                                            <p class="font-medium">1403/01/12 - 11:00</p>
-                                            <p class="text-sm text-gray-500">ویزیت انجام شده</p>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
+
+
                         </div>
                         
                         <!-- Prescriptions section -->
