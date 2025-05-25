@@ -46,7 +46,7 @@ def public_user_messages(request):
     template_name = 'contacts/partials/public_user_messages.html'
     
     initial_data = {}
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and not request.user.is_admin:
         try:
             current_user_if_logged_in = request.user
             user = Customuser.objects.get(id=current_user_if_logged_in.id)
@@ -67,29 +67,37 @@ def public_user_messages(request):
     
     
     if request.method == 'POST':
-        contact_form = ContactForm(request.POST)
+        if not request.user.is_admin:
+            contact_form = ContactForm(request.POST)
+        
+            if contact_form.is_valid():
+                ContactMessage.objects.create(
+                    name = contact_form.cleaned_data['name'],
+                    email = contact_form.cleaned_data['email'],
+                    phone = contact_form.cleaned_data['phone'],
+                    message = contact_form.cleaned_data['message'],
+                )
     
-        if contact_form.is_valid():
-            ContactMessage.objects.create(
-                name = contact_form.cleaned_data['name'],
-                email = contact_form.cleaned_data['email'],
-                phone = contact_form.cleaned_data['phone'],
-                message = contact_form.cleaned_data['message'],
-            )
+                context = {
+                    'contact_form' : contact_form,
+                }
+    
+                messages.success(request,'پیام شما با موفقیت ثبت شد،اپراتور های ما در اولین فرصت پاسخ شما را خواهند داد')
+                return redirect('main:index')
 
-            context = {
-                'contact_form' : contact_form,
-            }
-
-            messages.success(request,'پیام شما با موفقیت ثبت شد،اپراتور های ما در اولین فرصت پاسخ شما را خواهند داد')
-            return redirect('main:index')
-
+            else:
+                context = {
+                    'contact_form' : contact_form,
+                }
+                messages.error(request,'یکی از اطلاعات شما نامعتبر است',context)
+                return redirect('main:index')
         else:
             context = {
                 'contact_form' : contact_form,
             }
-            messages.error(request,'یکی از اطلاعات شما نامعتبر است',context)
+            messages.warning(request,'فقط کاربران عادی می توانند پیام دهند، شما مدیر سایت هستید','warning')
             return redirect('main:index')
+        
     return render(request, template_name, context)
 
 
