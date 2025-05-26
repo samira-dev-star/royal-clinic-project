@@ -155,8 +155,8 @@
                 <div class="flex items-center space-x-4 space-x-reverse">
                     <div class="relative">
                         <button class="text-gray-600 hover:text-gray-900">
-                            <i class="fas fa-bell text-xl"></i>
-                            <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                            {% comment %} <i class="fas fa-bell text-xl"></i> {% endcomment %}
+                            {% comment %} <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span> {% endcomment %}
                         </button>
                     </div>
                     
@@ -188,15 +188,21 @@
                         </div>
                     </div>
                     
-                    <div class="bg-white rounded-lg shadow p-6 flex items-center">
-                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
-                            <i class="fas fa-file-prescription text-xl"></i>
+
+                    {% comment %} <div class="bg-white rounded-lg shadow p-6 flex items-center"> {% endcomment %}
+                        <div class="image_containerr">
+                            <p class="text-gray-500 text-sm">
+                            {% if patient_data.image_name %}
+                                <img class="userpanel_image" id="profile-preview" src="{{ patient_data.image_name.url }}" alt="تصویر پروفایل"      class="profile-image">
+                            {% else %}
+                                <img id="profile-preview" src="{{media_url}}images/patients/user.png" alt="تصویر پروفایل"       class="default-profile-image">
+                            {% endif %}
+                            </p>
+                            <p class="text-2xl font-bold center">تصویر پروفایل</p>
                         </div>
-                        <div>
-                            <p class="text-gray-500 text-sm">نسخه‌های جدید</p>
-                            <p class="text-2xl font-bold">3</p>
-                        </div>
-                    </div>
+                    {% comment %} </div> {% endcomment %}
+
+
                     
                     <div class="bg-white rounded-lg shadow p-6 flex items-center">
                         <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-4">
@@ -213,8 +219,10 @@
                             <i class="fas fa-clock text-xl"></i>
                         </div>
                         <div>
-                            <p class="text-gray-500 text-sm">آخرین ویزیت</p>
-                            <p class="text-2xl font-bold">1403/01/12</p>
+                            <p class="text-gray-500 text-sm">تاریخ آخرین نوبت آنلاین</p>
+                            {% for resevation in reservations %}
+                            <p class="text-2xl font-bold">{{resevation.created_at|jformat:"%Y/%m/%d - %H:%M"}}</p>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -224,7 +232,7 @@
                     <div class="lg:col-span-2">
                         <div class="bg-white rounded-lg shadow overflow-hidden">
                             <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                                <h3 class="font-bold text-lg">نوبت‌های آینده</h3>
+                                <h3 class="font-bold text-lg">نوبت‌های آنلاین شما</h3>
                                 <a href="{% url "reservation:reservation_main_page" %}" class="gradient-bg text-white px-4 py-2 rounded-md text-sm btn-hover">
                                     <i class="fas fa-plus ml-2"></i>
                                     نوبت جدید
@@ -241,8 +249,8 @@
                                                 <i class="fas fa-user-md"></i>
                                             </div>
                                             <div>
-                                                <p class="font-medium">{{data.name}}{{data.family}}</p>
-                                                {% comment %} <p class="text-sm text-gray-500">تاریخ ثبت نوبت : {{data.created_at}}</p> {% endcomment %}
+                                                <p class="font-medium">{{data.name}}{{data.family}} -<span class="font-medium servicename"> نوبت : {{data.service}}</span></p>
+                                                
                                                 
                                                 <p class="text-sm text-gray-500">تاریخ ثبت نوبت : {{ data.created_at|jformat:"%Y/%m/%d - %H:%M" }}
 
@@ -251,9 +259,9 @@
                                         <div class="text-left">
                                             <p class="font-medium">تاریخ مراجعه : {{ data.selected_date|string_to_jalali:"%Y-%m-%d" }}</p>
                                             {% if data.is_confirmed %}
-                                            <p class="text-sm text-gray-500">وضعیت نوبت : فعال</p>
+                                            <p class="text-sm text-gray-500">وضعیت نوبت : <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">فعال</span></p>
                                             {% else %}
-                                            <p class="text-sm text-gray-500">وضعیت نوبت : غیر فعال</p>
+                                            <p class="text-sm text-gray-500">وضعیت نوبت : <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">در حال بررسی</span></p>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -344,7 +352,7 @@
                                     <span class="text-sm">رزرو نوبت</span>
                                 </a>
                                 
-                                <button class="bg-blue-500 text-white p-4 rounded-lg flex flex-col items-center justify-center btn-hover">
+                                <button id="crisp-chat-btn" class="bg-blue-500 text-white p-4 rounded-lg flex flex-col items-center justify-center btn-hover">
                                     <i class="fas fa-comment-medical text-2xl mb-2"></i>
                                     <span class="text-sm">مشاوره آنلاین</span>
                                 </button>

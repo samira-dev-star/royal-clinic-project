@@ -26,3 +26,27 @@ window.addEventListener('scroll', () => {
 backToTopButton.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+// --------------------------------------------------
+
+    window.$crisp = [];
+    window.CRISP_WEBSITE_ID = "5d6dc27b-5aa5-4012-b153-84b03621eb93";
+
+    (function () {
+        var d = document;
+        var s = d.createElement("script");
+        s.src = "https://client.crisp.chat/l.js";
+        s.async = 1;
+        s.onload = function () {
+            console.log("Crisp Loaded ✅");
+            // فعال کردن دکمه بعد از لود کامل
+            const chatBtn = document.getElementById("crisp-chat-btn");
+            if (chatBtn) {
+                chatBtn.addEventListener("click", function () {
+                    $crisp.push(["do", "chat:open"]);
+                });
+            }
+        };
+        d.getElementsByTagName("head")[0].appendChild(s);
+    })();
+
