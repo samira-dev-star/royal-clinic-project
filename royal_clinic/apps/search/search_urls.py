@@ -3,4 +3,6 @@ from . import views
 
 app_name = 'search'
 
-urlpatterns = []
+urlpatterns = [
+    path('',views.SearchResultsView.as_view(),name="search_view"),
+]

@@ -58,59 +58,10 @@
         {% include "patient_panel/partials/patients_list.html" %}
         
         <!-- Pagination -->
+        {% include "patient_panel/partials/paginator.html" %}
         
-        <div class="mt-10 flex justify-center">
-        <nav class="flex items-center gap-1">
-
-        {# دکمه رفتن به صفحه قبل #}
-        {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}"
-               class="w-10 h-10 flex items-center justify-center rounded-lg bg-white shadow-md text-pink-600 hover:bg-pink-50 transition-all">
-                <i class="fas fa-chevron-right"></i>
-            </a>
-        {% else %}
-            <span class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-200 text-gray-400 cursor-not-allowed">
-                <i class="fas fa-chevron-right"></i>
-            </span>
-        
-
-        {# حلقه شماره صفحات با منطق ساده‌تر #}
-        {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-                <span class="w-10 h-10 flex items-center justify-center rounded-lg bg-pink-600 text-white shadow-md">{{ num }}</span>
-            {% elif num <= 2 %}
-                <a href="?page={{ num }}" class="w-10 h-10 flex items-center justify-center rounded-lg bg-white shadow-md hover:bg-pink-50 transition-all">{{ num }}</a>
-            {% elif num == 3 %}
-                <span class="px-2">...</span>
-            {% elif num >= page_obj.number|add:'-1' and num <= page_obj.number|add:'1' %}
-                <a href="?page={{ num }}" class="w-10 h-10 flex items-center justify-center rounded-lg bg-white shadow-md hover:bg-pink-50 transition-all">{{ num }}</a>
-            {% elif num == page_obj.paginator.num_pages|add:'-2' %}
-                <span class="px-2">...</span>
-            {% elif num > page_obj.paginator.num_pages|add:'-2' %}
-                <a href="?page={{ num }}" class="w-10 h-10 flex items-center justify-center rounded-lg bg-white shadow-md hover:bg-pink-50 transition-all">{{ num }}</a>
-            {% endif %}
-        {% endfor %}
-
-        {# دکمه رفتن به صفحه بعد #}
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}"
-               class="w-10 h-10 flex items-center justify-center rounded-lg bg-white shadow-md text-pink-600 hover:bg-pink-50 transition-all">
-                <i class="fas fa-chevron-left"></i>
-            </a>
-        {% else %}
-            <span class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-200 text-gray-400 cursor-not-allowed">
-                <i class="fas fa-chevron-left"></i>
-            </span>
-        {% endif %}
-
-        </nav>
-            </div>
-            {% endif %}
-
-    </div>
-
-    <script src="{% static "js/patients_list.js" %}">
-    </script>
+        {% block extra_js %}<script src="{% static "js/patients_list.js" %}"></script>{% endblock extra_js %}
+    
 
 </body>
 {% endblock content %}
