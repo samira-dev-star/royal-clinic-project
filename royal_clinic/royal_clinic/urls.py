@@ -31,8 +31,10 @@ urlpatterns = [
     path('patient_panel/', include('apps.patient_panel.patient_panel_urls' , namespace='patient')),
     path('reservation/', include('apps.reservation.reservation_urls' , namespace='reservation')),
     path('realtime_chat/', include('apps.realtime_chat.realtime_chat_urls' , namespace='realtime_chat')),
+    path('search/',include('apps.search.search_urls' , namespace='search')),
     
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    
     
     
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
