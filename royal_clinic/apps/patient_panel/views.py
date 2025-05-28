@@ -1,3 +1,4 @@
+from urllib import request
 from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -5,7 +6,8 @@ from django.db import transaction
 from .models import CustomPatient,MedicalHistoryItem,Allergy,CurrentMedications
 from .patient_panel_form import CustomPatientForm, AllergyFormSet, MedicalHistoryFormSet,CurrentMedicationsFormSet
 from django.contrib.auth.mixins import LoginRequiredMixin     
-        
+from django.core.paginator import Paginator
+
 class CompletePatientProfileView(LoginRequiredMixin,View):
     template_name = 'patient_panel/patient_profile.html'
     def get(self, request):
@@ -87,6 +89,7 @@ class ShowMedicalHistoryAndAllergiesView(View):
     def get(self,*args, **kwargs):
         current_patient = kwargs['id']
         patient = CustomPatient.objects.filter(user_id=current_patient)
+        
         medical_history = MedicalHistoryItem.objects.filter(patient_id=current_patient)
         medicine = CurrentMedications.objects.filter(patient_id=current_patient)
         allergies = Allergy.objects.filter(patient_id=current_patient)
@@ -94,7 +97,8 @@ class ShowMedicalHistoryAndAllergiesView(View):
             'patient':patient,
             'medical_history':medical_history,
             'medicine':medicine,
-            'allergies':allergies
+            'allergies':allergies,
+            
         }
         
         return render(self.request,'patient_panel/medical_history_and_allergies.html',context)
@@ -102,10 +106,30 @@ class ShowMedicalHistoryAndAllergiesView(View):
 # ----------------------------------------------------
 
 class PatientsList(View):
-    def get(self,*args, **kwargs):
+    def get(self,request,*args, **kwargs):
         patients = CustomPatient.objects.all()
+        
+        sort_type = request.GET.get('sort_type')
+        if not sort_type:
+            sort_type = "0"
+        if sort_type =="1":
+            patients = patients.order_by('-user_id')
+        elif sort_type =="2":
+            patients = patients.order_by('user_id')
+        
+        paginator = Paginator(patients, 6)
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        
+        
+        
         context = {
-            'patients':patients
+            'patients':page_obj.object_list,
+            'page_obj':page_obj,
+            'sort_type':sort_type,
         }
         return render(self.request,'patient_panel/patients_list.html',context)
     
+
+
+
