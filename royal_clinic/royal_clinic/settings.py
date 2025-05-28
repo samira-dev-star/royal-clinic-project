@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     
-    'jalali_date', 
+    
     'django_jalali',
     'django.contrib.humanize',
     
@@ -58,7 +58,10 @@ INSTALLED_APPS = [
     'apps.user_services.apps.UserServicesConfig',
     'apps.comments_scores_favourites.apps.CommentsScoresFavouritesConfig',
     'apps.contact.apps.ContactConfig',
+    
+    'jalali_date', 
     'apps.patient_panel.apps.PatientPanelConfig',
+    
     'apps.reservation.apps.ReservationConfig',
     'apps.realtime_chat.apps.RealtimeChatConfig',
 ]
@@ -76,6 +79,28 @@ MIDDLEWARE = [
 
     
 ]
+
+
+
+JALALI_DATE_DEFAULTS = {
+    'LIST_DISPLAY_AUTO_CONVERT': False,
+    'Strftime': {
+        'date': '%y/%m/%d',
+        'datetime': '%H:%M:%S _ %y/%m/%d',
+    },
+    'Static': {
+        'js': [
+            'admin/js/django_jalali.min.js',
+        ],
+        'css': {
+            'all': [
+                'admin/css/django_jalali.min.css',
+            ]
+        }
+    },
+}
+
+
 
 ROOT_URLCONF = 'royal_clinic.urls'
 

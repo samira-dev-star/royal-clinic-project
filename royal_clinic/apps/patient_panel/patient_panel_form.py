@@ -1,6 +1,14 @@
 from django import forms
-from .models import CustomPatient, Allergy, MedicalHistoryItem
+from .models import CustomPatient, Allergy, MedicalHistoryItem,CurrentMedications
 from django.forms import inlineformset_factory
+
+# --------------------------------------
+# jalali date picker in forms
+from jalali_date.fields import JalaliDateField
+from jalali_date.widgets import AdminJalaliDateWidget
+
+
+
 
 class CustomPatientForm(forms.ModelForm):
     class Meta:
@@ -145,6 +153,36 @@ class MedicalHistoryForm(forms.ModelForm):
                 'placeholder': 'توضیحات'
             }),
         }
+        
+
+class CurrentMedicationsForm(forms.ModelForm):
+
+    class Meta:
+        model = CurrentMedications
+        fields = ['medication_name', 'dosage', 'priscribed_at', 'using_state']
+        widgets = {
+            'medication_name': forms.TextInput(attrs={
+                'class': 'form-input w-full',
+                'placeholder': 'نام دارو'
+            }),
+            'dosage': forms.TextInput(attrs={
+                'class': 'form-input w-full',
+                'placeholder': 'دوز مصرف'
+            }),
+            'using_state': forms.Select(attrs={
+                'class': 'form-input w-full'
+            }),
+            # 'priscribed_at': forms.TextInput(attrs={
+            # 'class': 'form-input w-full jalali-datepicker',
+            # 'placeholder': '01/02/1404',
+            # 'autocomplete': 'off'
+            # })
+        }
+        
+    def __init__(self, *args, **kwargs):
+        super(CurrentMedicationsForm,self).__init__(*args, **kwargs)
+        self.fields['priscribed_at']=JalaliDateField(widget=AdminJalaliDateWidget(attrs={'placeholder': '01/02/1404',}))
+        
 
 AllergyFormSet = inlineformset_factory(
     CustomPatient, Allergy, form=AllergyForm,
@@ -154,4 +192,11 @@ AllergyFormSet = inlineformset_factory(
 MedicalHistoryFormSet = inlineformset_factory(
     CustomPatient, MedicalHistoryItem, form=MedicalHistoryForm,
     extra=0, can_delete=True 
+)
+
+
+
+CurrentMedicationsFormSet = inlineformset_factory(
+    CustomPatient, CurrentMedications, form=CurrentMedicationsForm,
+    extra=0, can_delete=True
 )

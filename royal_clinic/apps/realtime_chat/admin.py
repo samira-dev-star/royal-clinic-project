@@ -29,8 +29,6 @@ class CrispAdmin(admin.ModelAdmin):
     def changelist_view(self, request, extra_context=None):
         # به جای نمایش لیست، مستقیم یک دکمه Crisp نشون می‌دیم
         return HttpResponse("""
-            
-                
                     <!DOCTYPE html>
                     <html lang="en">
                     <head>
@@ -128,6 +126,4 @@ class CrispAdmin(admin.ModelAdmin):
                         </script>
                     </body>
                     </html>
-            
-            
                     """)

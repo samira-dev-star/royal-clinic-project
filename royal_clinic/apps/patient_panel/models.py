@@ -4,6 +4,7 @@ from utils import FileUpload
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib import admin
+import django_jalali.db.models as jmodels
 # Create your models here.
 
 class CustomPatient(models.Model):
@@ -76,3 +77,34 @@ class MedicalHistoryItem(models.Model):
     class Meta:
         verbose_name = 'بیماری یا سابقه'
         verbose_name_plural = 'بیماری یا سابقه'
+
+
+
+class CurrentMedications(models.Model):
+    patient = models.ForeignKey(CustomPatient, on_delete=models.CASCADE, related_name='medications', verbose_name='بیمار')
+    medication_name = models.CharField(max_length=100, verbose_name='نام دارو',null=True, blank=True)
+    dosage = models.CharField(max_length=100, verbose_name='دوز مصرف',null=True, blank=True)
+    priscribed_at = models.DateField(default=timezone.now, verbose_name='تاریخ شروع مصرف',null=True, blank=True)
+    USING_STATE = (
+        ('در حال استفاده', 'در حال استفاده'),
+        ('مصرف تمام شده', 'مصرف تمام شده'),
+    )
+    using_state = models.CharField(max_length=20, choices=USING_STATE, default='still_using', verbose_name='وضعیت استفاده')
+   
+
+    def __str__(self):
+        return self.medication_name
+    
+    class Meta:
+        verbose_name = 'دارو'
+        verbose_name_plural = 'داروها'
+        
+        
+        
+class ShowPatientPanelForAdmin(models.Model):
+    class Meta:
+        verbose_name = 'نمایش پنل و اطلاعات بیماران'
+        verbose_name_plural = 'نمایش پنل و اطلاعات بیماران'
+        
+    def __str__(self):
+        return "نمایش پنل و اطلاعات بیماران"

@@ -203,7 +203,9 @@ class UserPanelView(View,LoginRequiredMixin):
         context = {
             'patient_data':patient_data,
             'reservations':reservations,
+            'current_user':current_user
         }
+        
         return render(request,self.template_name,context)
     
 #----------------------------------------------------------------------------------------------------------------

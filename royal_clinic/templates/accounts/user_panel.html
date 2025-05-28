@@ -193,7 +193,7 @@
                         <div class="image_containerr">
                             <p class="text-gray-500 text-sm">
                             {% if patient_data.image_name %}
-                                <img class="userpanel_image" id="profile-preview" src="{{ patient_data.image_name.url }}" alt="تصویر پروفایل"      class="profile-image">
+                                <img class="userpanel_image" id="profile-preview" src="{{ patient_data.image_name.url }}" alt="تصویر پروفایل" class="profile-image">
                             {% else %}
                                 <img id="profile-preview" src="{{media_url}}images/patients/user.png" alt="تصویر پروفایل"       class="default-profile-image">
                             {% endif %}
@@ -221,7 +221,7 @@
                         <div>
                             <p class="text-gray-500 text-sm">تاریخ آخرین نوبت آنلاین</p>
                             {% for resevation in reservations %}
-                            <p class="text-2xl font-bold">{{resevation.created_at|jformat:"%Y/%m/%d - %H:%M"}}</p>
+                            <p class="text-2xl font-bold">{{resevation.created_at}}</p>
                             {% endfor %}
                         </div>
                     </div>
@@ -362,10 +362,10 @@
                                     <span class="text-sm">دریافت نسخه</span>
                                 </button>
                                 
-                                <button class="bg-yellow-500 text-white p-4 rounded-lg flex flex-col items-center justify-center btn-hover">
+                                <a href="{% url "patient:medical_history_and_allergies" id=patient_data.user.id %}" class="bg-yellow-500 text-white p-4 rounded-lg flex flex-col items-center justify-center btn-hover">
                                     <i class="fas fa-file-medical text-2xl mb-2"></i>
                                     <span class="text-sm">پرونده پزشکی</span>
-                                </button>
+                                </a>
                             </div>
                             
                             <div class="px-6 py-4 border-t border-gray-200">

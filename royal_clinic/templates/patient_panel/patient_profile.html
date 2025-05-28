@@ -1,10 +1,15 @@
 {% extends "main_template.html" %}
+
+{% load jalali_tags %}
 {% load static %}
     
 {% block title %}ویرایش و تکمیل پروفایل{% endblock title %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static "css/patient_profile.css" %}">
+<link rel="stylesheet" href="{% static "css/medical_history.css" %}">
+<!-- Persian Datepicker CSS -->
+
 {% endblock extra_css %}
 
 {% block content %}
@@ -187,6 +192,58 @@
                         {% endfor %}
                     </div>
                 </div>
+
+                
+               
+               <!-- بخش داروهای مصرفی -->
+                <div class="form-section bg-gray-50 p-6 rounded-lg mb-6" id="medications-section">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-pills text-blue-500 ml-2 text-xl"></i>
+                            <h2 class="text-xl font-semibold text-gray-800">داروهای مصرفی اخیر</h2>
+                        </div>
+                        <button type="button" onclick="addMedicationForm()" class="add-btn bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm flex items-center">
+                            <i class="fas fa-plus ml-1"></i> افزودن دارو
+                        </button>
+                    </div>
+
+                    {{ medicine_formset.management_form }}
+                    <div id="medication-fields">
+                        {% for form in medicine_formset %}
+                        <div class="medication-form mb-4 border rounded p-4 shadow-sm">
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">نام دارو</label>
+                                    {{ form.medication_name }}
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">دوز مصرف</label>
+                                    {{ form.dosage }}
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">تاریخ شروع مصرف</label>
+                                    {{ form.priscribed_at }}
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">وضعیت استفاده</label>
+                                    {{ form.using_state }}
+                                </div>
+                            </div>
+                            <div class="flex justify-end mt-2">
+                                <button type="button" onclick="removeForm(this, 'medication')" class="bg-red-500 text-white px-3 py-2 rounded-lg">
+                                    <i class="fas fa-trash"></i> حذف
+                                </button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+               
                 
                 <!-- Submit Button -->
                 <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-8">
@@ -200,10 +257,22 @@
             </form>
         </div>
     </div>
-    {% block extra_js %}<script src="{% static "js/patient_panel.js" %}"></script>{% endblock extra_js %}
 
-
-{% comment %} --------------------------------------------------------------------------------------------- {% endcomment %}
 
 {% endblock content %}
 
+
+
+    {% block extra_js %}
+        <script src="{% static "js/patient_panel.js" %}"></script>
+        <!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+<!-- Persian Date & Datepicker -->
+<script src="https://cdn.jsdelivr.net/npm/persian-date@1.0.6/dist/persian-date.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+
+<!-- راه‌اندازی تقویم برای همه فیلدهای تاریخ -->
+
+
+    {% endblock extra_js %}

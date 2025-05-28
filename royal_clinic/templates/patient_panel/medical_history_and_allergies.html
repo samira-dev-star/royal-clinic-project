@@ -1,0 +1,285 @@
+{% extends "main_template.html" %}
+{% load static %}
+
+{% load jformat %}
+    
+{% block title %}اطلاعات زیباجو{% endblock title %}
+
+{% block extra_css %}
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{% static "css/medical_history.css" %}">{% endblock extra_css %}
+
+{% block content %}
+{% comment %} specifying with id="print-area" the part i want to download {% endcomment %}
+<body class="min-h-screen" id="print-area" class="avoid-break">
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <!-- Header -->
+        <header class="gradient-bg text-white rounded-xl shadow-lg mb-8 overflow-hidden">
+            <div class="flex flex-col md:flex-row items-center p-6 md:p-8">
+                {% for data in patient %}
+                {% if data.image_name %}
+                <div class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white/20 bg-white/10 flex items-center justify-center mb-4 md:mb-0 md:mr-6">
+                    <img class="medical_history_image" src="{{media_url}}{{data.image_name}}" alt="تصویر پروفایل">
+                </div>
+                {% else %}
+                <div class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white/20 bg-white/10 flex items-center justify-center mb-4 md:mb-0 md:mr-6">
+                    <i class="fas fa-user text-4xl md:text-5xl text-white/80"></i>
+                </div>
+                {% endif %}
+                <div class="text-center md:text-right">
+                    <h1 class="text-2xl md:text-3xl font-bold">{{data.user.name}} {{data.user.family}}</h1>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                        {% if data.user.gender == 'زن' %}
+                        <span class="px-3 py-1 bg-white/20 rounded-full text-sm flex items-center">
+                            <i class="fas fa-venus mr-1"></i> Female
+                        </span>
+                        {% elif data.user.gender == 'مرد' %}
+                        <span class="px-3 py-1 bg-white/20 rounded-full text-sm flex items-center">
+                            <i class="fas fa-venus mr-1"></i> Male
+                        </span>
+                        {% else %}
+                        {% endif %}
+                        <span class="px-3 py-1 bg-white/20 rounded-full text-sm flex items-center">
+                            <i class="fas fa-birthday-cake mr-1"></i> {{data.get_age}}
+                        </span>
+                        {% if data.emergency_contact %}
+                        <span class="px-3 py-1 bg-white/20 rounded-full text-sm flex items-center">
+                            <i class="fas fa-phone mr-1"></i> {{data.emergency_contact}}
+                        </span>
+                        {% endif %}
+                        <span class="px-3 py-1 bg-white/20 rounded-full text-sm flex items-center">
+                            <i class="fas fa-phone mr-1"></i> {{data.user.mobile_number}}
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="ml-auto hidden md:block printer">
+
+                    <button onclick="window.print()" class="bg-white text-blue-600 px-6 py-2 rounded-lg font-medium hover:bg-blue-50 transition">
+                        <i class="fas fa-print mr-2"></i> Print Profile
+                    </button>
+
+                    {% comment %} adding a button with onclick for downloading {% endcomment %}
+                    <button onclick="downloadPDF()" class="bg-green-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-green-600 transition printer ml-4">
+                        <i class="fas fa-file-pdf mr-2"></i> دانلود PDF
+                    </button>
+                    
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left Column -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Medical History Card -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                    <div class="border-b border-gray-100 px-6 py-4 bg-gray-50 flex justify-between items-center">
+                        <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+                            <i class="fas fa-history text-blue-500 mr-3"></i> سوابق پزشکی
+                        </h2>
+                        
+                    </div>
+                    {% for data in medical_history %}
+                    <div class="p-6">
+                        <div class="space-y-6">
+                            <!-- Timeline Item -->
+                            <div class="timeline-item relative pl-12">
+                                <div class="absolute left-0 top-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                    <i class="fas fa-heartbeat text-blue-500"></i>
+                                </div>
+                                <div class="bg-blue-50 rounded-lg p-4">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h3 class="font-medium text-gray-800">{{data.title}}</h3>
+                                        </div>
+                                        <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">سال تشخیص : {{data.diagnosis_year}}</span>
+                                    </div>
+                                    <p class="mt-2 text-sm text-gray-600">{{data.description}}</p>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                
+                <!-- Current Medications -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                    <div class="border-b border-gray-100 px-6 py-4 bg-gray-50">
+                        <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+                            <i class="fas fa-pills text-indigo-500 mr-3"></i> داروهایی که اخیرا مصرف کرده اید
+                        </h2>
+                    </div>
+                    {% for data in medicine %}
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Medication Card -->
+                            <div class="border border-gray-200 rounded-lg p-4 hover:border-indigo-300 transition">
+                                <div class="flex justify-between">
+                                    <h3 class="font-medium text-gray-800">{{data.medication_name}}</h3>
+                                    <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded">{{data.using_state}}</span>
+                                </div>
+                                <p class="text-sm text-gray-500 mt-1">{{data.dosage}}</p>
+                                <div class="mt-3 text-sm">
+                                    <p class="text-gray-600"><span class="font-medium">دوز مصرفی:</span> {{data.dosage}}</p>
+                                    <p class="text-gray-600"><span class="font-medium">تاریخ شروع مصرف:</span> {{data.priscribed_at|jformat:"%Y/%m/%d"}}</p>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+            </div>
+            
+
+            <!-- Right Column -->
+            <div class="space-y-6">
+                <!-- Allergies Card -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                    <div class="border-b border-gray-100 px-6 py-4 bg-gray-50 flex justify-between items-center">
+                        <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+                            <i class="fas fa-allergies text-red-500 mr-3"></i> آلرژی و حساسیت ها
+                        </h2>
+                        
+                    </div>
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-3">
+
+                            {% for data in allergies %}
+                            <!-- Allergy Chip -->
+                            <div class="allergy-chip bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-full flex items-center">
+                                <i class="fas fa-exclamation-triangle mr-2"></i> {{data.title}}
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+                        
+                        <div class="mt-6 bg-blue-50 border border-blue-100 rounded-lg p-4">
+                            <h3 class="font-medium text-blue-800 flex items-center">
+                                <i class="fas fa-info-circle mr-2"></i> Allergy Notes
+                            </h3>
+                            <p class="mt-2 text-sm text-blue-700">
+                                Patient experiences anaphylaxis with penicillin exposure. Sulfa drugs cause rash and itching. Dust mite allergy manifests as allergic rhinitis.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vital Signs -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                    <div class="border-b border-gray-100 px-6 py-4 bg-gray-50">
+                        <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+                            <i class="fas fa-heartbeat text-purple-500 mr-3"></i> Vital Signs
+                        </h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <!-- Vital Sign -->
+                            <div class="bg-white border border-gray-200 rounded-lg p-4 text-center">
+                                <div class="text-3xl font-bold text-purple-600">122/78</div>
+                                <div class="text-sm text-gray-500 mt-1">Blood Pressure</div>
+                                <div class="text-xs text-green-600 mt-1 flex items-center justify-center">
+                                    <i class="fas fa-arrow-down mr-1"></i> Improved from 130/85
+                                </div>
+                            </div>
+                            
+                            <!-- Vital Sign -->
+                            <div class="bg-white border border-gray-200 rounded-lg p-4 text-center">
+                                <div class="text-3xl font-bold text-purple-600">72</div>
+                                <div class="text-sm text-gray-500 mt-1">Pulse (bpm)</div>
+                                <div class="text-xs text-gray-500 mt-1">Normal range</div>
+                            </div>
+                            
+                            <!-- Vital Sign -->
+                            <div class="bg-white border border-gray-200 rounded-lg p-4 text-center">
+                                <div class="text-3xl font-bold text-purple-600">98.6°F</div>
+                                <div class="text-sm text-gray-500 mt-1">Temperature</div>
+                                <div class="text-xs text-gray-500 mt-1">Normal</div>
+                            </div>
+                            
+                            <!-- Vital Sign -->
+                            <div class="bg-white border border-gray-200 rounded-lg p-4 text-center">
+                                <div class="text-3xl font-bold text-purple-600">18</div>
+                                <div class="text-sm text-gray-500 mt-1">Respiration</div>
+                                <div class="text-xs text-gray-500 mt-1">Normal</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <h3 class="text-sm font-medium text-gray-700 mb-2">Last Recorded: 2 days ago</h3>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Next check-up in 3 days</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Contacts -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                    <div class="border-b border-gray-100 px-6 py-4 bg-gray-50">
+                        <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+                            <i class="fas fa-address-book text-green-500 mr-3"></i> Emergency Contacts
+                        </h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <!-- Contact -->
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                                    <i class="fas fa-user text-green-500"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">David Johnson</h3>
+                                    <p class="text-sm text-gray-500">Husband • (555) 987-6543</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Contact -->
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                                    <i class="fas fa-user text-green-500"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Lisa Thompson</h3>
+                                    <p class="text-sm text-gray-500">Sister • (555) 456-7890</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Contact -->
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                                    <i class="fas fa-building text-green-500"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">City General Hospital</h3>
+                                    <p class="text-sm text-gray-500">Emergency • (555) 911-9111</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button (Mobile) -->
+    <div class="fixed bottom-6 right-6 md:hidden">
+        <button class="w-14 h-14 rounded-full gradient-bg text-white shadow-lg flex items-center justify-center">
+            <i class="fas fa-plus text-xl"></i>
+        </button>
+    </div>
+
+    {% block extra_js %}
+    {% comment %} this cdn is for downloading this page in pdf format {% endcomment %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <script src="{% static 'js/medical_history.js' %}"></script>
+    {% endblock extra_js %}
+</body>
+{% endblock content %}
