@@ -1,6 +1,8 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static "css/header.css" %}">
+
+{% if type == 1 %}
 <!-- Header -->
 <header class="bg-white shadow-md sticky top-0 z-50">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
@@ -26,6 +28,79 @@
             <a href="{% url "account:register" %}" class="nav-link text-gray-700 hover:text-amber-700 font-medium">ایجاد حساب کاربری</a>
             <a href="{% url "account:login" %}" class="nav-link text-gray-700 hover:text-amber-700 font-medium">ورود</a>
             {% endif %}
+
+            
+
+        </nav>
+        
+        <div class="flex items-center space-x-3 space-x-reverse">
+            {% for data in contacts %}
+            {% if data.mobile_number1 %}
+            <a href="tel:{{data.mobile_number1}}" class="bg-amber-100 text-amber-800 px-4 py-2 rounded-full flex items-center">
+                <i class="fas fa-phone ml-2"></i>
+                <span>{{data.mobile_number1}}</span>    
+            </a>
+            {% endif %}
+            {% if data.mobile_number2 %}
+            <a href="tel:{{data.mobile_number2}}" class="bg-amber-100 text-amber-800 px-4 py-2 rounded-full flex items-center">
+                <i class="fas fa-phone ml-2"></i>
+                <span>{{data.mobile_number2}}</span>    
+            </a>
+            {% endif %}
+            {% endfor %}
+
+            {% if user.is_authenticated %}
+            <a href="{% url "account:userpanel" %}" class="bg-amber-100 text-amber-800 px-4 py-2 rounded-full flex items-center">
+                <span>حساب کاربری شما</span>
+            </a>
+            {% endif %}
+
+
+            <button class="md:hidden text-gray-700" id="mobile-menu-button">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </div>
+    {% include "partials/search_bar.html" %}
+    
+    <!-- Mobile menu -->
+    <div class="md:hidden hidden bg-white w-full py-3 px-4 shadow-md" id="mobile-menu">
+        <div class="flex flex-col space-y-3">
+            <a href="{% url "main:index" %}" class="text-gray-700 hover:text-amber-700 font-medium py-2 border-b border-gray-100">صفحه اصلی</a>
+            <a href="#services" class="text-gray-700 hover:text-amber-700 font-medium py-2 border-b border-gray-100">خدمات</a>
+            <a href="#doctors" class="text-gray-700 hover:text-amber-700 font-medium py-2 border-b border-gray-100">پزشکان</a>
+            <a href="#about" class="text-gray-700 hover:text-amber-700 font-medium py-2 border-b border-gray-100">درباره ما</a>
+            <a href="#contact" class="text-gray-700 hover:text-amber-700 font-medium py-2">تماس با ما</a>
+        </div>
+    </div>
+</header>
+{% elif type == 2 %}
+<header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <div class="flex items-center">
+            {% comment %} <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center">
+                <i class="fas fa-crown text-amber-700 text-xl"></i>  {% endcomment %}
+                <img class="w-14 h-14 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center" src="{{media_url}}images/index/IMG-20240528-WA0012.jpg" alt="index-icon">
+            {% comment %} </div>  {% endcomment %}
+            <h1 class="text-2xl font-bold text-amber-800 mr-3">کلینیک رویال</h1>
+        </div>
+        
+        <nav class="hidden md:flex space-x-8 space-x-reverse">
+            <a href="{% url "main:index" %}" class="nav-link text-gray-700 hover:text-amber-700 font-medium">صفحه اصلی</a>
+            <a href="#services" class="nav-link text-gray-700 hover:text-amber-700 font-medium">خدمات</a>
+            <a href="#doctors" class="nav-link text-gray-700 hover:text-amber-700 font-medium">پزشکان</a>
+            <a href="#about" class="nav-link text-gray-700 hover:text-amber-700 font-medium">درباره ما</a>
+            <a href="#contact" class="nav-link text-gray-700 hover:text-amber-700 font-medium">تماس با ما</a>
+
+
+            {% if user.is_authenticated %}
+            <a href="{% url "account:logout" %}" class="nav-link text-gray-700 hover:text-amber-700 font-medium">خروج</a>
+            {% else %}
+            <a href="{% url "account:register" %}" class="nav-link text-gray-700 hover:text-amber-700 font-medium">ایجاد حساب کاربری</a>
+            <a href="{% url "account:login" %}" class="nav-link text-gray-700 hover:text-amber-700 font-medium">ورود</a>
+            {% endif %}
+
+            
 
         </nav>
         
@@ -61,7 +136,7 @@
     <!-- Mobile menu -->
     <div class="md:hidden hidden bg-white w-full py-3 px-4 shadow-md" id="mobile-menu">
         <div class="flex flex-col space-y-3">
-            <a href="#" class="text-gray-700 hover:text-amber-700 font-medium py-2 border-b border-gray-100">صفحه اصلی</a>
+            <a href="{% url "main:index" %}" class="text-gray-700 hover:text-amber-700 font-medium py-2 border-b border-gray-100">صفحه اصلی</a>
             <a href="#services" class="text-gray-700 hover:text-amber-700 font-medium py-2 border-b border-gray-100">خدمات</a>
             <a href="#doctors" class="text-gray-700 hover:text-amber-700 font-medium py-2 border-b border-gray-100">پزشکان</a>
             <a href="#about" class="text-gray-700 hover:text-amber-700 font-medium py-2 border-b border-gray-100">درباره ما</a>
@@ -69,3 +144,4 @@
         </div>
     </div>
 </header>
+{% endif %}

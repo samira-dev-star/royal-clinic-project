@@ -1,5 +1,5 @@
 
-{% extends "main_template.html" %}
+{% extends "main_login.html" %}
 {% load static %}
 {% load jformat %}
 
@@ -55,7 +55,7 @@
         </div>
         
         <!-- Patient List -->
-        {% include "patient_panel/partials/patients_list.html" %}
+        {% include "patient_panel/partials/patients_box.html" with type=1 %}
         
         <!-- Pagination -->
         {% include "patient_panel/partials/paginator.html" %}

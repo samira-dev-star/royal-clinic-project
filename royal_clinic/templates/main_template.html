@@ -23,7 +23,8 @@
 
 
     <body class="bg-gray-50">
-        {% include "partials/header.html" %}
+        {% include "partials/header.html" with type=1 %}
+        
         {% include "partials/messages.html" %}
 
         {% block content %}

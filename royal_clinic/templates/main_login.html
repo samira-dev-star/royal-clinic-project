@@ -11,12 +11,13 @@
     
     
     <link rel="stylesheet" href="{% static "css/login_form.css" %}">
-    
+    {% block extra_css %}{% endblock extra_css %}
+
 </head>
 
 
 <body class="bg-gray-50">
-    {% include "partials/header.html" %}
+    {% include "partials/header.html" with type=2 %}
     {% include "partials/messages.html" %}
 
     {% block content %}
@@ -25,6 +26,8 @@
     {% endblock content %}
     {% include "partials/footer.html" %}
 
+    {% block extra_js %}{% endblock extra_js %}
+    
     <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="5d6dc27b-5aa5-4012-b153-84b03621eb93";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 </body>
 </html>

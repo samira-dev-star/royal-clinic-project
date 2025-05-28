@@ -1,0 +1,23 @@
+{% load static %}
+<link rel="stylesheet" href="{% static "css/search_bar.css" %}">
+    <div class="relative w-full md:w-96">
+        <div class="drop-search">
+
+
+            <form action="{% url "search:search_view" %}" class="drop-search__form">
+                {% comment %} این اینپوت نامش که کیو گذاشتم فقط برام مهمه چون نام کوئری ستم در وییو کیو گذاشتم{% endcomment %}
+                <input class="search-input w-full pr-10 pl-4 py-3 rounded-lg border border-gray-300 focus:border-pink-400 transition-all search" name="q" placeholder="جستجو" aria-label="Site search" type="text" autocomplete="off" style="background_color:pink;">
+
+                <button class="drop-search__button drop-search__button--submit"
+                    type="submit">
+                    <i class="fas fa-search absolute right-3 top-3.5 text-gray-400"></i>
+                </button>
+            </form>
+
+
+        </div>
+    </div>
+
+
+
+
