@@ -15,54 +15,33 @@
      <!-- Hero Slider -->
       
     <section class="relative h-screen overflow-hidden">
-        
-        <div class="relative h-full w-full">
+        <div class="relative h-full w-full">   
+        {% for data in sliders %}
             
-            <!-- Slider Item 1 -->
-            <div class="slider-item active h-full w-full flex items-center" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1551608873-589110affaa8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;">
+            <!-- Slider Item -->
+            <div class="slider-item active h-full w-full flex items-center"
+                 style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('{{ data.image_name.url }}') center/cover;">
+
+                <div class="container mx-auto px-4 text-white">
+                    {% if data.slider_title1 %}
+                    <h2 class="text-4xl md:text-6xl font-bold mb-6">{{ data.slider_title1 }}</h2>
+                    {% endif %}
                 
-                <div class="container mx-auto px-4 text-white">
-                    <h2 class="text-4xl md:text-6xl font-bold mb-6">زیبایی طبیعی، اعتماد به نفس بیشتر</h2>
-                    <p class="text-xl md:text-2xl mb-8 max-w-2xl">با جدیدترین تکنولوژی‌های روز دنیا، زیبایی طبیعی خود را کشف کنید</p>
-                    
-                    <a href="#appointment" class="appointment-btn text-amber-900 font-bold px-8 py-4 rounded-full inline-flex items-center">
+                    {% if data.slider_title2 %}
+                    <p class="text-xl md:text-2xl mb-4 max-w-2xl">{{ data.slider_title2 }}</p>
+                    {% endif %}
+                
+                    {% if data.slider_title3 %}
+                    <p class="text-lg md:text-xl mb-6 max-w-2xl">{{ data.slider_title3 }}</p>
+                    {% endif %}
+                
+                    <a href="{{ data.slider_link|default:'#appointment' }}" class="appointment-btn text-amber-900 font-bold px-8 py-4 rounded-full inline-flex items-center">
                         <span>رزرو نوبت</span>
                         <i class="fas fa-arrow-left mr-2"></i>
                     </a>
                 </div>
             </div>
-            
-            <!-- Slider Item 2 -->
-            <div class="slider-item h-full w-full flex items-center" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80') center/cover;">
-                <div class="container mx-auto px-4 text-white">
-                    <h2 class="text-4xl md:text-6xl font-bold mb-6">مراقبت تخصصی از پوست و مو</h2>
-                    <p class="text-xl md:text-2xl mb-8 max-w-2xl">با تیم متخصص ما، سلامت و زیبایی پوست و موی خود را تضمین کنید</p>
-                    <a href="#appointment" class="appointment-btn text-amber-900 font-bold px-8 py-4 rounded-full inline-flex items-center">
-                        <span>رزرو نوبت</span>
-                        <i class="fas fa-arrow-left mr-2"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Slider Item 3 -->
-            <div class="slider-item h-full w-full flex items-center" style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;">
-                <div class="container mx-auto px-4 text-white">
-                    <h2 class="text-4xl md:text-6xl font-bold mb-6">محیطی آرام و حرفه‌ای</h2>
-                    <p class="text-xl md:text-2xl mb-8 max-w-2xl">در محیطی لوکس و آرام، خدمات زیبایی حرفه‌ای دریافت کنید</p>
-                    <a href="#appointment" class="appointment-btn text-amber-900 font-bold px-8 py-4 rounded-full inline-flex items-center">
-                        <span>رزرو نوبت</span>
-                        <i class="fas fa-arrow-left mr-2"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Slider Controls -->
-        <div class="absolute bottom-10 left-0 right-0 flex justify-center space-x-3 space-x-reverse">
-            <button class="slider-dot w-3 h-3 rounded-full bg-white bg-opacity-50 focus:outline-none active"></button>
-            <button class="slider-dot w-3 h-3 rounded-full bg-white bg-opacity-50 focus:outline-none"></button>
-            <button class="slider-dot w-3 h-3 rounded-full bg-white bg-opacity-50 focus:outline-none"></button>
-        </div>
+        {% endfor %}  
     </section>
 
     <!-- About Us -->

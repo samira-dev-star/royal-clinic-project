@@ -16,19 +16,43 @@
                 <p class="text-gray-400 mb-4">
                     کلینیک تخصصی پوست، مو و زیبایی رویال با بهره‌گیری از کادر مجرب و تجهیزات پیشرفته، ارائه‌دهنده خدمات تخصصی با بالاترین کیفیت است.
                 </p>
+
+                {% comment %}  target="_blank" : این باعث میشه لینک‌ها در یک صفحه‌ی جدید باز بشن تا سایت اصلیت بسته نشه. {% endcomment %}
+
                 <div class="flex space-x-4 space-x-reverse">
-                    <a href="#" class="text-gray-400 hover:text-amber-500">
+                    {% for data in social_media %}
+
+                    {% if data.social_name == "اینستاگرام" %}
+                    <a href="{{data.social_link}}" class="text-gray-400 hover:text-amber-500">
                         <i class="fab fa-instagram text-xl"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-amber-500">
+                    {% endif %}
+
+                    {% if data.social_name == "تلگرام" %}
+                    <a href="{{data.social_link}}" class="text-gray-400 hover:text-amber-500">
                         <i class="fab fa-telegram text-xl"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-amber-500">
+                    {% endif %}
+
+                    {% if data.social_name == "واتساپ" %}
+                    <a href="{{data.social_link}}" class="text-gray-400 hover:text-amber-500">
                         <i class="fab fa-whatsapp text-xl"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-amber-500">
+                    {% endif %}
+
+                    {% if data.social_name == "لینکدین" %}
+                    <a href="{{data.social_link}}" class="text-gray-400 hover:text-amber-500">
                         <i class="fab fa-linkedin text-xl"></i>
                     </a>
+                    {% endif %}
+
+                    {% if data.social_name == "یوتیوب" %}
+                    <a href="{{data.social_link}}" class="text-gray-400 hover:text-amber-500">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                    {% endif %}
+
+                    {% endfor %}
                 </div>
             </div>
             
