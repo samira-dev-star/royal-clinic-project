@@ -80,13 +80,19 @@
                 </ul>
 
 
+                
 
 
                 <div class="mt-6">
-                    <a href="tel:+982112345678" class="bg-amber-600 text-white px-6 py-3 rounded-lg font-bold inline-flex items-center hover:bg-amber-700 transition duration-300">
+                    {% for data in contacts %}
+                    {% if data.mobile_number1 %}
+                    <a href="tel:{{data.mobile_number1}}" class="bg-amber-600 text-white px-6 py-3 rounded-lg font-bold inline-flex items-center hover:bg-amber-700 transition duration-300">
                         <i class="fas fa-phone ml-2"></i>
                         تماس با ما
                     </a>
+                    {% endif %}
+                    {% endfor %}
+                    
                 </div>
             </div>
         </div>

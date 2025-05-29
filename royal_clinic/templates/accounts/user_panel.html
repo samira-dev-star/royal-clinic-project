@@ -1,4 +1,4 @@
-{% extends "main_template.html" %}
+{% extends "main_login.html" %}
 {% load static %}
 {% comment %} {% load jalali_tags %} {% endcomment %}
 {% load humanize %}
@@ -18,9 +18,10 @@
         <div class="gradient-bg text-white w-64 flex-shrink-0 hidden md:flex flex-col">
             <div class="p-4 flex items-center justify-center border-b border-white/20">
                 <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mr-3">
-                    <i class="fas fa-hospital text-green-600 text-xl"></i>
+                    {% comment %} <i class="fas fa-hospital text-green-600 text-xl"></i> {% endcomment %}
+                    <img class="w-14 h-13 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center" src="{{media_url}}images/index/IMG-20240528-WA0012.jpg" alt="index-icon">
                 </div>
-                <h1 class="text-xl font-bold">کلینیک رویال</h1>
+                <h1 class="text-xl font-bold"> &nbsp;کلینیک رویال </h1>
             </div>
             
             <div class="p-4 flex items-center border-b border-white/20">
@@ -34,31 +35,17 @@
             </div>
             
             <nav class="flex-1 overflow-y-auto py-4">
-                <a href="#" class="sidebar-link active-link flex items-center px-4 py-3 text-white">
+                <a href="{% url "account:userpanel" %}" class="sidebar-link active-link flex items-center px-4 py-3 text-white">
                     <i class="fas fa-home ml-3"></i>
                     <span>داشبورد</span>
                 </a>
                 
-                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
-                    <i class="fas fa-calendar-check ml-3"></i>
-                    <span>نوبت‌های من</span>
-                </a>
                 
-                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
-                    <i class="fas fa-file-prescription ml-3"></i>
-                    <span>نسخه‌ها</span>
-                    <div class="prescription-badge">3</div>
-                </a>
-                
-                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
+                <a href="{% url "patient:medical_history_and_allergies" patient_data.user.id %}" class="sidebar-link flex items-center px-4 py-3 text-white">
                     <i class="fas fa-file-medical ml-3"></i>
                     <span>پرونده پزشکی</span>
                 </a>
                 
-                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
-                    <i class="fas fa-comment-medical ml-3"></i>
-                    <span>مشاوره آنلاین</span>
-                </a>
                 
                 <a href="{% url "patient:patient_profile" %}" class="sidebar-link flex items-center px-4 py-3 text-white">
                     <i class="fas fa-user-edit ml-3"></i>
@@ -101,47 +88,11 @@
                 </div>
                 <div>
                     <p class="font-medium">{{patient_data.user.name}} {{patient_data.user.family}}</p>
-                    <p class="text-xs text-white/80">بیمار</p>
+                    <p class="text-xs text-white/80">زیباجو</p>
                 </div>
             </div>
             
-            <nav class="py-4">
-                <a href="#" class="sidebar-link active-link flex items-center px-4 py-3 text-white">
-                    <i class="fas fa-home ml-3"></i>
-                    <span>داشبورد</span>
-                </a>
-                
-                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
-                    <i class="fas fa-calendar-check ml-3"></i>
-                    <span>نوبت‌های من</span>
-                </a>
-                
-                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white relative">
-                    <i class="fas fa-file-prescription ml-3"></i>
-                    <span>نسخه‌ها</span>
-                    <div class="prescription-badge">3</div>
-                </a>
-                
-                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
-                    <i class="fas fa-file-medical ml-3"></i>
-                    <span>پرونده پزشکی</span>
-                </a>
-                
-                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white">
-                    <i class="fas fa-comment-medical ml-3"></i>
-                    <span>مشاوره آنلاین</span>
-                </a>
-                
-                <a href="{% url "patient:patient_profile" %}" class="sidebar-link flex items-center px-4 py-3 text-white">
-                    <i class="fas fa-user-edit ml-3"></i>
-                    <span>پروفایل</span>
-                </a>
-                
-                <a href="#" class="sidebar-link flex items-center px-4 py-3 text-white mt-4">
-                    <i class="fas fa-sign-out-alt ml-3"></i>
-                    <span>خروج از سیستم</span>
-                </a>
-            </nav>
+            
         </div>
         
         <!-- Main content -->
@@ -149,7 +100,7 @@
             <!-- Top navigation -->
             <header class="bg-white shadow-sm py-4 px-6 flex items-center justify-between">
                 <div class="flex items-center">
-                    <h2 class="text-xl font-bold text-gray-800">داشبورد بیمار</h2>
+                    <h2 class="text-xl font-bold text-gray-800">داشبورد زیباجو</h2>
                 </div>
                 
                 <div class="flex items-center space-x-4 space-x-reverse">
@@ -195,7 +146,7 @@
                             {% if patient_data.image_name %}
                                 <img class="userpanel_image" id="profile-preview" src="{{ patient_data.image_name.url }}" alt="تصویر پروفایل" class="profile-image">
                             {% else %}
-                                <img id="profile-preview" src="{{media_url}}images/patients/user.png" alt="تصویر پروفایل"       class="default-profile-image">
+                                <img id="profile-preview" src="{{media_url}}images/patients/user.png" alt="تصویر پروفایل" class="default-profile-image">
                             {% endif %}
                             </p>
                             <p class="text-2xl font-bold center">تصویر پروفایل</p>
@@ -209,8 +160,8 @@
                             <i class="fas fa-user-md text-xl"></i>
                         </div>
                         <div>
-                            <p class="text-gray-500 text-sm">پزشک معالج</p>
-                            <p class="text-2xl font-bold">دکتر محمدی</p>
+                            <p class="text-gray-500 text-sm">نطر متخصص درباره ی {{patient_data.user.name}}</p>
+                            <p class="text-1xl font-bold">برای دریافت راهنمایی متخصص، پرونده پزشکی و پروفایل خود را تکمیل کنید</p>
                         </div>
                     </div>
                     
@@ -221,7 +172,7 @@
                         <div>
                             <p class="text-gray-500 text-sm">تاریخ آخرین نوبت آنلاین</p>
                             {% for resevation in reservations %}
-                            <p class="text-2xl font-bold">{{resevation.created_at}}</p>
+                            <p class="text-2xl font-bold">{{resevation.created_at|jformat:"%Y/%m/%d"}}</p>
                             {% endfor %}
                         </div>
                     </div>
@@ -277,11 +228,12 @@
                         <!-- Prescriptions section -->
                         <div class="bg-white rounded-lg shadow overflow-hidden mt-6">
                             <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                                <h3 class="font-bold text-lg">آخرین نسخه‌ها</h3>
-                                <a href="#" class="text-green-600 hover:text-green-800 text-sm">مشاهده همه</a>
+                                <h3 class="font-bold text-lg">خدمات پیشنهاد شده توسط متخصص برای شما</h3>
                             </div>
                             
                             <div class="divide-y divide-gray-200">
+
+                                {% for data in recommended_services %}
                                 <div class="appointment-card p-4 hover:bg-gray-50 transition duration-200 cursor-pointer">
                                     <div class="flex items-center justify-between">
                                         <div class="flex items-center">
@@ -289,52 +241,17 @@
                                                 <i class="fas fa-file-prescription"></i>
                                             </div>
                                             <div>
-                                                <p class="font-medium">نسخه شماره ۱۴۰۳۰۱۱۲۱</p>
-                                                <p class="text-sm text-gray-500">تاریخ: 1403/01/12</p>
+                                                <a href="{% url "services:service_detail" slug=data.recommended_services.slug %}" class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800"> {{data.recommended_services.service_title}} </a>
                                             </div>
                                         </div>
                                         <div class="text-left">
-                                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">فعال</span>
                                             <p class="text-sm text-gray-500 mt-1">دکتر محمدی</p>
                                         </div>
                                     </div>
                                 </div>
                                 
-                                <div class="appointment-card p-4 hover:bg-gray-50 transition duration-200 cursor-pointer">
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center">
-                                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-3">
-                                                <i class="fas fa-file-prescription"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium">نسخه شماره ۱۴۰۲۱۲۲۵۱</p>
-                                                <p class="text-sm text-gray-500">تاریخ: 1402/12/25</p>
-                                            </div>
-                                        </div>
-                                        <div class="text-left">
-                                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">در حال بررسی</span>
-                                            <p class="text-sm text-gray-500 mt-1">دکتر احمدی</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="appointment-card p-4 hover:bg-gray-50 transition duration-200 cursor-pointer">
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center">
-                                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3">
-                                                <i class="fas fa-file-prescription"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium">نسخه شماره ۱۴۰۲۱۱۱۵۱</p>
-                                                <p class="text-sm text-gray-500">تاریخ: 1402/11/15</p>
-                                            </div>
-                                        </div>
-                                        <div class="text-left">
-                                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">منقضی شده</span>
-                                            <p class="text-sm text-gray-500 mt-1">دکتر محمدی</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% endfor %}
+
                             </div>
                         </div>
                     </div>
@@ -346,7 +263,7 @@
                                 <h3 class="font-bold text-lg">اقدامات سریع</h3>
                             </div>
                             
-                            <div class="p-4 grid grid-cols-2 gap-4">
+                            <div class="p-4 grid grid-cols-1 gap-4">
                                 <a href="{% url "reservation:reservation_main_page" %}" class="gradient-bg text-white p-4 rounded-lg flex flex-col items-center justify-center btn-hover">
                                     <i class="fas fa-calendar-plus text-2xl mb-2"></i>
                                     <span class="text-sm">رزرو نوبت</span>
@@ -357,10 +274,7 @@
                                     <span class="text-sm">مشاوره آنلاین</span>
                                 </button>
                                 
-                                <button class="bg-purple-500 text-white p-4 rounded-lg flex flex-col items-center justify-center btn-hover">
-                                    <i class="fas fa-file-download text-2xl mb-2"></i>
-                                    <span class="text-sm">دریافت نسخه</span>
-                                </button>
+                                
                                 
                                 <a href="{% url "patient:medical_history_and_allergies" id=patient_data.user.id %}" class="bg-yellow-500 text-white p-4 rounded-lg flex flex-col items-center justify-center btn-hover">
                                     <i class="fas fa-file-medical text-2xl mb-2"></i>
@@ -392,40 +306,23 @@
                         <!-- Health tips -->
                         <div class="bg-white rounded-lg shadow overflow-hidden mt-6">
                             <div class="px-6 py-4 border-b border-gray-200">
-                                <h3 class="font-bold text-lg">نکات سلامت</h3>
+                                <h3 class="font-bold text-lg">پیشنهادات متخصص به شما</h3>
                             </div>
                             
+                            {% for data in recommended_services %}
                             <div class="p-4">
+
                                 <div class="flex items-start mb-4">
                                     <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-3 flex-shrink-0">
                                         <i class="fas fa-heartbeat"></i>
                                     </div>
                                     <div>
-                                        <p class="text-sm font-medium">کنترل فشار خون</p>
-                                        <p class="text-xs text-gray-500">فشار خون خود را روزانه اندازه‌گیری و ثبت نمایید.</p>
+                                        <p class="text-sm font-medium">{{data.description}}</p>
                                     </div>
                                 </div>
                                 
-                                <div class="flex items-start mb-4">
-                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3 flex-shrink-0">
-                                        <i class="fas fa-dumbbell"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium">فعالیت بدنی</p>
-                                        <p class="text-xs text-gray-500">حداقل 30 دقیقه پیاده‌روی روزانه داشته باشید.</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-start">
-                                    <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 mr-3 flex-shrink-0">
-                                        <i class="fas fa-utensils"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium">رژیم غذایی</p>
-                                        <p class="text-xs text-gray-500">مصرف نمک و چربی‌های اشباع را کاهش دهید.</p>
-                                    </div>
-                                </div>
                             </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -437,7 +334,6 @@
     <div class="back-to-top hidden">
         <i class="fas fa-arrow-up"></i>
     </div>
-    
 
 {% endblock content %}
 

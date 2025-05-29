@@ -1,4 +1,4 @@
-{% extends "main_template.html" %}
+{% extends "main_login.html" %}
 {% load static %}
 
 {% load jformat %}
@@ -161,11 +161,15 @@
                         
                         <div class="mt-6 bg-blue-50 border border-blue-100 rounded-lg p-4">
                             <h3 class="font-medium text-blue-800 flex items-center">
-                                <i class="fas fa-info-circle mr-2"></i> Allergy Notes
+                                <i class="fas fa-info-circle mr-2"></i> توصیه های پزشک به شما:
                             </h3>
-                            <p class="mt-2 text-sm text-blue-700">
-                                Patient experiences anaphylaxis with penicillin exposure. Sulfa drugs cause rash and itching. Dust mite allergy manifests as allergic rhinitis.
-                            </p>
+                            {% for data in dr_recommendations %}
+                                {% if data.description %}
+                                    <li class="mt-2 text-sm text-blue-700">{{data.description}}</li>
+                                {% endif %}
+                            {% endfor %}
+                                
+                            
                         </div>
                     </div>
                 </div>
@@ -174,49 +178,69 @@
                 <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
                     <div class="border-b border-gray-100 px-6 py-4 bg-gray-50">
                         <h2 class="text-lg font-semibold text-gray-800 flex items-center">
-                            <i class="fas fa-heartbeat text-purple-500 mr-3"></i> Vital Signs
+                            <i class="fas fa-heartbeat text-purple-500 mr-3"></i> ویژگی‌های فیزیولوژیکی 
                         </h2>
                     </div>
                     <div class="p-6">
                         <div class="grid grid-cols-2 gap-4">
                             <!-- Vital Sign -->
+                             {% for data in patient %}
                             <div class="bg-white border border-gray-200 rounded-lg p-4 text-center">
-                                <div class="text-3xl font-bold text-purple-600">122/78</div>
-                                <div class="text-sm text-gray-500 mt-1">Blood Pressure</div>
-                                <div class="text-xs text-green-600 mt-1 flex items-center justify-center">
-                                    <i class="fas fa-arrow-down mr-1"></i> Improved from 130/85
-                                </div>
+                                <div class="text-3xl font-bold text-purple-600">{{data.blood_type}}</div>
+                                <div class="text-sm text-gray-500 mt-1">گروه خونی</div>
                             </div>
                             
                             <!-- Vital Sign -->
                             <div class="bg-white border border-gray-200 rounded-lg p-4 text-center">
-                                <div class="text-3xl font-bold text-purple-600">72</div>
-                                <div class="text-sm text-gray-500 mt-1">Pulse (bpm)</div>
-                                <div class="text-xs text-gray-500 mt-1">Normal range</div>
+                                <div class="text-3xl font-bold text-purple-600">{{data.height}}</div>
+                                <div class="text-sm text-gray-500 mt-1">قد</div>
                             </div>
                             
                             <!-- Vital Sign -->
                             <div class="bg-white border border-gray-200 rounded-lg p-4 text-center">
-                                <div class="text-3xl font-bold text-purple-600">98.6°F</div>
-                                <div class="text-sm text-gray-500 mt-1">Temperature</div>
-                                <div class="text-xs text-gray-500 mt-1">Normal</div>
+                                <div class="text-3xl font-bold text-purple-600">{{data.weight}}</div>
+                                <div class="text-sm text-gray-500 mt-1">وزن</div>
                             </div>
                             
                             <!-- Vital Sign -->
                             <div class="bg-white border border-gray-200 rounded-lg p-4 text-center">
-                                <div class="text-3xl font-bold text-purple-600">18</div>
-                                <div class="text-sm text-gray-500 mt-1">Respiration</div>
-                                <div class="text-xs text-gray-500 mt-1">Normal</div>
+                                <div class="text-3xl font-bold text-purple-600">{{data.get_age}}</div>
+                                <div class="text-sm text-gray-500 mt-1">سن</div>
                             </div>
+                            
                         </div>
-                        
+
+                        {% if data.get_bmi <= 18.5 %}
                         <div class="mt-6">
-                            <h3 class="text-sm font-medium text-gray-700 mb-2">Last Recorded: 2 days ago</h3>
+                            <h3 class="text-sm font-medium text-gray-700 mb-2">رنج توده بدنی شما</h3>
                             <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 85%"></div>
+                                <div class="bg-purple-600 h-2.5 rounded-full" style="width: {{data.get_bmi_percent}}%"></div>
                             </div>
-                            <p class="text-xs text-gray-500 mt-1">Next check-up in 3 days</p>
+                            <p>شاخص توده ی بدنی : {{data.get_bmi}}</p>
+                            <p class="text-purple-600">کمبود وزن</p>
+                            
                         </div>
+                        {% elif 18.5 < data.get_bmi <= 25 %}
+                        <div class="mt-6">
+                            <h3 class="text-sm font-medium text-gray-700 mb-2">رنج توده بدنی شما</h3>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-600 h-2.5 rounded-full" style="width: {{data.get_bmi_percent}}%"></div>
+                            </div>
+                            <p>شاخص توده ی بدنی : {{data.get_bmi}}</p>
+                            <p class="text-green-600">سالم</p>
+                            
+                        </div>
+                        {% elif data.get_bmi > 25 %}
+                        <div class="mt-6">
+                            <h3 class="text-sm font-medium text-gray-700 mb-2">رنج توده بدنی شما</h3>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-red-600 h-2.5 rounded-full" style="width: {{data.get_bmi_percent}}%"></div>
+                            </div>
+                            <p>شاخص توده ی بدنی : {{data.get_bmi}}</p>
+                            <p class="text-red-600">نا سالم</p>
+                        </div>
+                        {% endif %}
+                        {% endfor   %}
                     </div>
                 </div>
 
@@ -224,43 +248,32 @@
                 <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
                     <div class="border-b border-gray-100 px-6 py-4 bg-gray-50">
                         <h2 class="text-lg font-semibold text-gray-800 flex items-center">
-                            <i class="fas fa-address-book text-green-500 mr-3"></i> Emergency Contacts
+                            <i class="fas fa-address-book text-green-500 mr-3"></i> شماره های تماس
                         </h2>
                     </div>
                     <div class="p-6">
                         <div class="space-y-4">
+                            {% for data in patient %}
                             <!-- Contact -->
                             <div class="flex items-center">
                                 <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
                                     <i class="fas fa-user text-green-500"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-medium">David Johnson</h3>
-                                    <p class="text-sm text-gray-500">Husband • (555) 987-6543</p>
+                                    <h3 class="font-medium">{{data.user.name}} {{data.user.family}}</h3>
+                                    <p class="text-sm text-gray-500">{{data.emergency_contact}}</p>
                                 </div>
                             </div>
-                            
-                            <!-- Contact -->
                             <div class="flex items-center">
                                 <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
-                                    <i class="fas fa-user text-green-500"></i>
+                                    <i class="fas fa-user text-green-500 mobile"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-medium">Lisa Thompson</h3>
-                                    <p class="text-sm text-gray-500">Sister • (555) 456-7890</p>
+                                    <h3 class="font-medium">{{data.user.name}} {{data.user.family}}</h3>
+                                    <p class="text-sm text-gray-500 mobile">{{data.user.mobile_number}}</p>
                                 </div>
                             </div>
-                            
-                            <!-- Contact -->
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
-                                    <i class="fas fa-building text-green-500"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-medium">City General Hospital</h3>
-                                    <p class="text-sm text-gray-500">Emergency • (555) 911-9111</p>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

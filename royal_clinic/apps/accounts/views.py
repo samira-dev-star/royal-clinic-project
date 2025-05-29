@@ -3,8 +3,9 @@ from django.views import View
 from .account_forms import RegisterUserForm,LoginUserForm,ChangePassword,ForgotPassword,VerifyForm
 from .models import Customuser,RulesandRegulations,ActivationCode
 from django.contrib import messages
-from apps.patient_panel.models import CustomPatient
+from apps.patient_panel.models import CustomPatient,DrRecommendations
 from apps.reservation.models import ReserveAppointment
+from apps.contact.models import Contact
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.aggregates import Count
 from django.db.models import Q
@@ -200,10 +201,16 @@ class UserPanelView(View,LoginRequiredMixin):
             reservation_count=Count('id')
         ).order_by("-created_at")[:3]
         
+        contacts = Contact.objects.all()
+        
+        recommended_services = DrRecommendations.objects.filter(patient=patient_data)
+        
         context = {
             'patient_data':patient_data,
             'reservations':reservations,
-            'current_user':current_user
+            'current_user':current_user,
+            'contacts':contacts,
+            'recommended_services':recommended_services,
         }
         
         return render(request,self.template_name,context)

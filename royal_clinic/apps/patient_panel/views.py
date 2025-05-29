@@ -3,10 +3,11 @@ from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db import transaction
-from .models import CustomPatient,MedicalHistoryItem,Allergy,CurrentMedications
+from .models import CustomPatient,MedicalHistoryItem,Allergy,CurrentMedications,DrRecommendations
 from .patient_panel_form import CustomPatientForm, AllergyFormSet, MedicalHistoryFormSet,CurrentMedicationsFormSet
 from django.contrib.auth.mixins import LoginRequiredMixin     
 from django.core.paginator import Paginator
+from apps.contact.models import Contact
 
 class CompletePatientProfileView(LoginRequiredMixin,View):
     template_name = 'patient_panel/patient_profile.html'
@@ -93,12 +94,16 @@ class ShowMedicalHistoryAndAllergiesView(View):
         medical_history = MedicalHistoryItem.objects.filter(patient_id=current_patient)
         medicine = CurrentMedications.objects.filter(patient_id=current_patient)
         allergies = Allergy.objects.filter(patient_id=current_patient)
+        contacts = Contact.objects.all()
+        dr_recommendations = DrRecommendations.objects.filter(patient_id=current_patient)
+        
         context = {
             'patient':patient,
             'medical_history':medical_history,
             'medicine':medicine,
             'allergies':allergies,
-            
+            'contacts':contacts,
+            'dr_recommendations':dr_recommendations,
         }
         
         return render(self.request,'patient_panel/medical_history_and_allergies.html',context)
@@ -131,5 +136,7 @@ class PatientsList(View):
         return render(self.request,'patient_panel/patients_list.html',context)
     
 
+# -------------------------------------------------------------------------------
+# Doctors recommendation for the current patient according to its conditions
 
 

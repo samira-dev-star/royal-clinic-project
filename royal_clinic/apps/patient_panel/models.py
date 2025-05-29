@@ -1,5 +1,6 @@
 from django.db import models
 from apps.accounts.models import Customuser
+from apps.services.models import Services
 from utils import FileUpload
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -43,6 +44,28 @@ class CustomPatient(models.Model):
         if self.birth_date:
             return (timezone.now().date() - self.birth_date).days // 365
         return None
+    
+    
+    @admin.display(description='شاخص توده بدنی (BMI)')
+    def get_bmi(self):
+        if self.height and self.weight:
+            height_in_m = self.height / 100  # تبدیل سانتی‌متر به متر
+            bmi = self.weight / (height_in_m ** 2)
+            return round(bmi, 2)
+        return "نامشخص"
+    
+
+    @admin.display(description='درصد BMI برای نوار پیشرفت')
+    def get_bmi_percent(self):
+        if self.height and self.weight:
+            height_in_m = self.height / 100
+            bmi = self.weight / (height_in_m ** 2)
+            max_bmi = 40  # حداکثر BMI فرضی برای نمایش
+            percent = min((bmi / max_bmi) * 100, 100)  # محدود به 100 درصد
+            return round(percent, 1)
+        return 0
+       
+
     
 
     
@@ -108,3 +131,18 @@ class ShowPatientPanelForAdmin(models.Model):
         
     def __str__(self):
         return "نمایش پنل و اطلاعات بیماران"
+    
+    
+    
+# ----------------------------------------------------------------------------
+class DrRecommendations(models.Model):
+    patient = models.ForeignKey(CustomPatient, on_delete=models.CASCADE, related_name='dr_recommendations', verbose_name='بیمار')
+    description = models.TextField(blank=True, null=True, verbose_name='توضیحات')
+    recommended_services = models.ForeignKey(Services, on_delete=models.CASCADE, related_name='dr_recommendations', verbose_name='خدمات پیشنهادی',null=True, blank=True)
+
+    def __str__(self):
+        return self.description
+    
+    class Meta:
+        verbose_name = 'پیشنهادات دکتر'
+        verbose_name_plural = 'پیشنهادات دکتر'

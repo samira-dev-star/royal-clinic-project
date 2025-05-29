@@ -38,7 +38,7 @@ class CustomPatientForm(forms.ModelForm):
             }),
             'height': forms.NumberInput(attrs={
                 'class': 'form-input w-full',
-                'step': '0.1'
+                'step': '0.1',
             }),
             'weight': forms.NumberInput(attrs={
                 'class': 'form-input w-full',
@@ -200,3 +200,7 @@ CurrentMedicationsFormSet = inlineformset_factory(
     CustomPatient, CurrentMedications, form=CurrentMedicationsForm,
     extra=0, can_delete=True
 )
+
+
+# ----------------------------------------------------------------------------
+

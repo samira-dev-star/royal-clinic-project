@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomPatient,ShowPatientPanelForAdmin
+from .models import CustomPatient,ShowPatientPanelForAdmin,DrRecommendations
 from django_admin_listfilter_dropdown.filters import DropdownFilter
 from django.http import HttpResponse
 # Register your models here.
@@ -98,3 +98,13 @@ class ShowPatientPanelForAdminAdmin(admin.ModelAdmin):
 </body>
 </html>
                             ''')
+        
+        
+        
+# ---------------------------------------------------
+
+@admin.register(DrRecommendations)
+class DrRecommendationsAdmin(admin.ModelAdmin):
+    class Meta:
+        model = DrRecommendations
+        fields = "__all__"
