@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 
 from django.urls import reverse
+from django.db.models import Q
 
 # Create your models here.
 
@@ -44,6 +45,21 @@ class Services(models.Model):
         if not self.slug:
             self.slug = slugify(self.service_title)
         super().save(*args, **kwargs)
+    
+    # دابل آندرلاین (__) برای فیلتر کردن یا annotate کردن در QuerySet استفاده می‌شه،
+    # هر شی از مدل Service، می‌تونه به همه‌ی تخفیف‌های مربوط به خودش با self.discounts دسترسی داشته
+    @property  
+    def has_discount(self):
+            return self.discounts.filter(Q(is_active=True) & Q(start_date__lte=timezone.now()) & Q(end_date__gte=timezone.now())).exists()
+            
+    @property
+    def current_discount(self):
+        now = timezone.now()
+        return self.discounts.filter(
+            is_active=True,
+            start_date__lte=now,
+            end_date__gte=now
+        ).first()
 
     
     class Meta:

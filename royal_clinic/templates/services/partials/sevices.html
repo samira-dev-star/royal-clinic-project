@@ -3,11 +3,11 @@
     {% for service in services %}
     <!-- Services -->
     <div class="relative service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
-        {% comment %} {% if service.has_discount %} {% endcomment %}
+        {% if service.has_discount %}
         <span class="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">
-            تخفیف
+            تخفیف{{service.current_discount.discount_percentage}}%
         </span>
-        {% comment %} {% endif %} {% endcomment %}
+        {% endif %}
         <div class="h-48 overflow-hidden">
             <img src="{{media_url}}{{service.service_image}}" alt="{{service.service_title}}" class="w-full h-full object-cover">
         </div>
