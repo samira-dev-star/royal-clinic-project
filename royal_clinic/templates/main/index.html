@@ -111,113 +111,25 @@
     <!-- Doctors -->
     <section id="doctors" class="py-16 bg-white">
         <div class="container mx-auto px-4">
+            
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">پزشکان متخصص ما</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">تیم متخصص و با تجربه کلینیک رویال با دانش به روز و مهارت بالا در خدمت شماست</p>
-                <div class="w-20 h-1 bg-amber-500 mx-auto mt-4"></div>
+              <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">پزشکان متخصص ما</h2>
+              <p class="text-gray-600 max-w-2xl mx-auto">تیم متخصص و با تجربه کلینیک رویال با دانش به روز و مهارت بالا در خدمت شماست</p>
+                        
+              <div class="relative max-w-2xl mx-auto mt-4">
+                <div class="h-1 bg-green-500 w-full"></div>
+                <a href="{% url "personel:personels" %}"
+                   class="absolute right-0 bg-green-500 text-white px-4 py-1 rounded text-sm hover:bg-green-600">
+                  نمایش همه
+                </a>
+              </div>
             </div>
+
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Doctor 1 -->
-                <div class="doctor-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
-                    <div class="h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="دکتر مریم احمدی" class="w-full h-full object-cover transition-transform duration-500">
-                    </div>
-                    <div class="p-6 text-center">
-                        <h3 class="text-xl font-bold text-gray-800 mb-1">دکتر مریم احمدی</h3>
-                        <p class="text-amber-600 mb-3">متخصص پوست و مو</p>
-                        <p class="text-gray-600 text-sm mb-4">
-                            فلوشیپ زیبایی از آمریکا با ۱۲ سال سابقه تخصصی در زمینه لیزر و تزریق‌های زیبایی
-                        </p>
-                        <div class="flex justify-center space-x-3 space-x-reverse">
-                            <a href="#" class="text-gray-400 hover:text-amber-600">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="text-gray-400 hover:text-amber-600">
-                                <i class="fab fa-linkedin"></i>
-                            </a>
-                            <a href="#" class="text-gray-400 hover:text-amber-600">
-                                <i class="fas fa-envelope"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Doctor 2 -->
-                <div class="doctor-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
-                    <div class="h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80" alt="دکتر علی رضایی" class="w-full h-full object-cover transition-transform duration-500">
-                    </div>
-                    <div class="p-6 text-center">
-                        <h3 class="text-xl font-bold text-gray-800 mb-1">دکتر علی رضایی</h3>
-                        <p class="text-amber-600 mb-3">متخصص کاشت مو</p>
-                        <p class="text-gray-600 text-sm mb-4">
-                            عضو انجمن جهانی کاشت مو با ۸ سال سابقه تخصصی در زمینه کاشت موهای طبیعی
-                        </p>
-                        <div class="flex justify-center space-x-3 space-x-reverse">
-                            <a href="#" class="text-gray-400 hover:text-amber-600">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="text-gray-400 hover:text-amber-600">
-                                <i class="fab fa-linkedin"></i>
-                            </a>
-                            <a href="#" class="text-gray-400 hover:text-amber-600">
-                                <i class="fas fa-envelope"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Doctor 3 -->
-                <div class="doctor-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
-                    <div class="h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="دکتر سارا محمدی" class="w-full h-full object-cover transition-transform duration-500">
-                    </div>
-                    <div class="p-6 text-center">
-                        <h3 class="text-xl font-bold text-gray-800 mb-1">دکتر سارا محمدی</h3>
-                        <p class="text-amber-600 mb-3">متخصص پوست و لیزر</p>
-                        <p class="text-gray-600 text-sm mb-4">
-                            متخصص پوست و لیزر با ۱۰ سال سابقه در زمینه درمان بیماری‌های پوستی و زیبایی
-                        </p>
-                        <div class="flex justify-center space-x-3 space-x-reverse">
-                            <a href="#" class="text-gray-400 hover:text-amber-600">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="text-gray-400 hover:text-amber-600">
-                                <i class="fab fa-linkedin"></i>
-                            </a>
-                            <a href="#" class="text-gray-400 hover:text-amber-600">
-                                <i class="fas fa-envelope"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Doctor 4 -->
-                <div class="doctor-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
-                    <div class="h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="دکتر حسین نوروزی" class="w-full h-full object-cover transition-transform duration-500">
-                    </div>
-                    <div class="p-6 text-center">
-                        <h3 class="text-xl font-bold text-gray-800 mb-1">دکتر حسین نوروزی</h3>
-                        <p class="text-amber-600 mb-3">متخصص تزریق‌های زیبایی</p>
-                        <p class="text-gray-600 text-sm mb-4">
-                            متخصص تزریق بوتاکس و ژل با ۷ سال سابقه در زمینه جوانسازی صورت
-                        </p>
-                        <div class="flex justify-center space-x-3 space-x-reverse">
-                            <a href="#" class="text-gray-400 hover:text-amber-600">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="text-gray-400 hover:text-amber-600">
-                                <i class="fab fa-linkedin"></i>
-                            </a>
-                            <a href="#" class="text-gray-400 hover:text-amber-600">
-                                <i class="fas fa-envelope"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                {% render_partial "personel:personel" %}
             </div>
+            
         </div>
     </section>
 

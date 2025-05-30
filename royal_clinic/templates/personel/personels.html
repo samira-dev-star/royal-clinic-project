@@ -1,0 +1,58 @@
+{% extends "main_template.html" %}
+{% load static %}
+{% load render_partial %}
+
+{% block title %}معرفی تمامی متخصصان کلینیک{% endblock title %}
+
+{% block extra_css %}<link rel="stylesheet" href="{% static "css/personels.css" %}"> {% endblock extra_css %}
+
+{% block content %}
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-green-500 to-green-700 text-white py-6 shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h1 class="text-3xl font-bold">کلینیک تخصصی رویال</h1>
+                    <p class="text-amber-100 mt-2">مرکز تخصصی درمان و زیبایی</p>
+                </div>
+                <div class="flex space-x-4 space-x-reverse">
+                    {% for contact in contacts %}
+                    <a href="tel:{{contact.mobile_number1}}" class="bg-green-800 hover:bg-green-900 px-4 py-2 rounded-lg transition">تماس با ما</a>
+                    {% endfor %}
+                    <a href="{% url "reservation:reservation_main_page" %}" class="bg-white text-amber-800 hover:bg-amber-100 px-4 py-2 rounded-lg transition">نوبت دهی آنلاین</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-amber-50 py-16">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-20"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4 section-title">تیم حرفه‌ای ما</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                    متخصصین مجرب و با تجربه کلینیک رویال با سال‌ها سابقه درخشان در خدمت سلامت و زیبایی شما هستند
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctors Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+
+                <!-- Doctors -->
+                {% render_partial "personel:personel" %}
+
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16">
+
+{% endblock content %}

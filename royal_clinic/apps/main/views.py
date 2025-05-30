@@ -30,3 +30,8 @@ def social_media_links(request):
     social_media = SocialMediaAddresses.objects.filter(is_active=True)
     return {'social_media': social_media}
 
+
+
+def contact_with_us(request):
+    contacts = Contact.objects.all()
+    return {'contacts': contacts}

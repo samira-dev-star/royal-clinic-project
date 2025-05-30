@@ -24,7 +24,7 @@ class Personel(models.Model):
     
     @display(description='تصویر پرسنل')
     def show_personel_images(self):
-        return mark_safe(f'<img src="{self.image}" width="100" height="100" />')
+        return mark_safe(f'<img src="/media/{self.image}" width="100" height="100" />')
     
     
     

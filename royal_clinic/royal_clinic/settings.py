@@ -119,6 +119,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'apps.main.views.media_admin',
                 'apps.main.views.social_media_links',
+                'apps.main.views.contact_with_us',
                 'django.contrib.messages.context_processors.messages',
                 
             ],
