@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     
     'apps.reservation.apps.ReservationConfig',
     'apps.realtime_chat.apps.RealtimeChatConfig',
+    'apps.personel.apps.PersonelConfig',
 ]
 
 MIDDLEWARE = [

@@ -1,13 +1,11 @@
 from django import forms
 from .models import CustomPatient, Allergy, MedicalHistoryItem,CurrentMedications
 from django.forms import inlineformset_factory
-
+#  فرم‌هایی که تولید می‌کنه، درون یک فرم اصلی (inline) نمایش داده می‌شن؛ مثلاً وقتی بخوای در فرم یک بیمار، چند تا آلرژی یا سابقه پزشکی همزمان وارد کنی.
 # --------------------------------------
 # jalali date picker in forms
 from jalali_date.fields import JalaliDateField
 from jalali_date.widgets import AdminJalaliDateWidget
-
-
 
 
 class CustomPatientForm(forms.ModelForm):
