@@ -1,6 +1,7 @@
 from django.db import models
 from apps.accounts.models import Customuser
 from utils import FileUpload
+from django.utils.html import mark_safe
 # Create your models here.
 
 
@@ -20,6 +21,11 @@ class Personel(models.Model):
     def __str__(self):
         return self.name_and_family
     
+    def show_personel_images(self):
+        return mark_safe(f'<img src="{self.image}" width="100" height="100" />')
+    
+    
+    
     
 class PersonelSocialMedia(models.Model):
     personel = models.ForeignKey(Personel, on_delete=models.CASCADE, related_name='personel_social_media',verbose_name="تیم متخصص")
@@ -30,7 +36,7 @@ class PersonelSocialMedia(models.Model):
         ('linkedin', 'linkedin'),
     )
     social_media = models.CharField(max_length=255, verbose_name="سایت", choices=SOCIAL_MEDIA, null=True, blank=True)
-    link = models.CharField(max_length=255, verbose_name="لینک", null=True, blank=True)
+    media_link = models.CharField(max_length=255, verbose_name="لینک", null=True, blank=True)
     
     class Meta:
         verbose_name = "آدرس شبکه های اجتماعی"
@@ -38,4 +44,7 @@ class PersonelSocialMedia(models.Model):
         
     def __str__(self):
         return self.social_media
+    
+    def link(self):
+        return mark_safe(f'<a href="{self.media_link} target="_blank">link</a>')
     
