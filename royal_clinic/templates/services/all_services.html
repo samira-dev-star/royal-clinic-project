@@ -36,14 +36,38 @@
         </div>
     </section>
 
-    <!-- Doctors Section -->
+    <!-- Services Section -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
 
-                <!-- Doctors -->
-                {% render_partial "services:all_services" %}
+                <!-- Services -->
+                    {% for service in services %}
+                    <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
+                        <div class="h-48 overflow-hidden">
+                            <img src="{{media_url}}{{service.service_image}}" alt="{{service.service_title}}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-amber-80 p-3 rounded-full mr-3">
+                                    {% comment %} <i class="fas fa-burn text-amber-600 text-xl"></i> {% endcomment %}
+                                    <img class="w-14 h-14 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center" src="{{media_url}}images/index/IMG-20240528-WA0012.jpg" alt="index-icon">
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-800">{{service.service_title}}</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                {% autoescape off %}
+                                {{service.service_short_description}}
+                                {% endautoescape %}
+                            </p>
+                            <a href="{% url "services:service_detail" service.slug %}" class="text-amber-600 font-medium flex items-center">
+                                اطلاعات بیشتر
+                                <i class="fas fa-arrow-left mr-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
 
                 
             </div>
