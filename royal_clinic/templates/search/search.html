@@ -1,44 +1,12 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نتیجه جست و جوی شما</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
-        
-        body {
-            font-family: 'Vazirmatn', sans-serif;
-        }
-        
-        .service-card {
-            transition: all 0.3s ease;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .personel-card {
-            transition: all 0.3s ease;
-        }
-        
-        .personel-card:hover {
-            transform: scale(1.02);
-        }
-        
-        .empty-state {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-    </style>
-</head>
-<body class="bg-gray-50">
-    {% extends "main_template.html" %}
-    {% load render_partial %}
+{% extends "main_template.html" %}
+{% load static %}
+    
     {% block title %}نتیجه جست و جوی شما{% endblock title %}
+
+    {% block extra_css %}{% static "css/search_result_page.css" %}{% endblock extra_css %}
+
+    
+  
 
     {% block content %}
     <div class="py-12">
@@ -104,51 +72,3 @@
 </body>
 </html>
 
-
-{% comment %} {% extends "main_template.html" %}
-{% load render_partial %}
-{% block title %}نتیجه جست و جوی شما{% endblock title %} {% endcomment %}
-
-{% comment %} {% block content %} {% endcomment %}
-
-{% comment %} اگه مشخصات را پیدا کرد نشون میده اگه نه میگه نه {% endcomment %}
-
-{% comment %} {% if services %}
-    <div class="">
-        <div class="container">
-            <h2 style="text-align: center;">نتیجه جست و جوی شما</h2>
-            <div class="product-flexbox">
-                
-                    {% include "services/partials/sevices.html" %}
-                
-            </div>
-        </div>
-    </div>
-{% else %}
-    <div class="container" style="padding: 100px;">
-        <h3 style="text-align: center; color:red;">خدماتی با این مشخصات یافت نشد</h3>
-    </div>
-{% endif %} {% endcomment %}
-
-
-
-{% comment %} {% if personels %}
-    <div class="">
-        <div class="container">
-            <h2 style="text-align: center;">نتیجه جست و جوی شما</h2>
-            <div class="product-flexbox">
-                
-                    {% include "personel/partials/personel_box.html" %}
-                
-            </div>
-        </div>
-    </div>
-{% else %}
-    <div class="container" style="padding: 100px;">
-        <h3 style="text-align: center; color:red;">متخصصی با این مشخصات یافت نشد</h3>
-    </div>
-{% endif %} {% endcomment %}
-
-
-
-{% comment %} {% endblock content %} {% endcomment %}
