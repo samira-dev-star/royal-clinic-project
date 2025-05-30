@@ -2,6 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from .models import Services,ServiceFeatures,ServiceAdvantages,ServiceCandidateCondition,ServiceProcedures,ServiceRecurringQuestion
 from django.db.models import Q
 from django.views import View
+from django.core.paginator import Paginator
 # Create your views here.
 
 def render_service_related_partial(request, slug, model, template_name, context_key):
@@ -109,6 +110,17 @@ class ShowSpecificServiceDetailsView(View):
     
 class ShowAllServicesView(View):
     template_name = 'services/all_services.html'
+    
     def get(self,request):
         services = Services.objects.filter(is_available=True)
-        return render(request,self.template_name,{'services':services})
+        
+        paginator = Paginator(Services.objects.filter(is_available=True), 9)
+        current_page = request.GET.get('page')
+        page_obj = paginator.get_page(current_page)
+        
+        context = {
+            'services':page_obj.object_list,
+            'page_obj':page_obj,
+        }
+        
+        return render(request,self.template_name,context)
