@@ -2,6 +2,7 @@ from django.db import models
 from apps.accounts.models import Customuser
 from utils import FileUpload
 from django.utils.html import mark_safe
+from django.contrib.admin import display
 # Create your models here.
 
 
@@ -21,6 +22,7 @@ class Personel(models.Model):
     def __str__(self):
         return self.name_and_family
     
+    @display(description='تصویر پرسنل')
     def show_personel_images(self):
         return mark_safe(f'<img src="{self.image}" width="100" height="100" />')
     
@@ -45,6 +47,7 @@ class PersonelSocialMedia(models.Model):
     def __str__(self):
         return self.social_media
     
+    @display(description='لینک شبکه')
     def link(self):
         return mark_safe(f'<a href="{self.media_link} target="_blank">link</a>')
     
