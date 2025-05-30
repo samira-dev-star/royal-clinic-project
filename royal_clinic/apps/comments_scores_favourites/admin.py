@@ -19,10 +19,13 @@ class DateFilter(SimpleListFilter):
         return queryset
 
 
-@admin.register(Comment)
+
 class CommentsAdmin(admin.ModelAdmin):
     list_display = ['service','commenting_user','is_active','registerdate']
     list_filter = [('is_active',DropdownFilter),DateFilter]
     search_fields = ['registerdate']
     ordering = ['-registerdate']
     list_editable = ['is_active']
+    
+    
+admin.site.register(Comment,CommentsAdmin)
