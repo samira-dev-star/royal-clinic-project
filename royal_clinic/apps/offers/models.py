@@ -6,7 +6,7 @@ from django.utils import timezone
 from apps.services.models import Services
 
 class ServiceDiscount(models.Model):
-    service = models.ForeignKey(Services, on_delete=models.CASCADE, related_name='discounts', verbose_name="سرویس مربوطه")
+    service = models.ManyToManyField(Services, related_name='discounts', verbose_name="سرویس مربوطه")
     title = models.CharField(max_length=200, verbose_name="عنوان تخفیف",null=True, blank=True)
     description = models.TextField(blank=True, null=True, verbose_name="توضیحات")
     
