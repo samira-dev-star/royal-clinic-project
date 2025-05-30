@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'apps.reservation.apps.ReservationConfig',
     'apps.realtime_chat.apps.RealtimeChatConfig',
     'apps.personel.apps.PersonelConfig',
+    'apps.offers.apps.OffersConfig',
 ]
 
 MIDDLEWARE = [
@@ -77,9 +78,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'middlewares.middlewares.SessionSecurityMiddleware',
-    
-
-    
+ 
 ]
 
 

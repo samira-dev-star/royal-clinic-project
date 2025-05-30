@@ -33,6 +33,7 @@ urlpatterns = [
     path('realtime_chat/', include('apps.realtime_chat.realtime_chat_urls' , namespace='realtime_chat')),
     path('search/',include('apps.search.search_urls' , namespace='search')),
     path('personel/',include('apps.personel.personel_urls',namespace='personel')),
+    path('offers/',include('apps.offers.offers_urls',namespace='offers')),
     
     path('ckeditor/', include('ckeditor_uploader.urls')),
     
