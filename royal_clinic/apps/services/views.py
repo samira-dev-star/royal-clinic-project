@@ -15,7 +15,7 @@ def render_service_related_partial(request, slug, model, template_name, context_
 def ShowServices(request):
     template_name = 'services/partials/sevices.html'
     
-    services = Services.objects.filter(Q(is_available=True))
+    services = Services.objects.filter(Q(is_available=True))[:6]
     context = {
         'services' : services
     }
@@ -107,3 +107,8 @@ class ShowSpecificServiceDetailsView(View):
             
     
     
+class ShowAllServicesView(View):
+    template_name = 'services/all_services.html'
+    def get(self,request):
+        services = Services.objects.filter(is_available=True)
+        return render(request,self.template_name,{'services':services})

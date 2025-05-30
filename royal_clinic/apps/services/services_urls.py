@@ -12,4 +12,5 @@ urlpatterns = [
     path('service_procedures/<str:slug>/',views.show_service_procedures,name='service_procedures'),
     path('service_related/<str:slug>/',views.show_other_services,name='service_related'),
     path('service_questions/<str:slug>/',views.service_repetative_questions,name='service_questions'),
+    path('all_services/',views.ShowAllServicesView.as_view(),name='all_services'),
 ]
