@@ -4,6 +4,8 @@ from django.db.models import Q
 
 from apps.services.models import Services
 from apps.personel.models import Personel
+from apps.offers.models import ServiceDiscount
+
 
 
 
@@ -20,6 +22,7 @@ class SearchResultsView(View):
             Q(slug__icontains=query)|
             Q(is_available__icontains=query)|
             Q(procedure_description__icontains=query)
+            
         )
         
         personels = Personel.objects.filter(
@@ -28,10 +31,20 @@ class SearchResultsView(View):
             Q(description__icontains=query)
         )
         
+        discounts = ServiceDiscount.objects.filter(
+            Q(description__icontains=query)|
+            Q(title__icontains=query)|
+            Q(discount_percentage__icontains=query)
+            
+        )
+        
+        
+        
         context = {
             
             "services" : services,
             "personels" : personels,
+            "discounts" : discounts,
         }
         
         return render(request,"search/search.html",context)

@@ -5,11 +5,12 @@ from django.views import View
 
 # Create your views here.
 
-# class ShowDiscounts(View):
-#     template_name = 'offers/discounts.html'
-#     def get(self, request):
-#         discounts = ServiceDiscount.objects.all()
-#         context = {
-#             'discounts': discounts
-#         }
-#         return render(request, self.template_name, context)
+def offers_partials(request):
+    
+    template_name = 'offers/partials/discount_partials.html'
+    offers = ServiceDiscount.objects.all()
+
+    context = {
+        'discounts': offers
+    }
+    return render(request, template_name, context)
