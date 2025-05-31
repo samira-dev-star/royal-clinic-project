@@ -15,7 +15,16 @@
      <!-- Hero Slider -->
       
     <section class="relative h-screen overflow-hidden">
-        <div class="relative h-full w-full">   
+        <div class="relative h-full w-full">  
+            
+            {% if offers %}
+            <div class="fixed left-4 bottom-6 z-50 bg-gradient-to-r from-red-600 to-yellow-500 text-white px-6 py-6 rounded-xl shadow-lg flex items-center justify-between animate-pulse space-x-4">
+                <p class="text-sm font-bold">🎉 تخفیف ویژه: </p>
+                <a href="{% url "services:show_discounts" %}" class="underline text-sm hover:text-yellow-100 transition duration-300">برای اطلاع از تخفیف‌ها کلیک کنید</a>
+            </div>
+            {% endif %}
+
+                    
         {% for data in sliders %}
             
             <!-- Slider Item -->
@@ -39,6 +48,11 @@
                         <span>رزرو نوبت</span>
                         <i class="fas fa-arrow-left mr-2"></i>
                     </a>
+
+                    
+                    
+
+                    
                 </div>
             </div>
         {% endfor %}  

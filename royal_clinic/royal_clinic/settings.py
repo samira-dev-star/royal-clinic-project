@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'apps.realtime_chat.apps.RealtimeChatConfig',
     'apps.personel.apps.PersonelConfig',
     'apps.offers.apps.OffersConfig',
+    
 ]
 
 MIDDLEWARE = [
@@ -119,6 +120,8 @@ TEMPLATES = [
                 'apps.main.views.media_admin',
                 'apps.main.views.social_media_links',
                 'apps.main.views.contact_with_us',
+                'apps.main.views.discount',
+                
                 'django.contrib.messages.context_processors.messages',
                 
             ],

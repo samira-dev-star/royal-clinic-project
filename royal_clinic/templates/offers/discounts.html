@@ -1,0 +1,52 @@
+{% extends "main_template.html" %}
+{% load static %}
+
+{% block title %}
+تخفیف‌ها
+{% endblock title %}
+
+{% block content %}
+
+<div class="container mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold text-center text-red-600 mb-10">🔥 تخفیف‌های ویژه کلینیک</h1>
+
+    {% if discounts %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for data in discounts %}
+                <div class="bg-white border border-red-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden relative">
+
+                    <div class="bg-gradient-to-r from-red-600 to-yellow-500 text-white px-6 py-4 flex items-center justify-between">
+                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                            <i class="fas fa-bolt fa-lg text-white animate-pulse"></i>
+                            <div>
+                                <p class="text-base font-bold">🎉 تخفیف ویژه</p>
+                                <p class="text-sm">{{ data.current_discount.title }} - {{ data.current_discount.discount_percentage }}٪</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ data.service_title }}</h2>
+                        <p class="text-gray-600 text-sm line-clamp-3">{{ data.service_short_description|safe }}</p>
+                    </div>
+
+                    <div class="px-6 pb-6">
+                        <a href="{% url 'services:service_detail' data.slug %}"
+                           class="block w-full text-center bg-red-600 text-white font-semibold py-2 rounded-xl hover:bg-red-700 transition">
+                            مشاهده سرویس
+                        </a>
+                    </div>
+
+                    {% if data.service_image %}
+                        <img src="{{ data.service_image.url }}" alt="{{ data.service_title }}"
+                             class="absolute top-4 right-4 w-20 h-20 object-cover rounded-full border-4 border-white shadow-md hidden md:block">
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-gray-500 mt-20">هیچ تخفیف فعالی در حال حاضر وجود ندارد.</p>
+    {% endif %}
+</div>
+
+{% endblock content %}

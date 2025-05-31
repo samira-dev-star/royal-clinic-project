@@ -124,3 +124,16 @@ class ShowAllServicesView(View):
         }
         
         return render(request,self.template_name,context)
+    
+    
+# --------------------------------------------------------------
+
+class ShowDiscounts(View):
+    template_name = 'offers/discounts.html'
+    def get(self, request):
+        services = Services.objects.all()
+        discounts = [services for services in services if services.has_discount]
+        context = {
+            'discounts': discounts
+        }
+        return render(request, self.template_name, context)

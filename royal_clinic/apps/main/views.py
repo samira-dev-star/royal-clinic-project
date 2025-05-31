@@ -4,6 +4,7 @@ from apps.services.models import Services
 from apps.contact.models import Contact
 from .models import Sliders,SocialMediaAddresses
 from django.db.models import Q
+from apps.offers.models import ServiceDiscount
 
 
 # Create your views here.
@@ -17,10 +18,12 @@ def index(request):
     contacts = Contact.objects.all()
     sliders = Sliders.objects.filter(Q(is_active=True))
     
+    
     context = {
         "services" : services,
         "contacts" : contacts,
         "sliders" : sliders,
+        
     }
     return render(request,'main/index.html',context)
 
@@ -35,3 +38,8 @@ def social_media_links(request):
 def contact_with_us(request):
     contacts = Contact.objects.all()
     return {'contacts': contacts}
+
+
+def discount(request):
+    offers = ServiceDiscount.objects.all()
+    return {'offers': offers}

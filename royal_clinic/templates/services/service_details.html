@@ -14,6 +14,17 @@
 
 
 {% block content %}
+
+{% if specific_service_clicked.has_discount %}
+            <div class="fixed left-4 bottom-6 z-50 bg-gradient-to-r from-red-600 to-yellow-500 text-white px-6 py-6 rounded-xl shadow-lg flex items-center justify-between animate-pulse space-x-4">
+                <p class="text-sm font-bold">🎉 تخفیف ویژه: </p>
+                <a href="#offers" class="underline text-sm hover:text-yellow-100 transition duration-300">این سرویس شامل تخفیف می باشد</a>
+            </div>
+{% endif %}
+
+
+
+            
     <!-- Service Hero -->
     <section class="service-hero py-20 md:py-32 text-white" style="background-image: url('{{ media_url }}{{ specific_service_clicked.service_image }}'); background-size: cover; background-position: center;">
         <div class="container mx-auto px-4">
