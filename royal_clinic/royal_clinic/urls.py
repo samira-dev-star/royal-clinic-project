@@ -34,6 +34,7 @@ urlpatterns = [
     path('search/',include('apps.search.search_urls' , namespace='search')),
     path('personel/',include('apps.personel.personel_urls',namespace='personel')),
     path('offers/',include('apps.offers.offers_urls',namespace='offers')),
+    path('gallery/',include('apps.gallery.gallery_urls',namespace='gallery')),
     
     path('ckeditor/', include('ckeditor_uploader.urls')),
     

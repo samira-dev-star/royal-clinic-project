@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'apps.realtime_chat.apps.RealtimeChatConfig',
     'apps.personel.apps.PersonelConfig',
     'apps.offers.apps.OffersConfig',
+    'apps.gallery.apps.GalleryConfig',
     
 ]
 
