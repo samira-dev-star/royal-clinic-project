@@ -24,7 +24,7 @@
                     {% for service in data.service.all %}
                         <a href="{% url 'services:service_detail' service.slug %}"
                            class="block w-full text-center bg-red-600 text-white font-semibold py-2 rounded-xl hover:bg-red-700 transition">
-                            مشاهده سرویس
+                            مشاهده سرویس {{ service.service_title }}
                         </a>
                     {% endfor %}
                 </div>
