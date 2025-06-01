@@ -17,8 +17,8 @@ class ServiceVideo(models.Model):
     is_active = models.BooleanField(default=True, verbose_name='فعال باشد؟')
 
     class Meta:
-        verbose_name = 'ویدیو سرویس'
-        verbose_name_plural = 'ویدیوهای سرویس'
+        verbose_name = 'ویدیو'
+        verbose_name_plural = 'ویدیوها'
 
     def __str__(self):
-        return f"{self.title} ({self.service.title})"
+        return f"{self.title} ({self.service})"
