@@ -1,0 +1,36 @@
+{% comment %} <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">نظرات مراجعین</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">آنچه بیماران ما درباره تجربه‌شان در کلینیک رویال می‌گویند</p>
+            <div class="w-20 h-1 bg-amber-500 mx-auto mt-4"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8"> {% endcomment %}
+            {% for testimonial in testimonials %}
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        {% for i in "12345"|slice:":testimonial.score"|make_list %}
+                            <div class="text-amber-500 text-2xl mr-2">★</div>
+                        {% endfor %}
+                    </div>
+                    <p class="text-gray-600 mb-6">{{ testimonial.idea }}</p>
+                    <div class="flex items-center">
+                        
+                        {% if testimonial.user.patient and testimonial.user.patient.image_name %}
+                            <img src="{{ testimonial.user.patient.image_name.url }}" alt="{{ testimonial.user.get_full_name }}" class="w-12 h-12 rounded-full mr-4">
+                        {% else %}
+                            <img src="{{ media_url }}images/comments/user.png" alt="user-comment">
+                        {% endif %}
+
+
+                        <div>
+                            <h4 class="font-bold text-gray-800">{{ testimonial.user.get_full_name }}</h4>
+                            <p class="text-gray-500 text-sm">{{ testimonial.service.service_title }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>هنوز نظری ثبت نشده است.</p>
+            {% endfor %}
+

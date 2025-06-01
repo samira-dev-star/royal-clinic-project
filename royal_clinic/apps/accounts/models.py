@@ -79,6 +79,9 @@ class Customuser(AbstractBaseUser,PermissionsMixin):
         verbose_name_plural = "کاربران و پرسنل"
 
 
+    def get_full_name(self):
+        return f"{self.name} {self.family}".strip()
+
 
 from ckeditor_uploader.fields import RichTextUploadingField
 from ckeditor.fields import RichTextField

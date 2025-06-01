@@ -2,6 +2,7 @@ from django.db import models
 from apps.services.models import Services
 from apps.accounts.models import Customuser
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator, MaxValueValidator
 # Create your models here.
 
 class Comment(models.Model):
@@ -60,3 +61,18 @@ class Comment(models.Model):
         verbose_name_plural = 'نظرات'
         
         
+# ------------------------------------------------------------------
+
+class UsersIdeaAndScores(models.Model):
+    user = models.ForeignKey(Customuser, on_delete=models.CASCADE,verbose_name='کاربر')
+    service = models.ForeignKey(Services, on_delete=models.CASCADE,verbose_name='سرویس')
+    idea = models.TextField(verbose_name='نطر')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ثبت')
+    
+    score = models.IntegerField(
+    verbose_name='امتیاز',
+    validators=[MinValueValidator(1), MaxValueValidator(5)]
+)
+    
+    def __str__(self):
+        return f"{self.user} - {self.service}"

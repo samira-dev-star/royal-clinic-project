@@ -214,72 +214,14 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div class="bg-white p-8 rounded-lg shadow-md">
-                    <div class="flex items-center mb-4">
-                        <div class="text-amber-500 text-2xl mr-2">★</div>
-                        <div class="text-amber-500 text-2xl mr-2">★</div>
-                        <div class="text-amber-500 text-2xl mr-2">★</div>
-                        <div class="text-amber-500 text-2xl mr-2">★</div>
-                        <div class="text-amber-500 text-2xl">★</div>
-                    </div>
-                    <p class="text-gray-600 mb-6">
-                        بهترین تجربه زیبایی من در کلینیک رویال بود. دکتر احمدی با حوصله و دقت بالا تمام توضیحات را دادند و نتیجه کار فوق‌العاده بود. محیط کلینیک هم بسیار تمیز و آرام بود.
-                    </p>
-                    <div class="flex items-center">
-                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="نازنین محمدی" class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-bold text-gray-800">نازنین محمدی</h4>
-                            <p class="text-gray-500 text-sm">بیمار لیزر موهای زائد</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 2 -->
-                <div class="bg-white p-8 rounded-lg shadow-md">
-                    <div class="flex items-center mb-4">
-                        <div class="text-amber-500 text-2xl mr-2">★</div>
-                        <div class="text-amber-500 text-2xl mr-2">★</div>
-                        <div class="text-amber-500 text-2xl mr-2">★</div>
-                        <div class="text-amber-500 text-2xl mr-2">★</div>
-                        <div class="text-amber-500 text-2xl">★</div>
-                    </div>
-                    <p class="text-gray-600 mb-6">
-                        بعد از سال‌ها ریزش مو، بالاخره با کمک دکتر رضایی مشکل من حل شد. کاشت موی طبیعی با نتیجه‌ای فوق‌العاده که اصلا قابل تشخیص نیست. ممنون از تیم حرفه‌ای کلینیک رویال.
-                    </p>
-                    <div class="flex items-center">
-                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="امیر حسینی" class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-bold text-gray-800">امیر حسینی</h4>
-                            <p class="text-gray-500 text-sm">بیمار کاشت مو</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 3 -->
-                <div class="bg-white p-8 rounded-lg shadow-md">
-                    <div class="flex items-center mb-4">
-                        <div class="text-amber-500 text-2xl mr-2">★</div>
-                        <div class="text-amber-500 text-2xl mr-2">★</div>
-                        <div class="text-amber-500 text-2xl mr-2">★</div>
-                        <div class="text-amber-500 text-2xl mr-2">★</div>
-                        <div class="text-amber-500 text-2xl">★</div>
-                    </div>
-                    <p class="text-gray-600 mb-6">
-                        تزریق بوتاکس من توسط دکتر نوروزی انجام شد و نتیجه‌ای کاملا طبیعی داشت. اصلا مثل بعضی کلینیک‌ها که صورت را بی‌حالت می‌کنند نبود. بسیار راضی هستم و ادامه درمان را هم با ایشان انجام خواهم داد.
-                    </p>
-                    <div class="flex items-center">
-                        <img src="https://randomuser.me/api/portraits/women/63.jpg" alt="فاطمه کریمی" class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-bold text-gray-800">فاطمه کریمی</h4>
-                            <p class="text-gray-500 text-sm">بیمار تزریق بوتاکس</p>
-                        </div>
-                    </div>
-                </div>
+
+                {% render_partial "csf:users_ideas" %}
+
             </div>
         </div>
     </section>
 
+    
     <!-- Appointment -->
     <section id="appointment" class="py-16 bg-white">
         <div class="container mx-auto px-4">

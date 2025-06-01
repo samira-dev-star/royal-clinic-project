@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404,redirect
 from .csf_forms import CommentForm
 from django.views import View
 from apps.services.models import Services
-from .models import Comment
+from .models import Comment,UsersIdeaAndScores
 from django.contrib import messages
 from apps.accounts.models import Customuser
 
@@ -68,3 +68,9 @@ class CommentView(View):
             return redirect("services:service_detail", service.slug)
         messages.error(request, "خطا در ثبت نظر", "danger")
         return redirect("services:service_detail", service.slug)
+    
+# -----------------------------------------------------------------
+
+def testimonials(request):
+    testimonials = UsersIdeaAndScores.objects.select_related('user', 'service').all()
+    return render(request, 'csf/partials/users_ideas.html', {'testimonials': testimonials})
