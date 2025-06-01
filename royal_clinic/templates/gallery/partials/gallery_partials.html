@@ -1,0 +1,32 @@
+
+{% if videos %}
+{% for video in videos %}
+
+    <div class="doctor-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300">
+        <div class="h-64 overflow-hidden">
+
+            <video controls class="w-full h-full object-cover transition-transform duration-500"
+                {% if video.thumbnail %}
+                    poster="{{ video.thumbnail.url }}"
+                {% endif %}
+            >
+                <source src="{{ video.video_file.url }}" type="video/mp4">
+                مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+            </video>
+
+
+        </div>
+        <div class="p-6 text-center">
+            <h3 class="text-xl font-bold text-gray-800 mb-1">{{video.title}}</h3>
+            <p class="text-amber-600 mb-3">{{ video.description }}</p>
+            
+
+            
+        </div>
+        
+    </div>
+
+{% endfor %}
+{% else %}
+        <p>ویدیویی برای نمایش وجود ندارد.</p>
+{% endif %}
