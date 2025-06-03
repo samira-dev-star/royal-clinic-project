@@ -74,3 +74,82 @@ class CommentView(View):
 def testimonials(request):
     testimonials = UsersIdeaAndScores.objects.select_related('user', 'service').all()
     return render(request, 'csf/partials/users_ideas.html', {'testimonials': testimonials})
+
+
+# -----------------------------------------------------------------
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.core.exceptions import PermissionDenied
+from .models import UsersIdeaAndScores, Services
+
+@login_required
+@require_POST
+def add_score(request):
+    # دریافت داده‌های ارسالی از فرم
+    service_id = request.POST.get('service_id')
+    score = request.POST.get('score')
+    idea = request.POST.get('idea', '').strip()
+
+    # اعتبارسنجی داده‌های ورودی
+    if not service_id or not score:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'درخواست نامعتبر: اطلاعات ضروری ارسال نشده'
+        }, status=400)
+
+    try:
+        service = get_object_or_404(Services, id=service_id)
+        score = int(score)
+    except (ValueError, TypeError):
+        return JsonResponse({
+            'status': 'error',
+            'message': 'امتیاز باید یک عدد معتبر باشد'
+        }, status=400)
+    
+    # بررسی محدوده مجاز امتیاز (1 تا 5)
+    if score < 1 or score > 5:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'امتیاز باید بین ۱ تا ۵ باشد'
+        }, status=400)
+
+    # بررسی وجود امتیاز قبلی کاربر برای این سرویس
+    existing_score = UsersIdeaAndScores.objects.filter(
+        user=request.user,
+        service=service
+    ).exists()
+    
+    if existing_score:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'شما قبلاً به این سرویس امتیاز داده‌اید'
+        }, status=403)
+
+    # ایجاد رکورد جدید در دیتابیس
+    try:
+        new_score = UsersIdeaAndScores.objects.create(
+            user=request.user,
+            service=service,
+            idea=idea,
+            score=score
+        )
+        new_score.save()
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': f'خطا در ذخیره‌سازی داده‌ها: {str(e)}'
+        }, status=500)
+
+    # محاسبه میانگین جدید امتیازهای سرویس
+    avg_score = service.calculate_average_score()
+    
+    return JsonResponse({
+        'status': 'success',
+        'message': 'امتیاز و نظر شما با موفقیت ثبت شد',
+        'avg_score': avg_score
+    })
+# -----------------------------------------------------------------
+    
+

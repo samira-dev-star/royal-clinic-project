@@ -17,6 +17,7 @@ class CustomUserAdmin(UserAdmin):
     
     list_display = ('mobile_number','email','name','family','gender','is_active','is_admin')
     list_filter = ('is_active',"is_admin","family")
+    list_editable = ('is_active','is_admin')
     
 
     fieldsets = (

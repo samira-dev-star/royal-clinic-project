@@ -26,6 +26,9 @@ class Personel(models.Model):
     def show_personel_images(self):
         return mark_safe(f'<img src="/media/{self.image}" width="100" height="100" />')
     
+    def activation(self):
+        return self.user.is_active
+    
     
     
     

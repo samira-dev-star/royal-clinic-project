@@ -7,7 +7,8 @@ from django.utils import timezone
 from django.utils.text import slugify
 
 from django.urls import reverse
-from django.db.models import Q
+from django.db.models import Q,Avg
+from middlewares.middlewares import RequestMiddleware
 
 # Create your models here.
 
@@ -60,6 +61,36 @@ class Services(models.Model):
             start_date__lte=now,
             end_date__gte=now
         ).first()
+        
+    
+    def get_user_score(self):
+        request = RequestMiddleware(get_response=None)
+        request = request.thread_local.current_request
+        score = 0
+        # یعنی امتیاز رو فقط واسه این کاربر برسی و فیلتر میکنه
+        user_score = self.scoring_service.filter(scoring_user=request.user)
+        if user_score.count() > 0:
+            score = user_score[0].score
+        return score
+        
+    
+    # آیا aggregate در پایتون وجود داره؟
+    # نتیجه‌گیری ساده:
+    # aggregate مال جنگوئه، نه پایتون خالص.
+    # باهاش می‌تونی عملیات آماری روی دیتای دیتابیس انجام بدی.
+    # حتماً باید از from django.db.models import Avg, Sum, ... استفاده کنی.
+    
+    # {'score__avg': 4.0}  
+    # score__avg این کلمه چطور تولید میشه
+    # score: نام فیلد مدل (مثلاً نمره‌ای که کاربر داده)
+    # Avg: تابعی که ازش استفاده کردی (میانگین گرفتن)
+    
+    # میانگین امتیازی که این کالا کسب کرده
+    def get_average_score(self):
+        avgScore = self.scoring_service.all().aggregate(Avg('score'))['score__avg']
+        if avgScore == None:
+            avgScore = 0
+        return avgScore
 
     
     class Meta:

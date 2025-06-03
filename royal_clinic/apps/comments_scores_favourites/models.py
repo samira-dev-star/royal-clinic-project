@@ -64,15 +64,16 @@ class Comment(models.Model):
 # ------------------------------------------------------------------
 
 class UsersIdeaAndScores(models.Model):
-    user = models.ForeignKey(Customuser, on_delete=models.CASCADE,verbose_name='کاربر')
-    service = models.ForeignKey(Services, on_delete=models.CASCADE,verbose_name='سرویس')
+    user = models.ForeignKey(Customuser, on_delete=models.CASCADE,verbose_name='کاربر',related_name="scoring_user")
+    service = models.ForeignKey(Services, on_delete=models.CASCADE,verbose_name='سرویس',related_name="scoring_service")
     idea = models.TextField(verbose_name='نطر')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ثبت')
     
-    score = models.IntegerField(
-    verbose_name='امتیاز',
-    validators=[MinValueValidator(1), MaxValueValidator(5)]
-)
+    score = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),MaxValueValidator(5)],verbose_name='امتیاز')
     
     def __str__(self):
         return f"{self.user} - {self.service}"
+    
+    class Meta:
+        verbose_name = 'نطر و امتیاز'
+        verbose_name_plural = 'نطرات و امتیازات'

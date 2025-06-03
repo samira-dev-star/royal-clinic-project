@@ -251,10 +251,149 @@
 				        	{% endif %}
 
                         </div>
-                    </div> 
+                    </div>  
 
 {% comment %} -------------------------------------------------------------------------------------------------------------------------- {% endcomment %}
+<hr>
+{% comment %} -------------------------------------------------------------------------------------------------------------------------- {% endcomment %}
 
+<style>
+/* Add this style to disable pointer events for stars after voting */
+.fa-star.disable {
+    pointer-events: none;
+    opacity: 0.5;
+}
+/* Style for checked (selected) stars */
+.fa-star.checked {
+    color: #ffc107 !important;
+}
+/* Optional: style for unselected stars */
+.fa-star {
+    color: #ccc;
+    transition: color 0.2s;
+}
+</style>
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h6>میانگین امتیاز سرویس : <span style="color: red;" id="avg_score">{{specific_service_clicked.get_average_score}}</span></h6>
+        
+    {% if user.is_authenticated %}
+        {% if specific_service_clicked.get_user_score > 0 %}
+            <div>
+                {% with ''|center:5 as range %}
+                    {% for i in range %}
+                        {% if forloop.counter <= specific_service_clicked.get_user_score %}
+                            <span id="star_{{forloop.counter}}" class="fa fa-star checked"></span>
+                        {% else %}
+                            <span id="star_{{forloop.counter}}" class="fa fa-star"></span>
+                        {% endif %}
+                    {% endfor %}
+                {% endwith %}
+            </div>
+        {% else %}
+            <div id="star-rating-group" data-service-id="{{ specific_service_clicked.id }}">
+                <span id="star_1" class="fa fa-star cursor-pointer" onclick="addScore(1)"></span>
+                <span id="star_2" class="fa fa-star cursor-pointer" onclick="addScore(2)"></span>
+                <span id="star_3" class="fa fa-star cursor-pointer" onclick="addScore(3)"></span>
+                <span id="star_4" class="fa fa-star cursor-pointer" onclick="addScore(4)"></span>
+                <span id="star_5" class="fa fa-star cursor-pointer" onclick="addScore(5)"></span>
+            </div>
+            <div style="margin-top: 10px;">
+                <textarea id="idea_text" rows="2" placeholder="ایده یا نظر خود را وارد کنید..." style="width: 250px; resize: vertical;"></textarea>
+            </div>
+            <button type="button" id="submit_idea_btn" class="bg-amber-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-amber-700 transition duration-300" style="margin-top: 8px;" onclick="submitIdea()">ثبت ایده</button>
+        {% endif %}
+    
+{% else %}
+    <h6 style="text-decoration: underline;">
+        برای امتیاز دهی
+        <a href="{% url "account:login" %}?next={% url 'services:service_detail' specific_service_clicked.slug %}">ورود</a> 
+        یا 							
+        <a href="{% url "account:register" %}?next={% url 'services:service_detail' specific_service_clicked.slug %}">ثبت نام</a>
+        کنید
+    </h6>
+{% endif %}
+</div>
+
+<script>
+let selectedScore = 0;
+
+function addScore(score) {
+    selectedScore = score;
+    // Only target interactive stars
+    var starRatings = document.querySelectorAll("#star-rating-group .fa-star");
+
+    // Reset all stars
+    starRatings.forEach(element => {
+        element.classList.remove("checked");
+    });
+
+    // Highlight selected stars
+    for (let i = 1; i <= score; i++) {
+        const element = document.getElementById("star_" + i);
+        if (element) {
+            element.classList.add("checked");
+        }
+    }
+}
+
+// Submit both score and idea
+function submitIdea() {
+    var idea = document.getElementById("idea_text").value;
+    var starGroup = document.getElementById("star-rating-group");
+    var serviceId = starGroup ? starGroup.getAttribute("data-service-id") : null;
+    if (!serviceId) {
+        alert("خطا: شناسه سرویس یافت نشد.");
+        return;
+    }
+    if (selectedScore === 0) {
+        alert("لطفا ابتدا امتیاز خود را انتخاب کنید.");
+        return;
+    }
+    // Send AJAX request
+    $.ajax({
+        type: "POST",
+        url: "{% url 'csf:add_score' %}",
+        data: {
+            service_id: serviceId,
+            score: selectedScore,
+            idea: idea,
+            csrfmiddlewaretoken: getCookie('csrftoken')
+        },
+        success: function(res) {
+            alert(res.message);
+            $("#avg_score").text(res.avg_score);
+            // Only disable interactive stars
+            $("#star-rating-group .fa-star").addClass("disable");
+            $("#idea_text").prop("disabled", true);
+            $("#submit_idea_btn").prop("disabled", true);
+        },
+        error: function(xhr, status, error) {
+            // Log the server response for debugging
+            console.error("Server response:", xhr.responseText);
+            alert("Error: " + error + "\n" + xhr.responseText);
+        }
+    });
+}
+
+// Function to get CSRF token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+
+{% comment %} -------------------------------------------------------------------------------------------------------------------------- {% endcomment %}
 
 
     <!-- Related Services -->

@@ -7,6 +7,35 @@ from django.core.validators import MaxLengthValidator,MinLengthValidator
 # --------------------------------------------------------------------------------------------------------------------
 # admin pannel forms
 
+from django.core.exceptions import ValidationError
+# Create your views here.
+
+def normalize_iranian_mobile(number):
+    if number is None:
+        return number
+        
+    # حذف فاصله‌ها و نویسه‌های غیرضروری
+    number = str(number).strip().replace(" ", "").replace("-", "").replace("+", "")
+    
+    # حذف پیشوند 0 اگر وجود دارد
+    if number.startswith('0'):
+        number = number[1:]
+    
+    # افزودن پیشوند 98 اگر وجود ندارد
+    if not number.startswith('98'):
+        number = '98' + number
+    
+    # حذف 98 اضافی در ابتدا
+    if number.startswith('9898'):
+        number = '98' + number[4:]
+    
+    # اطمینان از طول 12 رقمی (98 + 10 رقم)
+    if len(number) != 12:
+        raise ValidationError("شماره موبایل باید ۱۰ رقم (بدون پیشوند) باشد")
+    
+    return number
+
+
 class UserCreationForm(ModelForm):
     password1 = forms.CharField(label="Password",widget=forms.PasswordInput ,validators=[MaxLengthValidator(8),MinLengthValidator(4)])
     password2 = forms.CharField(label="RePassword",widget=forms.PasswordInput ,validators=[MaxLengthValidator(8),MinLengthValidator(4)])
@@ -20,6 +49,17 @@ class UserCreationForm(ModelForm):
         if pass1 and pass2 and pass1 != pass2 :
             raise ValidationError("رمز عبور و تکرار ان با هم مغایرت دارد")
         return pass2
+    
+    
+    
+    def clean_mobile_number(self):
+       try:
+           mobile = self.cleaned_data['mobile_number']
+           return normalize_iranian_mobile(mobile)
+       except ValidationError as e:
+           raise ValidationError(e.message)
+       
+       
     
     def save(self,commit=True):
         # commit false baes mishe user save nashe va user save nashode ro mirizim tu user
@@ -72,16 +112,15 @@ class RegisterUserForm(ModelForm):
         if pass1 and pass2 and pass1 != pass2:
             raise ValidationError('پسورد و تکرار آن باهم مغایرت دارند')
         return pass2
-    
+
+
     def clean_mobile_number(self):
-        mobile = self.cleaned_data['mobile_number'].strip().replace(" ", "")
-        if mobile.startswith('0'):
-            mobile = mobile[1:]
-        if not mobile.startswith('98') and not mobile.startswith('+98'):
-            mobile = '+98' + mobile
-        elif mobile.startswith('98'):  # بدون + اگر وارد شده باشه
-            mobile = '+' + mobile
-        return mobile
+        mobile = self.cleaned_data['mobile_number']
+        try:
+            # استفاده از تابع یکسان برای نرمال‌سازی
+            return normalize_iranian_mobile(mobile)
+        except ValidationError as e:
+            raise ValidationError(e.message)
 
             
 # -----------------------------------------------------------------------------------------------
@@ -109,29 +148,7 @@ class LoginUserForm(forms.Form):
                                    'id':'password',
                                    }))
     
-    def clean_mobile_number(self):
-        number = self.cleaned_data.get('mobile_number')
-
-        if " " in number:
-            raise ValidationError("شماره موبایل نباید فاصله داشته باشد.") 
-
-        if not number.replace('+', '').isdigit():
-            raise ValidationError("شماره موبایل فقط باید شامل عدد باشد.")
-
-        if not (number.startswith('09') or number.startswith('+989') or number.startswith('989')):
-            raise ValidationError("شماره موبایل باید با 09 یا +989 یا 989 شروع شود.")
-
-        # تبدیل به فرمت بین‌المللی
-        if number.startswith('09'):
-            number = '+98' + number[1:]  # 0912... => +98912...
-        elif number.startswith('989'):
-            number = '+' + number  # 98912... => +98912...
-        
-        # بررسی طول
-        if len(number) != 13:
-            raise ValidationError("تعداد ارقام شماره موبایل صحیح نمی‌باشد.")
-
-        return number
+    
 
 
     def clean_password(self):
@@ -141,6 +158,20 @@ class LoginUserForm(forms.Form):
         if len(password) > 8 :
             raise ValidationError('پسورد باید حداکثر 8 کاراکتر داشته باشد')
         return password
+    
+    def clean_mobile_number(self):
+        number = self.cleaned_data.get('mobile_number')
+        if not number:
+            raise ValidationError("شماره موبایل نمی‌تواند خالی باشد.")
+        try:
+            # استفاده از تابع یکسان برای نرمال‌سازی
+            normalized = normalize_iranian_mobile(number)
+            # اگر شماره با 98 شروع شد، به فرمت 09 برگردان برای سازگاری با دیتابیس
+            if normalized.startswith('98'):
+                normalized = '0' + normalized[2:]
+            return normalized
+        except ValidationError as e:
+            raise ValidationError(e.message)
 
 
 

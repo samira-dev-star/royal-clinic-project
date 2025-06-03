@@ -9,7 +9,7 @@ from apps.contact.models import Contact
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.aggregates import Count
 from django.db.models import Q
-# Create your views here.
+
 
 
 class RegisterUserView(View):
@@ -24,6 +24,7 @@ class RegisterUserView(View):
     def get(self,request,*args, **kwargs):
         form = RegisterUserForm()
         return render(request,self.template_name,{'form':form})
+    
     
     def post(self,request,*args, **kwargs):
         form = RegisterUserForm(request.POST)
@@ -106,11 +107,19 @@ class LoginUser(View):
         form = LoginUserForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            # print(data['mobile_number']) # تست
+            # اولین تلاش برای احراز هویت با فرمت 12 رقمی (بدون +)
             user = authenticate(
-                username=data['mobile_number'],  # مطمئن شوید USERNAME_FIELD='mobile_number' در مدل کاربر
+                username=data['mobile_number'],
                 password=data['password']
             )
+            
+            # اگر کاربر یافت نشد، با فرمت 13 رقمی (با +) امتحان کنید
+            if user is None:
+                user = authenticate(
+                    username='+' + data['mobile_number'],
+                    password=data['password']
+                )
+
             if user is not None:
                 if user.is_admin:  # اگر is_admin نشاندهنده کاربر مدیر است
                     messages.error(request, 'کاربر ادمین نمی‌تواند از این فرم وارد شود', 'error')
