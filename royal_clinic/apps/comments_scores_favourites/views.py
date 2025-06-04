@@ -153,3 +153,6 @@ def add_score(request):
 # -----------------------------------------------------------------
     
 
+# نصب tailwind
+# settings > 'tailwind','theme',
+# python manage.py tailwind init
