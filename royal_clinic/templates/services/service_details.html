@@ -272,6 +272,7 @@
     color: #ccc;
     transition: color 0.2s;
 }
+
 </style>
 
 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -342,6 +343,7 @@ function submitIdea() {
     var idea = document.getElementById("idea_text").value;
     var starGroup = document.getElementById("star-rating-group");
     var serviceId = starGroup ? starGroup.getAttribute("data-service-id") : null;
+
     if (!serviceId) {
         alert("خطا: شناسه سرویس یافت نشد.");
         return;
@@ -350,7 +352,7 @@ function submitIdea() {
         alert("لطفا ابتدا امتیاز خود را انتخاب کنید.");
         return;
     }
-    // Send AJAX request
+
     $.ajax({
         type: "POST",
         url: "{% url 'csf:add_score' %}",
@@ -361,17 +363,23 @@ function submitIdea() {
             csrfmiddlewaretoken: getCookie('csrftoken')
         },
         success: function(res) {
-            alert(res.message);
-            $("#avg_score").text(res.avg_score);
-            // Only disable interactive stars
-            $("#star-rating-group .fa-star").addClass("disable");
-            $("#idea_text").prop("disabled", true);
-            $("#submit_idea_btn").prop("disabled", true);
+            if (res.status === "success") {
+                alert(res.message);
+                $("#avg_score").text(res.avg_score);
+                $("#star-rating-group .fa-star").addClass("disable");
+                $("#idea_text").prop("disabled", true);
+                $("#submit_idea_btn").prop("disabled", true);
+            } else {
+                alert(res.message);
+            }
         },
-        error: function(xhr, status, error) {
-            // Log the server response for debugging
-            console.error("Server response:", xhr.responseText);
-            alert("Error: " + error + "\n" + xhr.responseText);
+        error: function(xhr) {
+            try {
+                const res = JSON.parse(xhr.responseText);
+                alert(res.message);
+            } catch (e) {
+                alert("خطایی در سرور رخ داد.");
+            }
         }
     });
 }
