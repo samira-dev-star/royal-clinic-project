@@ -80,6 +80,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'middlewares.middlewares.SessionSecurityMiddleware',
+    'middlewares.middlewares.RequestMiddleware',
  
 ]
 
