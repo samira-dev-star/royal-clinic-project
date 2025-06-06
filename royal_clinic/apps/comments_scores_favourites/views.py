@@ -143,12 +143,13 @@ def add_score(request):
         }, status=500)
 
     # محاسبه میانگین جدید امتیازهای سرویس
-    avg_score = service.calculate_average_score()
-    
+    avg_score = service.get_average_score()
+    user_score = service.get_user_score()
     return JsonResponse({
         'status': 'success',
         'message': 'امتیاز و نظر شما با موفقیت ثبت شد',
-        'avg_score': avg_score
+        'avg_score': avg_score,
+        'user_score': user_score,
     })
 # -----------------------------------------------------------------
     
@@ -156,3 +157,10 @@ def add_score(request):
 # نصب tailwind
 # settings > 'tailwind','theme',
 # python manage.py tailwind init
+
+# -----------------------------------------------------------------
+
+class ScoringServicesView(View):
+    def get(self, request):
+        services = Services.objects.all()
+        return render(request, 'csf/score_services.html', {'services': services})
