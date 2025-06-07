@@ -119,7 +119,3 @@ def add_score(request):
 
 # -----------------------------------------------------------------
 
-class ScoringServicesView(View):
-    def get(self, request):
-        services = Services.objects.all()
-        return render(request, 'csf/score_services.html', {'services': services})

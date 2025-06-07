@@ -6,6 +6,9 @@ from .models import Sliders,SocialMediaAddresses
 from django.db.models import Q
 from apps.offers.models import ServiceDiscount
 
+from apps.comments_scores_favourites.models import AddScore
+from apps.patient_panel.models import CustomPatient
+
 
 # Create your views here.
 
@@ -18,11 +21,22 @@ def index(request):
     contacts = Contact.objects.all()
     sliders = Sliders.objects.filter(Q(is_active=True))
     
+    scores_and_ideas = AddScore.objects.all()
+    
+    image_list = []
+    
+    for user in scores_and_ideas:
+       images = CustomPatient.objects.get(user=user.user) 
+       image_list.append(images.image_name.url)
+    
     
     context = {
         "services" : services,
         "contacts" : contacts,
         "sliders" : sliders,
+        
+        "scores_and_ideas" : scores_and_ideas,
+        "image_list" : image_list
         
     }
     return render(request,'main/index.html',context)
