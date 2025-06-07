@@ -23,11 +23,11 @@ def index(request):
     
     scores_and_ideas = AddScore.objects.all()
     
-    image_list = []
+    # image_list = []
     
-    for user in scores_and_ideas:
-       images = CustomPatient.objects.get(user=user.user) 
-       image_list.append(images.image_name.url)
+    # for user in scores_and_ideas:
+    #    images = CustomPatient.objects.get(user=user.user) 
+    #    image_list.append(images.image_name.url)
     
     
     context = {
@@ -36,7 +36,7 @@ def index(request):
         "sliders" : sliders,
         
         "scores_and_ideas" : scores_and_ideas,
-        "image_list" : image_list
+        # "image_list" : image_list
         
     }
     return render(request,'main/index.html',context)

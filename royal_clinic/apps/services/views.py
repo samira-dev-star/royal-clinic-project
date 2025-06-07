@@ -3,6 +3,7 @@ from .models import Services,ServiceFeatures,ServiceAdvantages,ServiceCandidateC
 from django.db.models import Q
 from django.views import View
 from django.core.paginator import Paginator
+from apps.comments_scores_favourites.models import AddScore
 # Create your views here.
 
 def render_service_related_partial(request, slug, model, template_name, context_key):
@@ -103,8 +104,11 @@ class ShowSpecificServiceDetailsView(View):
     template_name = 'services/service_details.html'
     def get(self,request,slug):
         specific_service_clicked = get_object_or_404(Services,slug=slug)
+        
+        scores_and_ideas = AddScore.objects.get(Q(user=request.user) & Q(service=specific_service_clicked))
+        
         if specific_service_clicked.is_available:
-            return render(request,self.template_name,{'specific_service_clicked':specific_service_clicked})
+            return render(request,self.template_name,{'specific_service_clicked':specific_service_clicked,'scores_and_ideas':scores_and_ideas})
             
     
     
@@ -117,6 +121,7 @@ class ShowAllServicesView(View):
         paginator = Paginator(Services.objects.filter(is_available=True), 9)
         current_page = request.GET.get('page')
         page_obj = paginator.get_page(current_page)
+        
         
         context = {
             'services':page_obj.object_list,

@@ -317,7 +317,9 @@
                 
             </div>
         </div>
+
         
+    
         <!-- Rating Component -->
         <div class="bg-white rounded-2xl shadow-lg p-6">
             <h2 class="text-xl font-bold text-gray-800 border-b pb-4 mb-6">تجربه ی خود را درباره ی سرویس {{specific_service_clicked.service_title}} به اشتراک بگذارید</h2>
@@ -337,13 +339,7 @@
                         </div>
                     </div>
 
-                    {% comment %} <div>
-                        <p class="text-gray-600">امتیاز شما به این سرویس : </p>
-                        <div class="flex items-baseline">
-                            <span id="avg_score" class="text-2xl font-bold text-amber-600">{{ specific_service_clicked.get_user_score }}</span>
-                            <span class="text-gray-500 text-sm mr-1">از 5</span>
-                        </div>
-                    </div> {% endcomment %}
+                    
 
                 </div>
 
@@ -360,7 +356,22 @@
                     <span id="avg_score" class="text-2xl font-bold text-amber-600">{{ specific_service_clicked.get_user_score }}</span>
                     <span class="text-gray-500 text-sm mr-1">از 5</span>
                 </div>
+
+                <div class="flex items-baseline">
+                       {% if scores_and_ideas %}
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= scores_and_ideas.score %}
+                                <div class="text-amber-500 text-2xl mr-2">★</div>
+                            {% else %}
+                                <div class="text-gray-300 text-2xl mr-2">★</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                
             </div>
+
+         
 
             <form id="rating-form" method="post" action="{% url "csf:add_score" %}">
                 {% csrf_token %}
