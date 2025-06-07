@@ -81,3 +81,32 @@ function hideCommentForm(commentId) {
 
 // --------------------------------------------------------------------------------------
 
+// sending service id to an specific view:
+
+// وقتی صفحه کاملاً بارگذاری شد
+    document.addEventListener('DOMContentLoaded', function() {
+        // خواندن service-id از data-attribute یا مستقیماً از context
+        // اگر نیاز به ارسال شناسه سرویس به صورت AJAX هنگام بارگذاری صفحه دارید:
+        const serviceId = "{{ specific_service_clicked.id }}";
+        if (!serviceId) return;
+
+        // ارسال AJAX با متد GET (در صورت نیاز به ارسال هنگام لود)
+        $.ajax({
+            url: "{% url 'csf:add_score' %}",
+            type: "GET",
+            data: {
+                service_id: serviceId
+            },
+            success: function(response) {
+                console.log("شناسهٔ سرویس با موفقیت ارسال شد:", response);
+            },
+            error: function(xhr, status, error) {
+                console.error("خطا در ارسال شناسهٔ سرویس:", error);
+            }
+        });
+    });
+
+
+// --------------------------------------------------------------------------------
+
+

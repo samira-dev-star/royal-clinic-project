@@ -63,7 +63,7 @@ class Comment(models.Model):
         
 # ------------------------------------------------------------------
 
-class UsersIdeaAndScores(models.Model):
+class AddScore(models.Model):
     user = models.ForeignKey(Customuser, on_delete=models.CASCADE,verbose_name='کاربر',related_name="scoring_user")
     service = models.ForeignKey(Services, on_delete=models.CASCADE,verbose_name='سرویس',related_name="scoring_service")
     idea = models.TextField(verbose_name='نطر')

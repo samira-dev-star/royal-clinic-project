@@ -68,7 +68,7 @@ class Services(models.Model):
         request = request.thread_local.current_request
         score = 0
         # یعنی امتیاز رو فقط واسه این کاربر برسی و فیلتر میکنه
-        user_score = self.scoring_service.filter(scoring_user=request.user)
+        user_score = self.scoring_service.filter(user=request.user)
         if user_score.count() > 0:
             score = user_score[0].score
         return score

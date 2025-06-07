@@ -1,8 +1,10 @@
+from locale import currency
+from multiprocessing import context
 from django.shortcuts import render,get_object_or_404,redirect
 from .csf_forms import CommentForm
 from django.views import View
 from apps.services.models import Services
-from .models import Comment,UsersIdeaAndScores
+from .models import Comment,AddScore
 from django.contrib import messages
 from apps.accounts.models import Customuser
 
@@ -72,91 +74,48 @@ class CommentView(View):
 # -----------------------------------------------------------------
 
 def testimonials(request):
-    testimonials = UsersIdeaAndScores.objects.select_related('user', 'service').all()
+    testimonials = AddScore.objects.select_related('user', 'service').all()
     return render(request, 'csf/partials/users_ideas.html', {'testimonials': testimonials})
 
 
 # -----------------------------------------------------------------
-from django.shortcuts import get_object_or_404
+
 from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
-from django.core.exceptions import PermissionDenied
-from .models import UsersIdeaAndScores, Services
+from django.utils.decorators import method_decorator
+
 
 @login_required
-@require_POST
 def add_score(request):
-    # دریافت داده‌های ارسالی از فرم
-    service_id = request.POST.get('service_id')
-    score = request.POST.get('score')
-    idea = request.POST.get('idea', '').strip()
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        score = request.POST.get('score')
+        idea = request.POST.get('idea')
+        service_id = request.POST.get('service_id')
 
-    # اعتبارسنجی داده‌های ورودی
-    if not service_id or not score:
-        return JsonResponse({
-            'status': 'error',
-            'message': 'درخواست نامعتبر: اطلاعات ضروری ارسال نشده'
-        }, status=400)
+        if score is None or score == '':
+            return JsonResponse({'success': False, 'message': 'امتیاز ارسال نشده است'}, status=400)
 
-    try:
-        service = get_object_or_404(Services, id=service_id)
-        score = int(score)
-    except (ValueError, TypeError):
-        return JsonResponse({
-            'status': 'error',
-            'message': 'امتیاز باید یک عدد معتبر باشد'
-        }, status=400)
-    
-    # بررسی محدوده مجاز امتیاز (1 تا 5)
-    if score < 1 or score > 5:
-        return JsonResponse({
-            'status': 'error',
-            'message': 'امتیاز باید بین ۱ تا ۵ باشد'
-        }, status=400)
+        try:
+            service = Services.objects.get(id=service_id)
+        except Services.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'سرویس پیدا نشد'}, status=404)
 
-    # بررسی وجود امتیاز قبلی کاربر برای این سرویس
-    existing_score = UsersIdeaAndScores.objects.filter(
-        user=request.user,
-        service=service
-    ).exists()
-    
-    if existing_score:
-        return JsonResponse({
-            'status': 'error',
-            'message': 'شما قبلاً به این سرویس امتیاز داده‌اید'
-        }, status=403)
+        # Check if user has already scored this service
+        if AddScore.objects.filter(user=request.user, service=service).exists():
+            return JsonResponse({'success': False, 'message': 'شما قبلاً به این سرویس امتیاز داده‌اید'}, status=400)
 
-    # ایجاد رکورد جدید در دیتابیس
-    try:
-        new_score = UsersIdeaAndScores.objects.create(
+        add_score_obj = AddScore.objects.create(
             user=request.user,
             service=service,
-            idea=idea,
-            score=score
+            score=int(score),
+            idea=idea
         )
-        new_score.save()
-    except Exception as e:
-        return JsonResponse({
-            'status': 'error',
-            'message': f'خطا در ذخیره‌سازی داده‌ها: {str(e)}'
-        }, status=500)
 
-    # محاسبه میانگین جدید امتیازهای سرویس
-    avg_score = service.get_average_score()
-    user_score = service.get_user_score()
-    return JsonResponse({
-        'status': 'success',
-        'message': 'امتیاز و نظر شما با موفقیت ثبت شد',
-        'avg_score': avg_score,
-        'user_score': user_score,
-    })
-# -----------------------------------------------------------------
-    
+        # Return user's score to keep stars highlighted
+        return JsonResponse({'success': True, 'message': 'امتیاز با موفقیت ثبت شد', 'user_score': add_score_obj.score})
 
-# نصب tailwind
-# settings > 'tailwind','theme',
-# python manage.py tailwind init
+    return JsonResponse({'success': False, 'message': 'درخواست نامعتبر'}, status=400)
 
 # -----------------------------------------------------------------
 

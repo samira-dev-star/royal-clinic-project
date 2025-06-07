@@ -257,153 +257,8 @@
 <hr>
 {% comment %} -------------------------------------------------------------------------------------------------------------------------- {% endcomment %}
 
-{% comment %} <style>
-/* Add this style to disable pointer events for stars after voting */
-.fa-star.disable {
-    pointer-events: none;
-    opacity: 0.5;
-}
-/* Style for checked (selected) stars */
-.fa-star.checked {
-    color: #ffc107 !important;
-}
-/* Optional: style for unselected stars */
-.fa-star {
-    color: #ccc;
-    transition: color 0.2s;
-}
 
-</style>
-
-<div style="display: flex; justify-content: space-between; align-items: center;">
-    <h6>میانگین امتیاز سرویس : <span style="color: red;" id="avg_score">{{specific_service_clicked.get_average_score}}</span></h6>
-        
-    {% if user.is_authenticated %}
-        {% if specific_service_clicked.get_user_score > 0 %}
-            <div>
-                {% with ''|center:5 as range %}
-                    {% for i in range %}
-                        {% if forloop.counter <= specific_service_clicked.get_user_score %}
-                            <span id="star_{{forloop.counter}}" class="fa fa-star checked"></span>
-                        {% else %}
-                            <span id="star_{{forloop.counter}}" class="fa fa-star"></span>
-                        {% endif %}
-                    {% endfor %}
-                {% endwith %}
-            </div>
-        {% else %}
-            <div id="star-rating-group" data-service-id="{{ specific_service_clicked.id }}">
-                <span id="star_1" class="fa fa-star cursor-pointer" onclick="addScore(1)"></span>
-                <span id="star_2" class="fa fa-star cursor-pointer" onclick="addScore(2)"></span>
-                <span id="star_3" class="fa fa-star cursor-pointer" onclick="addScore(3)"></span>
-                <span id="star_4" class="fa fa-star cursor-pointer" onclick="addScore(4)"></span>
-                <span id="star_5" class="fa fa-star cursor-pointer" onclick="addScore(5)"></span>
-            </div>
-            <div style="margin-top: 10px;">
-                <textarea id="idea_text" rows="2" placeholder="ایده یا نظر خود را وارد کنید..." style="width: 250px; resize: vertical;"></textarea>
-            </div>
-            <button type="button" id="submit_idea_btn" class="bg-amber-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-amber-700 transition duration-300" style="margin-top: 8px;" onclick="submitIdea()">ثبت ایده</button>
-        {% endif %}
-    
-{% else %}
-    <h6 style="text-decoration: underline;">
-        برای امتیاز دهی
-        <a href="{% url "account:login" %}?next={% url 'services:service_detail' specific_service_clicked.slug %}">ورود</a> 
-        یا 							
-        <a href="{% url "account:register" %}?next={% url 'services:service_detail' specific_service_clicked.slug %}">ثبت نام</a>
-        کنید
-    </h6>
-{% endif %}
-</div>
-
-<script>
-    
-let selectedScore = 0;
-
-function addScore(score) {
-    selectedScore = score;
-    // Only target interactive stars
-    var starRatings = document.querySelectorAll("#star-rating-group .fa-star");
-
-    // Reset all stars
-    starRatings.forEach(element => {
-        element.classList.remove("checked");
-    });
-
-    // Highlight selected stars
-    for (let i = 1; i <= score; i++) {
-        const element = document.getElementById("star_" + i);
-        if (element) {
-            element.classList.add("checked");
-        }
-    }
-}
-
-// Submit both score and idea
-function submitIdea() {
-    var idea = document.getElementById("idea_text").value;
-    var starGroup = document.getElementById("star-rating-group");
-    var serviceId = starGroup ? starGroup.getAttribute("data-service-id") : null;
-
-    if (!serviceId) {
-        alert("خطا: شناسه سرویس یافت نشد.");
-        return;
-    }
-    if (selectedScore === 0) {
-        alert("لطفا ابتدا امتیاز خود را انتخاب کنید.");
-        return;
-    }
-
-    $.ajax({
-        type: "POST",
-        url: "{% url 'csf:add_score' %}",
-        data: {
-            service_id: serviceId,
-            score: selectedScore,
-            idea: idea,
-            csrfmiddlewaretoken: getCookie('csrftoken')
-        },
-        success: function(res) {
-            if (res.status === "success") {
-                addScore(res.user_score);
-                alert(res.message);
-                $("#avg_score").text(res.avg_score);
-                $("#star-rating-group .fa-star").addClass("disable");
-                $("#idea_text").prop("disabled", true);
-                $("#submit_idea_btn").prop("disabled", true);
-            } else {
-                alert(res.message);
-            }
-        },
-        error: function(xhr) {
-            try {
-                const res = JSON.parse(xhr.responseText);
-                alert(res.message);
-            } catch (e) {
-                alert("خطایی در سرور رخ داد.");
-            }
-        }
-    });
-}
-
-// Function to get CSRF token
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-</script> {% endcomment %}
-
-{% comment %} -------------------------------------------------------------------------------------------------------------------------- {% endcomment %}
+<div>
 
     <script>
         tailwind.config = {
@@ -418,23 +273,36 @@ function getCookie(name) {
     </script>
     <style>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        .user-idea {
+            margin-top: -77px;
+            border: 1px solid #ccc; 
+            float: left;
+            resize: both;
         }
-        
-        @keyframes starPop {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.3); }
-            100% { transform: scale(1); }
+
+        input::placeholder, textarea::placeholder {
+          opacity: 1;
+          color: #0000006e;
         }
-        
-        .star-pop {
-            animation: starPop 0.5s ease-in-out;
+
+        .star {
+            font-size: 2rem;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
         }
-        
+
+        .star.hovered,
+        .star.selected {
+            color: gold;
+        }
+
+        .your-score {
+            float: left;
+        }
+
     </style>
-</head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center py-8">
+
     <div class="container max-w-4xl mx-auto px-4">
         <!-- Service Card -->
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
@@ -442,259 +310,154 @@ function getCookie(name) {
                 <div class="md:w-2/5 p-6 bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center">
                     <div class="text-center text-white">
                         <i class="fas fa-cloud-service text-7xl mb-4"></i>
-                        <h1 class="text-2xl font-bold">سرویس ابری پیشرفته</h1>
-                        <p class="mt-2 opacity-90">فضای ابری امن برای استارتاپ‌ها</p>
+                        <h1 class="text-2xl font-bold">امتیاز به سرویس {{specific_service_clicked.service_title}}</h1>
+                        <p class="mt-2 opacity-90">به این سرویس امتیاز بدهید.</p>
                     </div>
                 </div>
-                <div class="md:w-3/5 p-6">
-                    <div class="flex flex-col gap-2 mb-6">
-                        <div class="flex items-center">
-                            <i class="fas fa-database text-amber-600 text-xl ml-2"></i>
-                            <span>100 گیگابایت فضای ذخیره‌سازی</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-user-shield text-amber-600 text-xl ml-2"></i>
-                            <span>امنیت پیشرفته SSL</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-sync-alt text-amber-600 text-xl ml-2"></i>
-                            <span>پشتیبانی 24/7</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-plug text-amber-600 text-xl ml-2"></i>
-                            <span>یکپارچه‌سازی با برنامه‌ها</span>
-                        </div>
-                    </div>
-                    <div class="border-t pt-4">
-                        <p class="text-gray-600">
-                            سرویس ابری پیشرفته با امکانات کامل برای کسب‌وکار‌های نوپا و سازمان‌های بزرگ. دسترسی امن و سریع به داده‌هایتان از هر کجای دنیا.
-                        </p>
-                    </div>
-                </div>
+                
             </div>
         </div>
         
         <!-- Rating Component -->
         <div class="bg-white rounded-2xl shadow-lg p-6">
-            <h2 class="text-xl font-bold text-gray-800 border-b pb-4 mb-6">امتیازدهی به سرویس</h2>
-            
+            <h2 class="text-xl font-bold text-gray-800 border-b pb-4 mb-6">تجربه ی خود را درباره ی سرویس {{specific_service_clicked.service_title}} به اشتراک بگذارید</h2>
             <!-- Rating Stats -->
             <div id="rating-component" class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
                 <div id="average-section" class="flex items-center mb-4 md:mb-0">
                     <div class="bg-amber-100 text-amber-800 w-14 h-14 rounded-full flex items-center justify-center ml-3">
                         <i class="fas fa-star"></i>
                     </div>
+
+                    
                     <div>
                         <p class="text-gray-600">میانگین امتیاز سرویس:</p>
                         <div class="flex items-baseline">
-                            <span id="avg_score" class="text-2xl font-bold text-amber-600">4.3</span>
+                            <span id="avg_score" class="text-2xl font-bold text-amber-600">{{ specific_service_clicked.get_average_score }}</span>
                             <span class="text-gray-500 text-sm mr-1">از 5</span>
                         </div>
                     </div>
+
+                    {% comment %} <div>
+                        <p class="text-gray-600">امتیاز شما به این سرویس : </p>
+                        <div class="flex items-baseline">
+                            <span id="avg_score" class="text-2xl font-bold text-amber-600">{{ specific_service_clicked.get_user_score }}</span>
+                            <span class="text-gray-500 text-sm mr-1">از 5</span>
+                        </div>
+                    </div> {% endcomment %}
+
                 </div>
+
                 
                 <!-- Rating Controls -->
                 <div id="user-rating-section" class="flex-1 w-full md:w-auto">
                     <!-- User Rating Controls will be rendered here by JavaScript -->
                 </div>
             </div>
-            
-            <!-- Rating Chart -->
-            <div class="hidden md:block mt-10 mb-8">
-                <h3 class="text-lg font-medium mb-4 text-gray-700">توزیع امتیازات</h3>
-                <div class="space-y-3">
-                    <div class="flex items-center">
-                        <span class="w-8 text-amber-600"><i class="fas fa-star"></i> 5</span>
-                        <div class="flex-1 h-3 bg-gray-200 rounded-full mx-3">
-                            <div class="h-full bg-gradient-to-r from-amber-400 to-amber-600 rounded-full w-3/4"></div>
-                        </div>
-                        <span class="w-8 text-right">75%</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="w-8 text-amber-600"><i class="fas fa-star"></i> 4</span>
-                        <div class="flex-1 h-3 bg-gray-200 rounded-full mx-3">
-                            <div class="h-full bg-gradient-to-r from-amber-400 to-amber-600 rounded-full w-1/2"></div>
-                        </div>
-                        <span class="w-8 text-right">50%</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="w-8 text-amber-600"><i class="fas fa-star"></i> 3</span>
-                        <div class="flex-1 h-3 bg-gray-200 rounded-full mx-3">
-                            <div class="h-full bg-gradient-to-r from-amber-400 to-amber-600 rounded-full w-1/3"></div>
-                        </div>
-                        <span class="w-8 text-right">33%</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="w-8 text-amber-600"><i class="fas fa-star"></i> 2</span>
-                        <div class="flex-1 h-3 bg-gray-200 rounded-full mx-3">
-                            <div class="h-full bg-gradient-to-r from-amber-400 to-amber-600 rounded-full w-1/5"></div>
-                        </div>
-                        <span class="w-8 text-right">20%</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="w-8 text-amber-600"><i class="fas fa-star"></i> 1</span>
-                        <div class="flex-1 h-3 bg-gray-200 rounded-full mx-3">
-                            <div class="h-full bg-gradient-to-r from-amber-400 to-amber-600 rounded-full w-1/10"></div>
-                        </div>
-                        <span class="w-8 text-right">10%</span>
-                    </div>
+
+            <div class="your-score">
+                <p class="text-gray-600">امتیاز شما به این سرویس : </p>
+                <div class="flex items-baseline">
+                    <span id="avg_score" class="text-2xl font-bold text-amber-600">{{ specific_service_clicked.get_user_score }}</span>
+                    <span class="text-gray-500 text-sm mr-1">از 5</span>
                 </div>
             </div>
+
+            <form id="rating-form" method="post" action="{% url "csf:add_score" %}">
+                {% csrf_token %}
+                <input type="hidden" name="service_id" id="service-id" value="{{ specific_service_clicked.id }}">
+                <div id="star-rating-group">
+                    {% for i in "12345" %}
+                    <i class="fa fa-star star" data-value="{{ i }}"></i>
+                    {% endfor %}
+                </div>
+                <input type="hidden" name="score" id="rating-value">
+                <textarea name="idea" id="idea-text" rows="4" placeholder="نظرت را بنویس..." required></textarea>
+                <button type="submit" class="btn bg-amber-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-amber-700 transition duration-300 mt-2">ارسال</button>
+            </form>
+
+            <div id="confirm-box" class="text-green-600 mt-3"></div>
+            <!-- Notification Container -->
+            <div id="notification" class="fixed top-5 left-1/2 transform -translate-x-1/2 w-full max-w-md px-4 z-50"></div>
         </div>
-        
-        <!-- Notification Container -->
-        <div id="notification" class="fixed top-5 left-1/2 transform -translate-x-1/2 w-full max-w-md px-4 z-50"></div>
-    </div>
-    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Initialize service data
-        const serviceId = 1;
-        let selectedScore = 0;
-        let userHasRated = false;
-        
-        // Initialize the rating component
-        function initRatingComponent() {
-            const ratingSection = document.getElementById('user-rating-section');
-            const avgScoreSpan = document.getElementById('avg_score');
+    $(document).ready(function () {
+    let selectedRating = 0;
+
+    $('.star').on('mouseover', function () {
+        const value = $(this).data('value');
+        $('.star').each(function () {
+            $(this).toggleClass('hovered', $(this).data('value') <= value);
+        });
+    });
+
+    $('.star').on('mouseout', function () {
+        $('.star').removeClass('hovered');
+    });
+
+    $('.star').on('click', function () {
+        selectedRating = $(this).data('value');
+        $('#rating-value').val(selectedRating);
+        $('.star').each(function () {
+            $(this).toggleClass('selected', $(this).data('value') <= selectedRating);
+        });
+    });
+
+    $('#rating-form').on('submit', function (e) {
+        e.preventDefault();
+
+        const score = $('#rating-value').val();
+        const idea = $('#idea-text').val();
+        const csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+        const serviceId = $('#service-id').val();
+
+        if (!score || score < 1 || score > 5) {
+            $('#confirm-box').text('لطفا یک امتیاز معتبر انتخاب کنید.');
+            return;
+        }
+
+        if (!idea.trim()) {
+            $('#confirm-box').text('لطفا نظر خود را وارد کنید.');
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url "csf:add_score" %}',
+            data: {
+                'score': score,
+                'idea': idea,
+                'service_id': serviceId,
+                'csrfmiddlewaretoken': csrfToken,
+            },
+
+            success: function (response) {
+                if (response.success) {
+                    $('#confirm-box').text('✅ امتیاز شما با موفقیت ثبت شد!');
+                    $('#avg_score').text(response.avg_score || "—");
+                    $('#rating-form')[0].reset();
+                    $('.star').removeClass('selected');
+                    selectedRating = 0;
+                } 
+            },
             
-            // Check if user has rated this service in localStorage
-            const storedRating = localStorage.getItem(`service_rating_${serviceId}`);
-            if (storedRating) {
-                const {score, rated} = JSON.parse(storedRating);
-                if (rated) {
-                    userHasRated = true;
-                    selectedScore = score;
-                    renderRatedState(score);
-                    avgScoreSpan.textContent = (parseFloat(avgScoreSpan.textContent) + 0.2).toFixed(1);
-                    return;
+            error: function (xhr) {
+                let msg = '❌ خطایی در ثبت امتیاز رخ داد.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    msg = xhr.responseJSON.message;
                 }
+                $('#confirm-box').text(msg);
             }
-            
-            // Render the rating UI for an unrated user
-            renderInteractiveRating();
-        }
-        
-        // Render the interactive rating UI
-        function renderInteractiveRating() {
-            const ratingSection = document.getElementById('user-rating-section');
-            ratingSection.innerHTML = `
-                <div class="bg-gray-50 rounded-xl p-5 shadow-sm">
-                    <div id="star-rating-group" data-service-id="${serviceId}" class="flex justify-center my-4">
-                        ${Array(5).fill().map((_, i) => 
-                            `<span id="star_${5-i}" class="fa fa-star text-3xl mx-1 cursor-pointer text-gray-300 hover:text-amber-400 transition-colors duration-300" data-score="${5-i}" onclick="handleStarClick(${5-i})"></span>`
-                        ).join('')}
-                    </div>
-                    
-                    <div class="mt-5">
-                        <label for="idea_text" class="block text-sm font-medium text-gray-700 mb-2">ایده یا نظر خود را با ما در میان بگذارید</label>
-                        <textarea id="idea_text" rows="3" placeholder="نظر شما برای بهبود سرویس ما بسیار ارزشمند است..." class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-300 focus:border-amber-400 transition"></textarea>
-                    </div>
-                    
-                    <button id="submit_idea_btn" class="mt-4 w-full py-3 bg-gradient-to-r from-amber-500 to-amber-700 text-white font-bold rounded-lg shadow-md hover:from-amber-600 hover:to-amber-800 transition-all duration-300 transform hover:scale-[1.02]" onclick="submitIdea()">
-                        ثبت امتیاز و نظر
-                    </button>
-                </div>
-            `;
-        }
-        
-        // Render UI for already rated users
-        function renderRatedState(score) {
-            const ratingSection = document.getElementById('user-rating-section');
-            ratingSection.innerHTML = `
-                <div class="bg-amber-50 rounded-xl p-5 border border-amber-200">
-                    <div class="flex flex-col items-center">
-                        <div class="flex my-2">
-                            ${Array(5).fill().map((_, i) => 
-                                `<span class="fa fa-star text-3xl mx-1 ${i < score ? 'text-amber-500' : 'text-gray-300'}"></span>`
-                            ).join('')}
-                        </div>
-                        <div class="mt-2 bg-amber-100 text-amber-800 px-4 py-2 rounded-full text-sm">
-                            <i class="fas fa-check-circle ml-1"></i>
-                            امتیاز شما: ${score} ستاره
-                        </div>
-                        <p class="text-sm text-gray-600 mt-3 text-center">
-                            از امتیازدهی و نظر شما سپاسگزاریم.
-                        </p>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // Handle star selection
-        function handleStarClick(score) {
-            if (userHasRated) return;
-            
-            selectedScore = score;
-            const stars = document.querySelectorAll('#star-rating-group .fa-star');
-            
-            // Update star appearance
-            stars.forEach(star => {
-                const starScore = parseInt(star.getAttribute('data-score'));
-                if (starScore <= score) {
-                    star.classList.add('text-amber-500', 'star-pop');
-                    star.classList.remove('text-gray-300');
-                } else {
-                    star.classList.add('text-gray-300');
-                    star.classList.remove('text-amber-500');
-                }
-            });
-        }
-        
-        // Submit rating and idea
-        function submitIdea() {
-            const ideaText = document.getElementById('idea_text').value;
-            
-            if (!selectedScore) {
-                showNotification('لطفاً ابتدا امتیاز خود را انتخاب کنید', 'error');
-                return;
-            }
-            
-            // Save to localStorage
-            localStorage.setItem(`service_rating_${serviceId}`, JSON.stringify({
-                serviceId: serviceId,
-                score: selectedScore,
-                idea: ideaText,
-                rated: true,
-                timestamp: new Date().toISOString()
-            }));
-            
-            userHasRated = true;
-            renderRatedState(selectedScore);
-            updateAverageScore();
-            showNotification('امتیاز شما با موفقیت ثبت شد. از نظر شما سپاسگزاریم!', 'success');
-        }
-        
-        // Update average score visually
-        function updateAverageScore() {
-            const avgScoreSpan = document.getElementById('avg_score');
-            let currentScore = parseFloat(avgScoreSpan.textContent);
-            avgScoreSpan.textContent = (currentScore + 0.1).toFixed(1);
-        }
-        
-        // Show notification
-        function showNotification(message, type) {
-            const notification = document.getElementById('notification');
-            const bgColor = type === 'success' ? 'bg-green-500' : 'bg-rose-500';
-            
-            notification.innerHTML = `
-                <div class="flex items-center ${bgColor} text-white text-sm font-bold px-4 py-3 rounded-md shadow-lg transform transition-transform duration-300 translate-y-0" role="alert">
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'} mr-2 text-xl"></i>
-                    <div>
-                        <p class="font-bold">${type === 'success' ? 'موفقیت‌آمیز' : 'خطا'}</p>
-                        <p>${message}</p>
-                    </div>
-                </div>
-            `;
-            
-            // Auto hide after 3 seconds
-            setTimeout(() => {
-                notification.innerHTML = '';
-            }, 3000);
-        }
-        
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', initRatingComponent);
+        });
+    });
+});
+
     </script>
+</div>
+
+
+
 {% comment %} -------------------------------------------------------------------------------------------------------------------------- {% endcomment %}
 
     <!-- Related Services -->
@@ -743,6 +506,9 @@ function getCookie(name) {
 
     {% block extra_js %}
     <script src="{% static "js/service_details.js" %}"></script>
+    
     {% endblock extra_js %}
     
 {% endblock content %}
+
+
