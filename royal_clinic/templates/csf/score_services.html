@@ -1,1 +1,53 @@
 {% extends "main_template.html" %}
+
+{% block title %}امتیاز و تجربه شما{% endblock title %}
+
+{% block content %}
+    <!-- Testimonials -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">نظرات مراجعین</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">آنچه بیماران ما درباره تجربه‌شان در کلینیک رویال می‌گویند</p>
+                
+
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                {% for data in scores_and_ideas %}
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <div class="flex items-center mb-4">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= data.score %}
+                                    <div class="text-amber-500 text-2xl mr-2">★</div>
+                                {% else %}
+                                    <div class="text-gray-300 text-2xl mr-2">★</div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <p class="text-gray-600 mb-6">{{ data.idea }}</p>
+                        <div class="flex items-center">
+
+                            {% if data.user.patient and data.user.patient.image_name %}
+                                <img src="{{ data.user.patient.image_name.url }}" alt="{{ data.user.get_full_name }}" class="w-12 h-12 rounded-full mr-4">
+                            {% else %}
+                                <img src="{{ media_url }}images/comments/user.png" alt="user-comment" class="w-12 h-12 rounded-full mr-4">
+                            {% endif %}
+
+                            <div>
+                                <h4 class="font-bold text-gray-800">{{ data.user.get_full_name }}</h4>
+                                <p class="text-gray-500 text-sm">{{ data.service.service_title }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>هنوز نظری ثبت نشده است.</p>
+                {% endfor %}
+
+                    
+
+            </div>
+        </div>
+    </section>
+{% endblock content %}

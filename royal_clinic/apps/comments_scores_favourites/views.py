@@ -119,3 +119,7 @@ def add_score(request):
 
 # -----------------------------------------------------------------
 
+class ShowAllScoresAndIdeasView(View):
+    def get(self, request):
+        scores_and_ideas = AddScore.objects.all()
+        return render(request, 'csf/score_services.html', {'scores_and_ideas': scores_and_ideas})

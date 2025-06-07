@@ -21,7 +21,7 @@ def index(request):
     contacts = Contact.objects.all()
     sliders = Sliders.objects.filter(Q(is_active=True))
     
-    scores_and_ideas = AddScore.objects.all()
+    scores_and_ideas = AddScore.objects.all()[:3]
     
     # image_list = []
     
@@ -40,6 +40,9 @@ def index(request):
         
     }
     return render(request,'main/index.html',context)
+
+
+
 
 
 

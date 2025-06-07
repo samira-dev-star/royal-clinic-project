@@ -141,7 +141,7 @@
                           class="absolute right-0 bg-green-500 text-white px-4 py-1 rounded text-sm hover:bg-green-600">
                          نمایش همه
                        </a> 
-                     </div>
+                    </div>
                </div>
                
                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -180,29 +180,7 @@
         </div>
     </section>
 
-    <!-- Statistics -->
-    <section class="py-16 bg-gradient-to-r from-amber-100 to-amber-200">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div class="p-6">
-                    <div class="text-4xl md:text-5xl font-bold text-amber-800 mb-2">+۱۵</div>
-                    <div class="text-gray-700 font-medium">سال تجربه</div>
-                </div>
-                <div class="p-6">
-                    <div class="text-4xl md:text-5xl font-bold text-amber-800 mb-2">+۵۰۰۰</div>
-                    <div class="text-gray-700 font-medium">بیمار راضی</div>
-                </div>
-                <div class="p-6">
-                    <div class="text-4xl md:text-5xl font-bold text-amber-800 mb-2">+۲۰</div>
-                    <div class="text-gray-700 font-medium">خدمت تخصصی</div>
-                </div>
-                <div class="p-6">
-                    <div class="text-4xl md:text-5xl font-bold text-amber-800 mb-2">۱۰۰٪</div>
-                    <div class="text-gray-700 font-medium">رضایت بیماران</div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <!-- Testimonials -->
     <section class="py-16 bg-gray-50">
@@ -210,12 +188,19 @@
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">نظرات مراجعین</h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">آنچه بیماران ما درباره تجربه‌شان در کلینیک رویال می‌گویند</p>
-                <div class="w-20 h-1 bg-amber-500 mx-auto mt-4"></div>
+                
+
+                <div class="relative max-w-2xl mx-auto mt-4">
+                       <div class="h-1 bg-green-500 w-full"></div>
+                       <a href="{% url "csf:users_ideas" %}"
+                          class="absolute right-0 bg-green-500 text-white px-4 py-1 rounded text-sm hover:bg-green-600">
+                         نمایش همه
+                       </a> 
+                    </div>
+
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-
                 
                 {% for data in scores_and_ideas %}
                     <div class="bg-white p-8 rounded-lg shadow-md">
@@ -247,7 +232,7 @@
                     <p>هنوز نظری ثبت نشده است.</p>
                 {% endfor %}
 
-
+                    
 
             </div>
         </div>
