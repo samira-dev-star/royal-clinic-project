@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.admin.filters import SimpleListFilter
-from .models import Comment
+from .models import Comment,AddScore
 from django_admin_listfilter_dropdown.filters import DropdownFilter
 from django.db.models import Q
 # Register your models here.
@@ -29,3 +29,13 @@ class CommentsAdmin(admin.ModelAdmin):
     
     
 admin.site.register(Comment,CommentsAdmin)
+
+
+
+@admin.register(AddScore)
+class AddScoreAdmin(admin.ModelAdmin):
+    list_display = ['service','user','score','created_at']
+    list_filter = [('score',DropdownFilter),('created_at',DropdownFilter)]
+    ordering = ['-score','-created_at']
+    
+    
