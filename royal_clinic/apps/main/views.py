@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.conf import settings
 from apps.services.models import Services
 from apps.contact.models import Contact
-from .models import Sliders,SocialMediaAddresses
+from .models import Sliders,SocialMediaAddresses,IndexIntroduction,Properties
 from django.db.models import Q
 from apps.offers.models import ServiceDiscount
 
@@ -23,6 +23,10 @@ def index(request):
     
     scores_and_ideas = AddScore.objects.all()[:3]
     
+    introduction = IndexIntroduction.objects.all()
+    
+    prop = Properties.objects.all()
+    
     # image_list = []
     
     # for user in scores_and_ideas:
@@ -36,7 +40,9 @@ def index(request):
         "sliders" : sliders,
         
         "scores_and_ideas" : scores_and_ideas,
-        # "image_list" : image_list
+        
+        "introduction" : introduction,
+        "prop" : prop,
         
     }
     return render(request,'main/index.html',context)

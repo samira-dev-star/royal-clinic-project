@@ -62,43 +62,35 @@
     <section id="about" class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">کلینیک پوست و موی زیبایی رویال</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4"> {{data.heading}} </h2>
                 <div class="w-20 h-1 bg-amber-500 mx-auto"></div>
             </div>
-            
+            {% for data in introduction %}
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10">
-                    <img src="https://images.unsplash.com/photo-1551608873-589110affaa8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="کلینیک رویال" class="rounded-lg shadow-xl w-full h-auto">
+                    <img src="{{media_url}}{{data.image}}" alt="کلینیک رویال" class=" shadow-xl w-full h-auto intro-image">
                 </div>
                 
                 <div class="md:w-1/2">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6">تجربه‌ای متفاوت در زیبایی</h3>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6"> {{data.title}} </h3>
                     <p class="text-gray-600 mb-6 leading-relaxed">
-                        کلینیک پوست و موی زیبایی رویال با بیش از ۱۵ سال سابقه درخشان در زمینه ارائه خدمات تخصصی پوست، مو و زیبایی، همواره در تلاش بوده تا با بهره‌گیری از جدیدترین تکنولوژی‌های روز دنیا و کادر مجرب پزشکی، رضایت کامل مراجعین محترم را جلب نماید.
+                        {% autoescape off %}
+                        {{data.introduction}}
+                        {% endautoescape %}
                     </p>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        ما در کلینیک رویال به زیبایی طبیعی شما اهمیت می‌دهیم. هدف ما نه تغییر چهره، بلکه بهبود و تقویت زیبایی‌های طبیعی شماست. با استفاده از روش‌های غیرتهاجمی و کم‌عوارض، به شما کمک می‌کنیم بهترین نسخه خود باشید.
-                    </p>
+                    
                     <div class="flex flex-wrap gap-4">
+                        {% for p in data.propertiess.all %}
                         <div class="flex items-center bg-amber-50 px-4 py-2 rounded-full">
                             <i class="fas fa-check-circle text-amber-600 mr-2"></i>
-                            <span class="text-gray-700">پزشکان متخصص</span>
+                            <span class="text-gray-700"> {{p.name}} </span>
                         </div>
-                        <div class="flex items-center bg-amber-50 px-4 py-2 rounded-full">
-                            <i class="fas fa-check-circle text-amber-600 mr-2"></i>
-                            <span class="text-gray-700">تجهیزات پیشرفته</span>
-                        </div>
-                        <div class="flex items-center bg-amber-50 px-4 py-2 rounded-full">
-                            <i class="fas fa-check-circle text-amber-600 mr-2"></i>
-                            <span class="text-gray-700">محیطی آرام</span>
-                        </div>
-                        <div class="flex items-center bg-amber-50 px-4 py-2 rounded-full">
-                            <i class="fas fa-check-circle text-amber-600 mr-2"></i>
-                            <span class="text-gray-700">گارانتی خدمات</span>
-                        </div>
+                        {% endfor %}
+                        
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </section>
 

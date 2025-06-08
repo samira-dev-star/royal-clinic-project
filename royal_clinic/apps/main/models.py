@@ -1,8 +1,12 @@
+from turtle import mode
 from django.db import models
+from django.contrib import admin
 from utils import FileUpload
 from django.utils import timezone
 from django.utils.html import mark_safe
 from django.contrib.admin import display
+from ckeditor_uploader.fields import RichTextUploadingField
+from utils import FileUpload
 
 # mark safe is similar to httpresponse >> both take an html code in string format and run it.
 # Create your models here.
@@ -80,3 +84,44 @@ class SocialMediaAddresses(models.Model):
     
     
 # ----------------------------------------------------------------------
+
+
+        
+        
+
+class IndexIntroduction(models.Model):
+    heading = models.CharField(max_length=500,null=True,blank=True,verbose_name="سرتیتر")
+    title = models.CharField(max_length=500,null=True,blank=True,verbose_name="عنوان")
+    introduction = RichTextUploadingField(null=True,blank=True,verbose_name="معرفی سایت",config_name='special')
+    
+    file_upload = FileUpload('images','index')
+    image = models.FileField(upload_to=file_upload.create_address,verbose_name="مدیا",null=True,blank=True)
+    
+    
+    
+    def __str__(self):
+        return f"{self.title}"
+    
+    @admin.display(description='مدیا')
+    def show_media_in_admin(self):
+        return mark_safe(f'<img src="/media/{self.image}" style="width:80px; height:80px"/>')
+    
+    class Meta:
+        verbose_name = "معرفی سایت"
+        verbose_name_plural = "معرفی سایت"
+    
+
+# ----------------------------------------------------------------------
+
+
+
+class Properties(models.Model):
+    properties = models.ForeignKey(IndexIntroduction,null=True,blank=True,verbose_name="امکانات",on_delete=models.CASCADE,related_name='propertiess')
+    name = models.CharField(max_length=400,null=True,blank=True,verbose_name="نام ویژگی")
+    
+    def __str__(self):
+        return f"{self.properties}"
+    
+    class Meta:
+        verbose_name = "ویژگی"
+        verbose_name_plural = "ویژگی ها"

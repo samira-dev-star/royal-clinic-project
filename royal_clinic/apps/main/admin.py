@@ -1,6 +1,8 @@
 from django.contrib import admin
 
-from .models import Sliders,SocialMediaAddresses
+from .models import Sliders,SocialMediaAddresses,IndexIntroduction,Properties
+
+from django_admin_listfilter_dropdown.filters import DropdownFilter
 # Register your models here.
 
 # deactivation action
@@ -29,3 +31,28 @@ class SocialMediaAddressesAdmin(admin.ModelAdmin):
     search_fields = ['social_name',]
     ordering = ['update_date',]
     list_editable = ['is_active',]
+    
+# ----------------------------------------------
+
+class PropertyTabularAdmin(admin.TabularInline):
+    model = Properties
+    extra = 3
+
+
+class IndexIntroAdmin(admin.ModelAdmin):
+    list_display = ['show_media_in_admin','heading','title',]
+    list_filter = [('heading',DropdownFilter),('title',DropdownFilter),]
+    search_fields = ['heading',]
+    inlines = [PropertyTabularAdmin,]
+   
+
+admin.site.register(IndexIntroduction,IndexIntroAdmin)
+    
+# ----------------------------------------------
+
+
+class PropertyAdmin(admin.ModelAdmin):
+    list_display = ['name',]
+    list_filter = ['name',]
+    search_fields = ['name',]
+    
