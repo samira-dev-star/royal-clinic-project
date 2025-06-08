@@ -1,0 +1,104 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body {
+    font-family: 'Vazirmatn', sans-serif;
+    background-color: #f8fafc;
+}
+
+.form-input:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+}
+
+.btn-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.input-error {
+    border-color: #ef4444;
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+    
+.pr-16 {
+    /* padding-right: 4rem; */
+    padding-right: 0;
+  }
+
+/* .w-full {
+    background-color: #f1f1f1;
+} */
+
+/* --------------------------------------------------------------------------------------------------------------- */
+/* قوانین و مقررات */
+
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body {
+    font-family: 'Vazirmatn', sans-serif;
+    background-color: #f8fafc;
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+}
+
+.terms-container {
+    scroll-behavior: smooth;
+}
+
+.terms-section {
+    scroll-margin-top: 100px;
+}
+
+.highlight-box {
+    border-right: 4px solid #10b981;
+    background-color: #f0fdf4;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #10b981;
+    border-radius: 4px;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background-color: #10b981;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.back-to-top:hover {
+    transform: translateY(-5px);
+    background-color: #059669;
+}
+
+/* ------------------------------------------------------------------------------------------------- */

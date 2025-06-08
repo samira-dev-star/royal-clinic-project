@@ -1,0 +1,12 @@
+.search {
+  background-color: #6abb7ec2;
+  position: absolute;
+  opacity: 1;
+  color: #fff;
+  font-weight: bold;
+  font-size: 20px;
+}
+input::placeholder, textarea::placeholder {
+  opacity: 1;
+  color: #fff;
+}

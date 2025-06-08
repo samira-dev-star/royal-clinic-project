@@ -24,9 +24,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-&8l5=ud(ys$%o^9w$dc$=6xi9c^al)j=si8kea(v^+!a5no&h3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# ----------------------------------
+# development mode
+# DEBUG = True
+# ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = []
+
+# اگر پروژه‌ت رو با DEBUG=False اجرا می‌کنی، حواست باشه که:
+# Django خودش فایل‌های استاتیک رو سرو نمی‌کنه.
+# python manage.py collectstatic
+# production mode
+DEBUG = False
+ALLOWED_HOSTS = ["*"]
+# ----------------------------------
 
 
 # Application definition
@@ -189,6 +199,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS =  (os.path.join(BASE_DIR,'static/'),)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

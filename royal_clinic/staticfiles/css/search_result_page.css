@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .personel-card {
+            transition: all 0.3s ease;
+        }
+        
+        .personel-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .empty-state {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
