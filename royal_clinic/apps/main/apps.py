@@ -7,3 +7,7 @@ class MainConfig(AppConfig):
     
     verbose_name = 'صفحه ی اصلی'
     verbose_name_plural = 'صفحه ی اصلی'
+    
+    def ready(self) -> None:
+        from . import signals
+        return super().ready()

@@ -7,3 +7,7 @@ class PatientPanelConfig(AppConfig):
     
     verbose_name = 'پنل بیماران'
     verbose_name_plural = 'پنل بیماران'
+    
+    def ready(self) -> None:
+        from . import signals
+        return super().ready()

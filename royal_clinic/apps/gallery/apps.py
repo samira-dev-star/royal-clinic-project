@@ -7,3 +7,7 @@ class GalleryConfig(AppConfig):
     
     verbose_name = 'گالری'
     verbose_name_plural = 'گالری'
+    
+    def ready(self) -> None:
+        from . import signals
+        return super().ready()

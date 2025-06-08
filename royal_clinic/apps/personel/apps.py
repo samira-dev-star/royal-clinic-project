@@ -7,3 +7,7 @@ class PersonelConfig(AppConfig):
     
     verbose_name = 'برد تخصصی'
     verbose_name_plural = 'برد تخصصی'
+    
+    def ready(self):
+        from . import signals
+        return super().ready()

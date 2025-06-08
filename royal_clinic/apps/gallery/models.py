@@ -2,6 +2,7 @@ from django.db import models
 from utils import FileUpload
 from apps.services.models import Services  # فرض اینکه مدل Service قبلاً وجود داره
 
+
 class ServiceVideo(models.Model):
     service = models.ForeignKey(Services, on_delete=models.CASCADE, related_name='videos', verbose_name='سرویس مربوطه',null=True,blank=True)
     title = models.CharField(max_length=200, verbose_name='عنوان ویدیو',null=True, blank=True)
@@ -22,3 +23,16 @@ class ServiceVideo(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.service})"
+
+
+# -------------------------------------------------------------------------------
+# signals
+
+# def delete_video(sender, instance, **kwargs):
+#     instance.video_file.delete()
+
+# exacly after video is deleted the model send signal to the following function to do an action.
+# post_delete.connect(
+#     receiver=delete_video,
+#     sender=ServiceVideo
+# )
