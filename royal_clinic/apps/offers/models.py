@@ -30,5 +30,4 @@ class ServiceDiscount(models.Model):
         now = timezone.now()
         return self.is_active and self.start_date <= now <= self.end_date
     
-    def get_service_slug(self):
-        return self.service.first().slug
+    

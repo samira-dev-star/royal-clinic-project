@@ -105,7 +105,11 @@ class ShowSpecificServiceDetailsView(View):
     def get(self,request,slug):
         specific_service_clicked = get_object_or_404(Services,slug=slug)
         
-        scores_and_ideas = AddScore.objects.get(Q(user=request.user) & Q(service=specific_service_clicked))
+        if request.user.is_authenticated:
+            scores_and_ideas = AddScore.objects.filter(Q(user=request.user) & Q(service=specific_service_clicked)).first()
+        else:
+            scores_and_ideas = AddScore.objects.filter(Q(service=specific_service_clicked)).first()
+        
         
         if specific_service_clicked.is_available:
             return render(request,self.template_name,{'specific_service_clicked':specific_service_clicked,'scores_and_ideas':scores_and_ideas})
