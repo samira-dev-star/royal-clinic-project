@@ -15,7 +15,8 @@ class ReserveAppointment(models.Model):
     
     selected_date = models.CharField(
         max_length=10,
-        verbose_name="تاریخ انتخاب"
+        verbose_name="تاریخ انتخاب",
+        blank=True,null=True
     )
     created_at = models.DateTimeField(auto_now_add=True,verbose_name="تاریخ ثبت نوبت")  # زمان رزرو
     is_confirmed = models.BooleanField(default=False, verbose_name="تایید شده")
