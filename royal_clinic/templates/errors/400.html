@@ -1,0 +1,107 @@
+{% extends "main_template.html" %}
+{% load static %}
+
+{% block title %}خطای ۴۰۰{% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "css/errors.css" %}">
+{% endblock extra_css %}
+
+{% block content %}
+    <!-- عناصر تزئینی بالا -->
+    <div class="absolute top-0 left-0 w-full">
+        <div class="floating-element text-royal-pink opacity-50 absolute top-8 left-[5%]">
+            <i class="fa-solid fa-flower text-3xl"></i>
+        </div>
+        <div class="floating-element text-royal-gold opacity-40 absolute top-12 right-[7%]">
+            <i class="fa-solid fa-spa text-4xl"></i>
+        </div>
+        <div class="floating-element mirror-effect text-royal-purple opacity-50 absolute top-20 left-[12%]">
+            <i class="fa-solid fa-crown text-4xl"></i>
+        </div>
+        <div class="floating-element text-royal-purple opacity-30 absolute top-32 right-[20%]">
+            <i class="fa-solid fa-spa text-3xl"></i>
+        </div>
+    </div>
+    
+    <!-- محتوای اصلی -->
+    <div class="flex flex-col items-center justify-center flex-grow px-4 md:px-8 py-12">
+        <div class="max-w-3xl w-full backdrop-blur-sm rounded-3xl p-6 md:p-10 blush-element relative">
+            <div class="text-center mb-8">
+                <h1 class="text-8xl md:text-9xl font-bold gold-effect mb-4">۴۰۰</h1>
+                <h2 class="text-4xl md:text-5xl font-semibold text-royal-purple mb-6">درخواست نامعتبر!</h2>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8 mb-16">
+                <div class="flex flex-col items-center">
+                    <div class="w-40 h-40 bg-gradient-to-br from-royal-purple to-royal-pink rounded-full overflow-hidden shadow-xl flex items-center justify-center">
+                        <div class="bg-white w-[96%] h-[96%] rounded-full flex items-center justify-center text-royal-gold">
+                            <i class="fa-solid fa-circle-exclamation text-6xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="max-w-md text-center md:text-right">
+                    <p class="text-gray-600 text-lg mb-4">
+                        به‌نظر می‌رسد درخواست شما کمی گیج‌کننده بوده... شاید فرمی ناتمام، یا لینکی اشتباه؟ 
+                    </p>
+                    <p class="text-gray-600 mb-6">
+                        نگران نباشید! با آرامش سلطنتی‌مون برگردید و مسیر زیبایی رو دوباره شروع کنید.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="/" class="bg-gradient-to-r from-pink-600 to-pink-400 text-white font-medium py-3 px-8 rounded-full shadow-md hover:opacity-90 transition duration-300 hover:scale-[1.02] errors-bg-col">
+                        <i class="fa-solid fa-house-heart ml-2"></i> بازگشت به خانه
+                        </a>
+
+                        <a href="{% url "reservation:reservation_main_page" %}" class="bg-white border border-royal-purple text-royal-purple font-medium py-3 px-8 rounded-full hover:bg-soft-peach transition duration-300">
+                            <i class="fa-solid fa-spa ml-2"></i> رزرو نوبت درمانی
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- بخش نکات زیبایی -->
+            <div class="bg-white bg-opacity-70 backdrop-blur rounded-xl p-6">
+                <h3 class="text-royal-purple text-xl font-semibold mb-4 text-center"><i class="fa-solid fa-crown text-royal-gold ml-2"></i> یادآوری دوستانه</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="flex items-start">
+                        <div class="bg-soft-peach p-3 rounded-lg ml-3">
+                            <i class="fa-solid fa-circle-check text-royal-purple text-xl"></i>
+                        </div>
+                        <p class="text-gray-600">اطمینان حاصل کنید که فرم‌ها را کامل و صحیح پر کرده‌اید</p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="bg-soft-peach p-3 rounded-lg ml-3">
+                            <i class="fa-solid fa-arrow-rotate-left text-royal-purple text-xl"></i>
+                        </div>
+                        <p class="text-gray-600">گاهی یک بار بازنگری، جلوی کلی دردسر را می‌گیرد!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- بخش پایانی -->
+        <div class="mt-12 text-center text-gray-600">
+            <p class="font-medium">کلینیک رویال - زیبایی هوشمندانه آغاز می‌شود</p>
+            <p class="text-sm mt-2">© ۲۰۲۳ کلینیک رویال. تمام حقوق محفوظ است</p>
+        </div>
+    </div>
+    
+    <!-- عناصر تزئینی پایین -->
+    <div class="absolute bottom-12 left-0 w-full">
+        <div class="floating-element text-royal-gold opacity-40 absolute bottom-24 right-[5%]">
+            <i class="fa-solid fa-flower-tulip text-4xl"></i>
+        </div>
+        <div class="floating-element mirror-effect text-royal-pink opacity-50 absolute bottom-10 left-[10%]">
+            <i class="fa-solid fa-crown text-3xl"></i>
+        </div>
+        <div class="floating-element text-royal-purple opacity-30 absolute bottom-32 right-[15%]">
+            <i class="fa-solid fa-feather text-3xl"></i>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block extra_js %}
+    <script src="{% static "js/errors.js" %}"></script>
+{% endblock extra_js %}

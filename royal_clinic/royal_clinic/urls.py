@@ -35,7 +35,7 @@ urlpatterns = [
     path('personel/',include('apps.personel.personel_urls',namespace='personel')),
     path('offers/',include('apps.offers.offers_urls',namespace='offers')),
     path('gallery/',include('apps.gallery.gallery_urls',namespace='gallery')),
-    path('error_handlers/',include('apps.error_handlers.urls',namespace='error_handlers')),
+    # path('error_handlers/',include('apps.error_handlers.urls',namespace='error_handlers')),
     
     
     path('ckeditor/', include('ckeditor_uploader.urls')),
@@ -55,3 +55,6 @@ admin.site.index_title = 'Royal Clinic'
 
 
 handler404 = 'apps.error_handlers.views.error_404'
+handler400 = 'apps.error_handlers.views.error_400'
+handler403 = 'apps.error_handlers.views.error_403'
+handler500 = 'apps.error_handlers.views.error_500'
