@@ -350,10 +350,14 @@
                 </div>
             </div>
 
+            {% if specific_service_clicked.get_user_score %}
             <div class="your-score">
                 <p class="text-gray-600">امتیاز شما به این سرویس : </p>
                 <div class="flex items-baseline">
+                    
                     <span id="avg_score" class="text-2xl font-bold text-amber-600">{{ specific_service_clicked.get_user_score }}</span>
+                    
+                    
                     <span class="text-gray-500 text-sm mr-1">از 5</span>
                 </div>
 
@@ -370,7 +374,13 @@
                 </div>
                 
             </div>
-
+            {% else %}
+            <div class="your-score">
+                <div class="flex items-baseline">
+                    <span id="avg_score" class="text-2xl font-bold text-amber-600">شما هنوز به این سرویس امتیازی ندادید</span>
+                </div>
+            </div>
+            {% endif %}
          
 
             <form id="rating-form" method="post" action="{% url "csf:add_score" %}">

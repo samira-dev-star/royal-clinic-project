@@ -36,6 +36,7 @@ urlpatterns = [
     path('offers/',include('apps.offers.offers_urls',namespace='offers')),
     path('gallery/',include('apps.gallery.gallery_urls',namespace='gallery')),
     
+    
     path('ckeditor/', include('ckeditor_uploader.urls')),
     
     
@@ -43,6 +44,13 @@ urlpatterns = [
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
 
+
+
+
+
 admin.site.site_header = 'پنل مدیریت کلینیک رویال'
 admin.site.site_title = 'Royal Clinic'
 admin.site.index_title = 'Royal Clinic'
+
+
+handler404 = 'apps.error_handlers.views.error_404'

@@ -1,0 +1,166 @@
+{% extends "main_template.html" %}
+
+{% block title %}404 error{% endblock title %}
+
+{% block extra_css %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+        
+        .royal-gradient-bg {
+            background: linear-gradient(135deg, #fdf2fb 0%, #fffbee 100%);
+        }
+        
+        .gold-effect {
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            color: transparent;
+            background-image: linear-gradient(to right, #cf9a3b, #e6bc57, #d9ac50);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .mirror-effect {
+            transform: rotateY(180deg);
+        }
+        
+        .blush-element {
+            background: linear-gradient(145deg, #fde5f1, #fce8ef);
+            box-shadow: 5px 5px 10px #f7d5e6, 
+                        -5px -5px 10px #ffffff;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background-color: #fdfafc;
+        }
+        
+        h1, h2, h3, .serif-font {
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.5px;
+        }
+    </style>
+{% endblock extra_css %}
+
+{% block content %}
+    <!-- Top decorative elements -->
+    <div class="absolute top-0 left-0 w-full">
+        <div class="floating-element text-royal-pink opacity-50 absolute top-8 left-[5%]">
+            <i class="fa-solid fa-flower text-3xl"></i>
+        </div>
+        <div class="floating-element text-royal-gold opacity-40 absolute top-12 right-[7%]">
+            <i class="fa-solid fa-spa text-4xl"></i>
+        </div>
+        <div class="floating-element mirror-effect text-royal-purple opacity-50 absolute top-20 left-[12%]">
+            <i class="fa-solid fa-crown text-4xl"></i>
+        </div>
+        <div class="floating-element text-royal-purple opacity-30 absolute top-32 right-[20%]">
+            <i class="fa-solid fa-spa text-3xl"></i>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="flex flex-col items-center justify-center flex-grow px-4 md:px-8 py-12">
+        <div class="max-w-3xl w-full backdrop-blur-sm rounded-3xl p-6 md:p-10 blush-element relative">
+            <div class="text-center mb-8">
+                <h1 class="text-8xl md:text-9xl font-bold gold-effect mb-4">404</h1>
+                <h2 class="text-4xl md:text-5xl font-semibold text-royal-purple mb-6">Beauty Lost in Translation</h2>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8 mb-16">
+                <div class="flex flex-col items-center">
+                    <div class="w-40 h-40 bg-gradient-to-br from-royal-purple to-royal-pink rounded-full overflow-hidden shadow-xl flex items-center justify-center">
+                        <div class="bg-white w-[96%] h-[96%] rounded-full flex items-center justify-center text-royal-gold">
+                            <i class="fa-solid fa-question text-6xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="max-w-md text-center md:text-left">
+                    <p class="text-gray-600 text-lg mb-4">
+                        The page you're seeking has disappeared into the mirror, just like yesterday's perfect complexion!
+                    </p>
+                    <p class="text-gray-600 mb-6">
+                        Perhaps it's having a spa day, or the digital botox was a tad too effective. 
+                        Please enjoy our Royal Glow while we help you find your way back.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="/" class="bg-gradient-to-r from-royal-purple to-royal-pink text-white font-medium py-3 px-8 rounded-full shadow-md hover:opacity-90 transition duration-300 hover:scale-[1.02]">
+                            <i class="fa-solid fa-house-heart mr-2"></i> Return to Home
+                        </a>
+                        <a href="#" class="bg-white border border-royal-purple text-royal-purple font-medium py-3 px-8 rounded-full hover:bg-soft-peach transition duration-300">
+                            <i class="fa-solid fa-spa mr-2"></i> Schedule a Treatment
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tips Section -->
+            <div class="bg-white bg-opacity-70 backdrop-blur rounded-xl p-6">
+                <h3 class="text-royal-purple text-xl font-semibold mb-4 text-center"><i class="fa-solid fa-crown text-royal-gold mr-2"></i> Royal Beauty Tips</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="flex items-start">
+                        <div class="bg-soft-peach p-3 rounded-lg mr-3">
+                            <i class="fa-solid fa-moon text-royal-purple text-xl"></i>
+                        </div>
+                        <p class="text-gray-600">Beauty sleep isn't a myth - 7-9 hours each night for a true royal glow</p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="bg-soft-peach p-3 rounded-lg mr-3">
+                            <i class="fa-solid fa-wind text-royal-purple text-xl"></i>
+                        </div>
+                        <p class="text-gray-600">Gentle skincare routines preserve your skin's natural elegance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer Section -->
+        <div class="mt-12 text-center text-gray-600">
+            <p class="font-medium">Royal Clinic - Where Luxury Meets Radiance</p>
+            <p class="text-sm mt-2">© 2023 Royal Clinic. All treatments preserved in beauty</p>
+        </div>
+    </div>
+    
+    <!-- Bottom floating elements -->
+    <div class="absolute bottom-12 left-0 w-full">
+        <div class="floating-element text-royal-gold opacity-40 absolute bottom-24 right-[5%]">
+            <i class="fa-solid fa-flower-tulip text-4xl"></i>
+        </div>
+        <div class="floating-element mirror-effect text-royal-pink opacity-50 absolute bottom-10 left-[10%]">
+            <i class="fa-solid fa-crown text-3xl"></i>
+        </div>
+        <div class="floating-element text-royal-purple opacity-30 absolute bottom-32 right-[15%]">
+            <i class="fa-solid fa-feather text-3xl"></i>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block extra_js %}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add animation to the buttons on hover
+            const buttons = document.querySelectorAll('a');
+            buttons.forEach(btn => {
+                btn.addEventListener('mouseenter', function() {
+                    this.classList.add('transform', 'scale-[1.03]');
+                });
+                btn.addEventListener('mouseleave', function() {
+                    this.classList.remove('transform', 'scale-[1.03]');
+                });
+            });
+        });
+    </script>
+
+{% endblock extra_js %}

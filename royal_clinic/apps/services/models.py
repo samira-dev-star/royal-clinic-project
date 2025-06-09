@@ -63,15 +63,42 @@ class Services(models.Model):
         ).first()
         
     
+    # def get_user_score(self):
+    #     request = RequestMiddleware(get_response=None)
+    #     request = request.thread_local.current_request
+    #     score = 0
+    #     # یعنی امتیاز رو فقط واسه این کاربر برسی و فیلتر میکنه
+    #     user_score = self.scoring_service.filter(user=request.user)
+    #     if user_score.count() > 0:
+    #         score = user_score[0].score
+    #     return score
+    
+    # def get_user_score(self):
+    #     request = RequestMiddleware(get_response=None)
+    #     request = request.thread_local.current_request
+    #     score = 0
+    #     # فقط اگر کاربر لاگین کرده باشد امتیاز را بررسی کن
+    #     user = getattr(request, 'user', None)
+    #     if user and user.is_authenticated:
+    #         user_score = self.scoring_service.filter(user=user)
+    #         if user_score.count() > 0:
+    #             score = user_score[0].score
+    #     return score
+    
+    
     def get_user_score(self):
-        request = RequestMiddleware(get_response=None)
-        request = request.thread_local.current_request
-        score = 0
-        # یعنی امتیاز رو فقط واسه این کاربر برسی و فیلتر میکنه
-        user_score = self.scoring_service.filter(user=request.user)
-        if user_score.count() > 0:
-            score = user_score[0].score
-        return score
+        request = RequestMiddleware(get_response=None).thread_local.current_request
+        user = getattr(request, 'user', None)
+    
+        if user and user.is_authenticated:
+            user_score = self.scoring_service.filter(user=user).first()
+            if user_score:
+                return user_score.score
+    
+        return 0
+
+        
+    
         
     
     # آیا aggregate در پایتون وجود داره؟
