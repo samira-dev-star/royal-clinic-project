@@ -1,0 +1,49 @@
+
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+        
+        .royal-gradient-bg {
+            background: linear-gradient(135deg, #fdf2fb 0%, #fffbee 100%);
+        }
+        
+        .gold-effect {
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            color: transparent;
+            background-image: linear-gradient(to right, #cf9a3b, #e6bc57, #d9ac50);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .mirror-effect {
+            transform: rotateY(180deg);
+        }
+        
+        .blush-element {
+            background: linear-gradient(145deg, #fde5f1, #fce8ef);
+            box-shadow: 5px 5px 10px #f7d5e6, 
+                        -5px -5px 10px #ffffff;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background-color: #fdfafc;
+        }
+        
+        h1, h2, h3, .serif-font {
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.5px;
+        }
+    
+        .errors-bg-col {
+            background-color: #ff899d;
+        }
