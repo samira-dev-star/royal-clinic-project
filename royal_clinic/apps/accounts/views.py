@@ -47,7 +47,7 @@ class RegisterUserView(View):
                 messages.success(request,"ثبت نام با موفقیت انجام شد برای ورود شماره موبایل و پسورد خود را وارد کنید",'success')
                 new_user.is_active = True
                 new_user.save()
-                return redirect('main:index')
+                return redirect('account:login')
             
             
                 

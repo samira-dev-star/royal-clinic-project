@@ -10,30 +10,24 @@ from django.core.validators import MaxLengthValidator,MinLengthValidator
 from django.core.exceptions import ValidationError
 # Create your views here.
 
-def normalize_iranian_mobile(number):
+from django.core.exceptions import ValidationError
+
+def validate_iranian_mobile(number):
     if number is None:
-        return number
-        
-    # حذف فاصله‌ها و نویسه‌های غیرضروری
-    number = str(number).strip().replace(" ", "").replace("-", "").replace("+", "")
+        return
+
+    number = str(number).strip().replace(" ", "").replace("-", "")
+
+    if not number.isdigit():
+        raise ValidationError("شماره موبایل فقط باید شامل ارقام باشد.")
+
+    if not number.startswith('09') or len(number) != 11:
+        raise ValidationError("شماره موبایل باید با 09 شروع شود و دقیقاً 11 رقم باشد.")
     
-    # حذف پیشوند 0 اگر وجود دارد
-    if number.startswith('0'):
-        number = number[1:]
     
-    # افزودن پیشوند 98 اگر وجود ندارد
-    if not number.startswith('98'):
-        number = '98' + number
     
-    # حذف 98 اضافی در ابتدا
-    if number.startswith('9898'):
-        number = '98' + number[4:]
     
-    # اطمینان از طول 12 رقمی (98 + 10 رقم)
-    if len(number) != 12:
-        raise ValidationError("شماره موبایل باید ۱۰ رقم (بدون پیشوند) باشد")
     
-    return number
 
 
 class UserCreationForm(ModelForm):
@@ -52,13 +46,7 @@ class UserCreationForm(ModelForm):
     
     
     
-    def clean_mobile_number(self):
-       try:
-           mobile = self.cleaned_data['mobile_number']
-           return normalize_iranian_mobile(mobile)
-       except ValidationError as e:
-           raise ValidationError(e.message)
-       
+
        
     
     def save(self,commit=True):
@@ -106,6 +94,10 @@ class RegisterUserForm(ModelForm):
             'mobile_number' : forms.TextInput(attrs={'class':'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 form-input','placeholder':'شماره تماس خود را وارد کنید'})
         }
         
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['mobile_number'].validators.append(validate_iranian_mobile)
+        
     def clean_password2(self):
         pass1 = self.cleaned_data.get('password1')
         pass2 = self.cleaned_data.get('password2')
@@ -114,13 +106,7 @@ class RegisterUserForm(ModelForm):
         return pass2
 
 
-    def clean_mobile_number(self):
-        mobile = self.cleaned_data['mobile_number']
-        try:
-            # استفاده از تابع یکسان برای نرمال‌سازی
-            return normalize_iranian_mobile(mobile)
-        except ValidationError as e:
-            raise ValidationError(e.message)
+    
 
             
 # -----------------------------------------------------------------------------------------------
@@ -129,6 +115,7 @@ class RegisterUserForm(ModelForm):
 class LoginUserForm(forms.Form):
     mobile_number = forms.CharField(label="",
                                     error_messages={"required":"لطفا شماره موبایل خود را وارد کنید"},
+                                    validators=[validate_iranian_mobile],
                                     widget=forms.TextInput(attrs={
                                         'class':'form-control',
                                         'placeholder':'09xxxxxxxxx',
@@ -159,20 +146,7 @@ class LoginUserForm(forms.Form):
             raise ValidationError('پسورد باید حداکثر 8 کاراکتر داشته باشد')
         return password
     
-    def clean_mobile_number(self):
-        number = self.cleaned_data.get('mobile_number')
-        if not number:
-            raise ValidationError("شماره موبایل نمی‌تواند خالی باشد.")
-        try:
-            # استفاده از تابع یکسان برای نرمال‌سازی
-            normalized = normalize_iranian_mobile(number)
-            # اگر شماره با 98 شروع شد، به فرمت 09 برگردان برای سازگاری با دیتابیس
-            if normalized.startswith('98'):
-                normalized = '0' + normalized[2:]
-            return normalized
-        except ValidationError as e:
-            raise ValidationError(e.message)
-
+    
 
 
         
@@ -216,6 +190,7 @@ class ChangePassword(forms.Form):
 
 class ForgotPassword(forms.Form):
     mobile_number = forms.CharField(label="",
+                                    validators=[validate_iranian_mobile],
                                     error_messages={"required":"لطفا شماره موبایل خود را وارد کنید"},
                                     widget=forms.TextInput(attrs={
                                         'class':'form-control',
@@ -224,36 +199,14 @@ class ForgotPassword(forms.Form):
                                         'id':'mobile'}))
     
     
-    def clean_mobile_number(self):
-        number = self.cleaned_data.get('mobile_number')
 
-        if " " in number:
-            raise ValidationError("شماره موبایل نباید فاصله داشته باشد.") 
-
-        if not number.replace('+', '').isdigit():
-            raise ValidationError("شماره موبایل فقط باید شامل عدد باشد.")
-
-        if not (number.startswith('09') or number.startswith('+989') or number.startswith('989')):
-            raise ValidationError("شماره موبایل باید با 09 یا +989 یا 989 شروع شود.")
-
-        # تبدیل به فرمت بین‌المللی
-        if number.startswith('09'):
-            number = '+98' + number[1:]  # 0912... => +98912...
-        elif number.startswith('989'):
-            number = '+' + number  # 98912... => +98912...
-        
-        # بررسی طول
-        if len(number) != 13:
-            raise ValidationError("تعداد ارقام شماره موبایل صحیح نمی‌باشد.")
-
-        return number
-    
 # --------------------------------------------------------------------------------------------------------
 
 class VerifyForm(forms.Form):
     active_code = forms.CharField(label='',
-                                      error_messages={"required":"این فیلد نمی تواند خالی باشد"},
-                                      widget=forms.TextInput(attrs={'class':'form-control','placeholder':'کد دریافتی را وارد کنید'})) 
+                                  error_messages={"required":"این فیلد نمی تواند خالی باشد"},
+                                  widget=forms.TextInput(attrs={'class':'form-control','placeholder':'کد دریافتی را وارد کنید'
+                                })) 
 
 # --------------------------------------------------------------------------------------------------------
 
