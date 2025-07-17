@@ -2,7 +2,35 @@
 {% load static %}
 {% load render_partial %}
 
-{% block title %}تمامی ویدیو ها{% endblock title %}
+{% block title %}ویدیوهای زیبایی و درمان | کلینیک تخصصی رویال{% endblock title %}
+
+{% block meta_description %}
+  <meta name="description" content="ویدیوهای تخصصی زیبایی، درمان پوست و مو، و رضایت مراجعین کلینیک رویال را مشاهده کنید.">
+  <meta name="robots" content="index, follow">
+{% endblock meta_description %}
+
+{% block extra_head %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "ویدیوهای زیبایی و درمان",
+    "description": "ویدیوهای تخصصی و معرفی خدمات کلینیک زیبایی رویال",
+    "mainEntity": [
+      {% for video in videos %}
+        {
+          "@type": "VideoObject",
+          "name": "{{ video.title|escapejs }}",
+          "description": "{{ video.description|truncatewords:20|escapejs }}",
+          "thumbnailUrl": "{{ video.thumbnail.url|default:'' }}",
+          "uploadDate": "{{ video.upload_date|date:'c' }}",
+          "contentUrl": "{{ video.video_file.url }}"
+        }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+  </script>
+{% endblock extra_head %}
 
 {% block extra_css %}<link rel="stylesheet" href="{% static "css/personels.css" %}"> {% endblock extra_css %}
 
