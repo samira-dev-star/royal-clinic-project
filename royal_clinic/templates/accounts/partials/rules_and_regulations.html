@@ -2,6 +2,32 @@
 
 {% block title %}قوانین و مقررات{% endblock title %}
 
+{% block meta_description %}
+<meta name="description" content="صفحه قوانین و مقررات کلینیک رویال، لطفاً قبل از ثبت‌ نام موارد را با دقت مطالعه کنید.">
+{% endblock %}
+
+
+{% comment %} 
+این خط می‌گه که معنای بقیه‌ی کلمات و تگ‌ها (مثل "@type", "name", "description") از استاندارد Schema.org گرفته شده.
+به زبان ساده:
+یعنی: «من دارم از لغت‌نامه‌ی schema.org استفاده می‌کنم تا گوگل و موتورهای جستجو بفهمن منظورم از "WebPage" یا "description" چیه.» 
+----------------------------------------
+<script type="application/ld+json">:
+ld+json: یعنی داده‌ها به صورت JSON هستن و طبق فرمت Linked Data نوشته شدن.
+{% endcomment %}
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "قوانین و مقررات کلینیک رویال",
+  "description": "صفحه رسمی قوانین و شرایط استفاده از خدمات کلینیک رویال.",
+  "url": "http://localhost:8000/accounts/rules/"
+  
+}
+</script>
+{% endblock extra_head %}
+
 {% block content %}
 
     <!-- Header -->
@@ -54,3 +80,15 @@
                 <input type="checkbox" name="rule" id="rule" onclick="handleAcceptRules()">
             </div>
 {% endblock content %}
+
+
+ {% comment %} جمع‌بندی نهایی: نمره سئو این صفحه
+معیار	وضعیت
+🔖 title توصیفی	✅ خوب
+📝 متا دیسکریپشن	✅ عالی
+🧠 Structured Data	✅ هست
+🔤 محتوای متنی قابل خواندن	✅ بله
+📅 تاریخ به‌روز بودن	✅ هست
+📱 واکنش‌گرا	✅ هست (Tailwind)
+🛠️ سرعت و بهینه‌سازی	⚠️ بعداً در زمان دیپلوی بررسی کن
+🔐 HTTPS	❌ هنوز لوکال هست، موقع دیپلوی فراموش نشه {% endcomment %}

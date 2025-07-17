@@ -6,6 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>کلینیک پوست و موی زیبایی رویال | {% block title %}{% endblock title %}</title>
+
+    {% block meta_description %}
+    <!-- این مقدار پیش‌فرضه، می‌تونه خالی باشه یا یه چیز عمومی -->
+    <meta name="description" content="کلینیک لیزر،زیبایی و لاغری رویال ارائه‌دهنده خدمات درمانی مدرن.">
+    {% endblock %}
     
     
     <link rel="stylesheet" href="{% static 'tailwind/output.css' %}">
@@ -19,7 +24,7 @@
 
 
     {% block extra_css %}{% endblock extra_css %}
-    
+    {% block extra_head %}{% endblock %}
 
 </head>
 
