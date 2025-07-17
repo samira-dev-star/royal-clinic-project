@@ -1,7 +1,29 @@
 {% extends "main_template.html" %}
 {% load static %}
 
-{% block title %}خطای ۴۰۰{% endblock title %}
+{% block title %}خطای ۴۰۰ - درخواست نامعتبر | کلینیک زیبایی رویال{% endblock title %}
+
+
+
+{% block meta_description %}
+    <meta name="robots" content="noindex, follow">
+    <meta name="description" content="خطای ۴۰۰ - درخواست شما در کلینیک رویال به درستی ارسال نشده است. لطفاً بررسی کرده و مجدد تلاش کنید.">
+{% endblock meta_description %}
+
+{% block extra_head %}
+    {% comment %} <link rel="canonical" href="https://yourdomain.com/error/400/" /> {% endcomment %}
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "خطای ۴۰۰",
+          "description": "صفحه خطای ۴۰۰ - درخواست نامعتبر در کلینیک زیبایی رویال.",
+          //"url": "https://royalclinic.ir/error/400/"
+        }
+  </script>
+{% endblock extra_head %}
+
+
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static "css/errors.css" %}">
@@ -28,7 +50,9 @@
     <div class="flex flex-col items-center justify-center flex-grow px-4 md:px-8 py-12">
         <div class="max-w-3xl w-full backdrop-blur-sm rounded-3xl p-6 md:p-10 blush-element relative">
             <div class="text-center mb-8">
-                <h1 class="text-8xl md:text-9xl font-bold gold-effect mb-4">۴۰۰</h1>
+                <h1 class="text-4xl md:text-5xl font-semibold text-royal-purple mb-6">
+                    خطای ۴۰۰ - درخواست نامعتبر در کلینیک رویال
+                </h1>
                 <h2 class="text-4xl md:text-5xl font-semibold text-royal-purple mb-6">درخواست نامعتبر!</h2>
             </div>
             
@@ -42,6 +66,10 @@
                 </div>
                 
                 <div class="max-w-md text-center md:text-right">
+                    <p class="text-gray-600 text-center max-w-xl mx-auto mt-6">
+در صورتی که با این خطا مواجه شده‌اید، ممکن است به دلیل وارد کردن داده‌های ناقص در فرم یا لینک نادرست باشد. لطفاً مجدد تلاش کرده یا از طریق منوی اصلی به صفحات دیگر سایت کلینیک رویال مراجعه نمایید.
+                    </p>
+
                     <p class="text-gray-600 text-lg mb-4">
                         به‌نظر می‌رسد درخواست شما کمی گیج‌کننده بوده... شاید فرمی ناتمام، یا لینکی اشتباه؟ 
                     </p>

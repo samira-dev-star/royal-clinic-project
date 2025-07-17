@@ -1,7 +1,25 @@
 {% extends "main_template.html" %}
 {% load static %}
 
-{% block title %}خطای ۴۰۴{% endblock title %}
+{% block title %}خطای ۴۰۴ - صفحه یافت نشد | کلینیک زیبایی رویال{% endblock title %}
+
+{% block meta_description %}
+    <meta name="robots" content="noindex, follow">
+    <meta name="description" content="خطای ۴۰۴ - متأسفانه صفحه‌ای که به دنبال آن هستید یافت نشد. ممکن است حذف شده باشد یا مسیر آن تغییر کرده باشد. با ما همراه بمانید.">
+{% endblock meta_description %}
+
+{% block extra_head %}
+    {% comment %}<link rel="canonical" href="https://royalclinic.ir/error/404/" />{% endcomment %}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "خطای ۴۰۴",
+        "description": "صفحه خطای ۴۰۴ - صفحه‌ای که به دنبال آن هستید در کلینیک زیبایی رویال یافت نشد.",
+        //"url": "https://royalclinic.ir/error/404/"
+    }
+    </script>
+{% endblock extra_head %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static "css/errors.css" %}">

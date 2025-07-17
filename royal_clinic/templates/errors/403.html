@@ -1,7 +1,25 @@
 {% extends "main_template.html" %}
 {% load static %}
 
-{% block title %}خطای ۴۰۳{% endblock title %}
+{% block title %}خطای ۴۰۳ - دسترسی غیرمجاز | کلینیک زیبایی رویال{% endblock title %}
+
+{% block meta_description %}
+    <meta name="robots" content="noindex, follow">
+    <meta name="description" content="خطای ۴۰۳ - شما مجاز به مشاهده این صفحه نیستید. لطفاً ابتدا وارد حساب کاربری خود شوید یا از طریق پشتیبانی پیگیری نمایید.">
+{% endblock meta_description %}
+
+{% block extra_head %}
+    {% comment %} <link rel="canonical" href="https://yourdomain.com/error/403/" /> {% endcomment %}
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "خطای ۴۰۳",
+            "description": "صفحه خطای ۴۰۳ - دسترسی غیرمجاز در کلینیک زیبایی رویال.",
+            //"url": "https://royalclinic.ir/error/403/"
+        }
+    </script>
+{% endblock extra_head %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static "css/errors.css" %}">
