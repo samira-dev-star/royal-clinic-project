@@ -4,6 +4,25 @@
 
 {% block title %}رزرو نوبت به صورت آنلاین{% endblock title %}
 
+{% block meta_description %}
+  <meta name="description" content="رزرو نوبت آنلاین در کلینیک رویال برای خدمات زیبایی و درمانی. نام، شماره تماس و سرویس مورد نظر را وارد کنید و تاریخ مناسب خود را انتخاب نمایید.">
+{% endblock %}
+
+{% block extra_head %}
+  
+  <link rel="canonical" href="http://localhost:8000/reservation/reservation_main_page/" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "رزرو نوبت کلینیک رویال",
+    "description": "فرم رزرو نوبت آنلاین در کلینیک تخصصی رویال برای خدمات پوست، مو، زیبایی و درمانی.",
+    "url": "http://localhost:8000/reservation/reservation_main_page/"
+  }
+  </script>
+{% endblock extra_head %}
+
 {% block extra_css %}<link rel="stylesheet" href="{% static "css/reservation_form_page.css" %}">{% endblock extra_css %}
 
 {% block content %}
