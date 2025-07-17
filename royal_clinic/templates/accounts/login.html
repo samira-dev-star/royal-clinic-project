@@ -1,5 +1,25 @@
 {% extends "main_login.html" %}
 {% block title %}فرم ورود - شماره موبایل و رمز عبور{% endblock title %}
+
+
+{% block meta_description %}
+<meta name="description" content="برای ورود به حساب کاربری خود در کلینیک رویال، شماره موبایل و رمز عبور خود را وارد کنید.">
+<meta name="robots" content="noindex, nofollow" />
+{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "فرم ورود به حساب کاربری کلینیک رویال",
+  "description": "برای ورود به حساب کاربری خود در سایت کلینیک رویال فرم ورود را پر کنید",
+  "url": "http://localhost:8000/accounts/login/"
+  
+}
+</script>
+{% endblock extra_head %}
+
 {% block content %}
 
 

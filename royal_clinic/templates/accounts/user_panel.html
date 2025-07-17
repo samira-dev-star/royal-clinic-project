@@ -1,12 +1,32 @@
 {% extends "main_login.html" %}
 {% load static %}
-{% comment %} {% load jalali_tags %} {% endcomment %}
 {% load humanize %}
 {% load jformat %}
 {% load jalali_extras %}
 
 
-    {% block title %}پنل بیمار - کلینیک رویال{% endblock title %} 
+{% block title %}پنل بیمار - کلینیک رویال{% endblock title %} 
+
+{% block meta_description %}
+  <meta name="description" content="پنل کاربری بیماران در کلینیک زیبایی رویال برای مشاهده نوبت‌ها، پرونده پزشکی و خدمات توصیه‌شده توسط پزشک.">
+  <meta name="robots" content="noindex, nofollow" />
+{% endblock %}
+
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "پنل کاربری بیمار - کلینیک رویال",
+  "description": "داشبورد بیمار برای مدیریت نوبت‌ها، پرونده پزشکی، پروفایل و پیشنهادات پزشک در کلینیک زیبایی رویال",
+  "inLanguage": "fa",
+  "dateModified": "{{ now|date:'c' }}"
+}
+</script>
+{% endblock %}
+
+
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static "css/userpanel.css" %}">
@@ -148,7 +168,7 @@
                         <div class="image_containerr">
                             <p class="text-gray-500 text-sm">
                             {% if patient_data.image_name %}
-                                <img class="userpanel_image" id="profile-preview" src="{{ patient_data.image_name.url }}" alt="تصویر پروفایل" class="profile-image">
+                                <img class="userpanel_image" id="profile-preview" src="{{ patient_data.image_name.url }}" alt="تصویر پروفایل بیمار {{ patient_data.user.name }} {{ patient_data.user.family }}" class="profile-image">
                             {% else %}
                                 <img id="profile-preview" src="{{media_url}}images/patients/user.png" alt="تصویر پروفایل" class="default-profile-image">
                             {% endif %}

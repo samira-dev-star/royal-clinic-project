@@ -1,6 +1,24 @@
 {% extends "main_template_account.html" %}
 
-{% block title %}ثبت نام{% endblock title %}
+{% block title %}ثبت نام در کلینیک رویال | ایجاد حساب کاربری{% endblock title %}
+
+{% block meta_description %}
+<meta name="description" content="ثبت نام در کلینیک رویال برای دسترسی به خدمات پزشکی، نوبت‌گیری آنلاین و پزشکان متخصص. همین حالا حساب کاربری خود را بسازید.">
+<meta name="robots" content="noindex, nofollow" />
+{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "ثبت نام در کلینیک رویال",
+  "description": "ایجاد حساب کاربری در سایت رسمی کلینیک رویال برای دریافت نوبت، پشتیبانی و دسترسی به پزشکان متخصص.",
+  "url": "http:localhost:8000/accounts/register/"
+}
+</script>
+{% endblock extra_head %}
+
 
 {% block content %}
 
