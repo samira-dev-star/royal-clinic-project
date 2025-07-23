@@ -5,6 +5,38 @@
     
 {% block title %}اطلاعات زیباجو{% endblock title %}
 
+
+
+{% block meta_description %}
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="پروفایل پزشکی، سوابق درمانی و داروهای مصرفی زیباجوی کلینیک رویال. اطلاعات کامل و دقیق برای پیگیری وضعیت سلامتی." />
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="پروفایل زیباجو - کلینیک رویال">
+<meta property="og:description" content="نمایش کامل سوابق پزشکی، داروها، آلرژی‌ها و اطلاعات فیزیولوژیکی زیباجوی کلینیک رویال.">
+<meta property="og:type" content="profile">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:image" content="{% if patient.0.image_name %}{{ media_url }}{{ patient.0.image_name }}{% else %}{% static 'images/default-profile.jpg' %}{% endif %}" />
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock meta_description %}
+
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ patient.0.user.name }} {{ patient.0.user.family }}",
+  "gender": "{{ patient.0.user.gender }}",
+  "birthDate": "{{ patient.0.user.birth_date|default:"" }}",
+  "telephone": "{{ patient.0.user.mobile_number }}",
+  "image": "{% if patient.0.image_name %}{{ media_url }}{{ patient.0.image_name }}{% else %}{% static 'images/default-profile.jpg' %}{% endif %}",
+  "url": "{{ request.build_absolute_uri }}"
+}
+</script>
+{% endblock extra_head %}
+
+
 {% block extra_css %}
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
 
@@ -17,10 +49,15 @@
         <!-- Header -->
         <header class="gradient-bg text-white rounded-xl shadow-lg mb-8 overflow-hidden">
             <div class="flex flex-col md:flex-row items-center p-6 md:p-8">
+                
+                <h1 class="text-2xl md:text-3xl font-bold text-center mb-6 text-gray-800">
+                پروفایل پزشکی و سوابق درمانی زیباجو در کلینیک رویال
+                </h1>
+
                 {% for data in patient %}
                 {% if data.image_name %}
                 <div class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white/20 bg-white/10 flex items-center justify-center mb-4 md:mb-0 md:mr-6">
-                    <img class="medical_history_image" src="{{media_url}}{{data.image_name}}" alt="تصویر پروفایل">
+                    <img class="medical_history_image" src="{{media_url}}{{data.image_name}}" alt="پروفایل پزشکی {{data.user.name}} {{data.user.family}}">
                 </div>
                 {% else %}
                 <div class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white/20 bg-white/10 flex items-center justify-center mb-4 md:mb-0 md:mr-6">
