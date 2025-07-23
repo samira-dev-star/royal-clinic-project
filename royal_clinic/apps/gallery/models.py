@@ -36,3 +36,22 @@ class ServiceVideo(models.Model):
 #     receiver=delete_video,
 #     sender=ServiceVideo
 # )
+
+
+class ServiceImage(models.Model):
+    service = models.ForeignKey(Services, on_delete=models.CASCADE, related_name='images', verbose_name='سرویس مربوطه',null=True,blank=True)
+    title = models.CharField(max_length=200, verbose_name='عنوان تصویر',null=True, blank=True)
+    description = models.TextField(blank=True, null=True, verbose_name='توضیحات')
+    
+    file_upload_images = FileUpload('images', 'services')
+    image_file = models.ImageField(upload_to=file_upload_images.create_address, verbose_name='فایل تصویر')
+    
+    upload_date = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ آپلود')
+    is_active = models.BooleanField(default=True, verbose_name='فعال باشد؟')
+    
+    def __str__(self):
+        return f"{self.title} {self.service}"
+    
+    class Meta:
+        verbose_name = 'تصویر'
+        verbose_name_plural = 'تصاویر'

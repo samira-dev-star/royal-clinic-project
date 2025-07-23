@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ServiceVideo
+from .models import ServiceVideo,ServiceImage
 
 from django.utils.html import format_html
 
@@ -31,3 +31,10 @@ admin.site.register(ServiceVideo, ServiceVideoAdmin)
 
 # اگر می‌خوای سریع بنویسی و مطمئنی ورودی‌ها امن هستند، mark_safe بد نیست.
 # اگر می‌خوای کدت ایمن‌تر و به‌روزتر باشه، بهتره از format_html استفاده کنی.
+
+
+@admin.register(ServiceImage)
+class ServiceImageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'service', 'is_active', 'upload_date')
+    list_filter = ('is_active', 'upload_date', 'service')
+    search_fields = ('title', 'description')
