@@ -7,10 +7,62 @@
 <link rel="stylesheet" href="{% static "css/service_details.css" %}">
 {% endblock extra_css %}
 
-{% block title %}جزئیات سرویس{% endblock title %}
+{% block title %}{{ specific_service_clicked.service_title }} | کلینیک زیبایی رویال{% endblock title %}
 
 
+{% block meta_description %}
+<meta name="description" content="{{ specific_service_clicked.service_short_description|truncatechars:160 }}">
+{% endblock meta_description %}
 
+{% block meta_keywords %}
+<meta name="keywords" content="{{ specific_service_clicked.service_keywords|default:'زیبایی, کلینیک زیبایی, خدمات زیبایی, پوست, مو, جوانسازی' }}">
+{% endblock meta_keywords %}
+
+{% block meta_og %}
+<meta property="og:title" content="{{ specific_service_clicked.service_title }}">
+<meta property="og:description" content="{{ specific_service_clicked.service_short_description|truncatechars:150 }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ media_url }}{{ specific_service_clicked.service_image }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:type" content="article">
+{% endblock %}
+
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "{{ specific_service_clicked.service_title }}",
+  "description": "{{ specific_service_clicked.service_short_description|striptags|truncatechars:200 }}",
+  "provider": {
+    "@type": "MedicalClinic",
+    "name": "کلینیک زیبایی رویال"
+  },
+  "areaServed": "ایران",
+  "url": "{{ request.build_absolute_uri }}"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for question in specific_service_clicked.service_questions.all %}
+    {
+      "@type": "Question",
+      "name": "{{ question.title }}",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{ question.answer|striptags|escapejs }}"
+      }
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+
+{% endblock extra_head %}
 
 
 {% block content %}
@@ -173,9 +225,9 @@
 						        <div class="review">
 						        	<div class="review__avatar">
                                         {% if comment.is_admin_comment  %}
-						        		<img src="{{ media_url }}images/comments/admin.png" alt="admin-comment">
+						        		<img src="{{ media_url }}images/comments/admin.png" alt="admin-comment-{{ specific_service_clicked.service_title }}">
                                         {% else %}
-                                        <img src="{{ media_url }}images/comments/user.png" alt="user-comment">
+                                        <img src="{{ media_url }}images/comments/user.png" alt="user-comment-{{ specific_service_clicked.service_title }}">
                                         {% endif %}
 						        	</div>
 						        	<div class="review__content">
@@ -206,9 +258,9 @@
 									<div class="review">
 										<div class="review__avatar">
 										    {% if  reply.is_admin_comment %}
-						        		    <img src="{{ media_url }}images/comments/admin.png" alt="admin-comment">
+						        		    <img src="{{ media_url }}images/comments/admin.png" alt="admin-comment-{{ specific_service_clicked.service_title }}">
                                             {% else %}
-                                            <img src="{{ media_url }}images/comments/user.png" alt="user-comment">
+                                            <img src="{{ media_url }}images/comments/user.png" alt="user-comment-{{ specific_service_clicked.service_title }}">
                                             {% endif %}
 										</div>
 										<div class="review__content">

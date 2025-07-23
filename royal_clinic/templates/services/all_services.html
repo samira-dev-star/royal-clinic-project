@@ -2,7 +2,42 @@
 {% load static %}
 {% load render_partial %}
 
-{% block title %}معرفی تمامی متخصصان کلینیک{% endblock title %}
+{% block title %}لیست خدمات کلینیک تخصصی رویال | زیبایی، پوست، مو و بیشتر{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="در این صفحه با تمامی خدمات کلینیک تخصصی رویال آشنا شوید. شامل خدمات زیبایی، پوست، مو، لیزر و سایر درمان‌های تخصصی با بهترین متخصصان." />
+{% endblock %}
+
+{% block meta_keywords %}
+<meta name="keywords" content="خدمات کلینیک, خدمات زیبایی, خدمات پوست و مو, کلینیک رویال, درمان‌های پزشکی, لیزر" />
+{% endblock %}
+
+{% block canonical %}
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "خدمات کلینیک رویال",
+  "description": "فهرست خدمات درمانی و زیبایی کلینیک تخصصی رویال",
+  "url": "{{ request.build_absolute_uri }}",
+  "numberOfItems": {{ services|length }},
+  "itemListElement": [
+    {% for service in services %}
+    {
+      "@type": "ListItem",
+      "position": {{ forloop.counter }},
+      "name": "{{ service.service_title|escapejs }}",
+      "url": "{% url 'services:service_detail' service.slug %}"
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endblock extra_head %}
 
 {% block extra_css %}<link rel="stylesheet" href="{% static "css/personels.css" %}"> {% endblock extra_css %}
 
@@ -70,7 +105,7 @@
                         {% endif %}
 
                         <div class="h-48 overflow-hidden">
-                            <img src="{{media_url}}{{service.service_image}}" alt="{{service.service_title}}" class="w-full h-full object-cover">
+                            <img src="{{media_url}}{{service.service_image}}" alt="تصویر {{ service.service_title }}" class="w-full h-full object-cover">
                         </div>
                         <div class="p-6">
                             <div class="flex items-center mb-4">
@@ -86,7 +121,7 @@
                                 {% endautoescape %}
                             </p>
                             <a href="{% url "services:service_detail" service.slug %}" class="text-amber-600 font-medium flex items-center">
-                                اطلاعات بیشتر
+                                مشاهده {{ service.service_title }}
                                 <i class="fas fa-arrow-left mr-2"></i>
                             </a>
                         </div>
