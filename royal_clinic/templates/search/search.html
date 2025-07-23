@@ -1,11 +1,35 @@
 {% extends "main_template.html" %}
 {% load static %}
     
-    {% block title %}نتیجه جست و جوی شما{% endblock title %}
+    {% block title %}نتیجه جستجو برای "{{ query }}"{% endblock title %}
 
     {% block extra_css %}<link rel="stylesheet" href="{% static "css/search_result_page.css" %}">{% endblock extra_css %}
 
-    
+{% block meta_description %}
+<meta name="robots" content="noindex, follow">
+<meta name="description" content="نتایج جستجوی شما برای خدمات، پزشکان و تخفیف‌ها در کلینیک تخصصی رویال." />
+<meta name="description" content="نتایج جستجو برای '{{ query }}' در کلینیک رویال شامل خدمات، پزشکان و تخفیف‌ها." />
+{% endblock %}
+
+{% block meta_keywords %}
+<meta name="keywords" content="جستجو خدمات پزشکی, پزشک زیبایی, تخفیف کلینیک, کلینیک رویال" />
+{% endblock %}
+
+{% block canonical %}
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+{% endblock %}
+
+{% block extra_schema %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SearchResultsPage",
+  "name": "نتایج جستجوی کلینیک رویال",
+  "description": "نتایج جستجو شامل خدمات، پزشکان و تخفیف‌های ویژه در کلینیک رویال.",
+  "url": "{{ request.build_absolute_uri }}"
+}
+</script>
+{% endblock extra_schema %}
   
 
     {% block content %}
