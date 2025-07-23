@@ -6,6 +6,50 @@
 
 {% block title %}صفحه ی اصلی{% endblock title %}
 
+{% block meta_description %}
+<meta name="description" content="کلینیک تخصصی رویال - مرکز تخصصی درمان و زیبایی با تیم متخصص و خدمات حرفه‌ای. رزرو آنلاین نوبت و مشاهده ویدیوهای آموزشی." />
+<meta name="keywords" content="کلینیک رویال، درمان پوست، زیبایی، رزرو نوبت آنلاین، ویدیوهای آموزشی پوست، پزشکان متخصص" />
+<meta name="author" content="کلینیک رویال" />
+<meta name="robots" content="index, follow" />
+<meta property="og:title" content="کلینیک تخصصی رویال - درمان و زیبایی" />
+<meta property="og:description" content="مرکز تخصصی درمان و زیبایی رویال با ارائه خدمات حرفه‌ای و تیم متخصص در خدمت شماست." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+<meta property="og:image" content="{% static 'images/logo.png' %}" />
+
+{% endblock meta_description %}
+
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  "name": "کلینیک تخصصی رویال",
+  "image": "{{ request.build_absolute_uri }}{% static 'images/logo.png' %}",
+  "@id": "{{ request.build_absolute_uri }}",
+  "url": "{{ request.build_absolute_uri }}",
+  "telephone": [
+    {% for contact in contacts %}
+      "{{ contact.mobile_number1 }}"{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "{% if contacts %}{{ contacts.0.address }}{% endif %}",
+    "addressLocality": "اهواز",
+    "addressCountry": "IR"
+  },
+  "sameAs": [
+    "https://www.instagram.com/royalclinic/",
+    "https://www.linkedin.com/company/royalclinic/"
+  ],
+  "description": "کلینیک تخصصی رویال - مرکز تخصصی درمان و زیبایی با تیم متخصص و خدمات حرفه‌ای. رزرو آنلاین نوبت و مشاهده ویدیوهای آموزشی."
+}
+</script>
+
+{% endblock extra_head %}
+
 
 
 {% block content %}
@@ -68,7 +112,7 @@
             {% for data in introduction %}
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10">
-                    <img src="{{media_url}}{{data.image}}" alt="کلینیک رویال" class=" shadow-xl w-full h-auto intro-image">
+                    <img src="{{media_url}}{{data.image}}" alt="تصویر کلینیک رویال - {{data.title}}" class=" shadow-xl w-full h-auto intro-image">
                 </div>
                 
                 <div class="md:w-1/2">
