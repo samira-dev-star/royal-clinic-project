@@ -120,12 +120,15 @@ class WorkingTimeType2(models.Model):
 
 # users public messages to clinic
 
+from django_jalali.db import models as jmodels
+
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100,verbose_name='نام و نام خانوادگی')
     email = models.EmailField(verbose_name='ایمیل',null=True,blank=True)
     phone = models.CharField(max_length=20,verbose_name='شماره موبایل')
     message = models.TextField(verbose_name='پیام')
-    created_at = models.DateTimeField(auto_now_add=True,verbose_name='تاریخ ارسال')
+    # created_at = models.DateTimeField(auto_now_add=True,verbose_name='تاریخ ارسال')
+    created_at = jmodels.jDateTimeField(auto_now_add=True,verbose_name='تاریخ ارسال')
 
     def __str__(self):
         return f"پیام از {self.name}"

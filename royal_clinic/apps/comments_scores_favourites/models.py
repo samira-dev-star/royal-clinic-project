@@ -3,6 +3,7 @@ from apps.services.models import Services
 from apps.accounts.models import Customuser
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django_jalali.db import models as jmodels
 # Create your models here.
 
 class Comment(models.Model):
@@ -24,7 +25,8 @@ class Comment(models.Model):
     
     comment_text = models.TextField(verbose_name='متن نظر')
     
-    registerdate = models.DateTimeField(auto_now_add=True,verbose_name='تاریخ درج نظر')
+    # registerdate = models.DateTimeField(auto_now_add=True,verbose_name='تاریخ درج نظر')
+    registerdate = jmodels.jDateTimeField(auto_now_add=True, verbose_name='تاریخ درج نظر')
     
     is_active = models.BooleanField(default=False,verbose_name='وضعیت نظر')
     
@@ -63,11 +65,14 @@ class Comment(models.Model):
         
 # ------------------------------------------------------------------
 
+
+
 class AddScore(models.Model):
     user = models.ForeignKey(Customuser, on_delete=models.CASCADE,verbose_name='کاربر',related_name="scoring_user")
     service = models.ForeignKey(Services, on_delete=models.CASCADE,verbose_name='سرویس',related_name="scoring_service")
     idea = models.TextField(verbose_name='نطر')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ثبت')
+    # created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ثبت')
+    created_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name='تاریخ ثبت')
     
     score = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),MaxValueValidator(5)],verbose_name='امتیاز')
     
