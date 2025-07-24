@@ -18,7 +18,7 @@ class Services(models.Model):
     service_description = RichTextUploadingField(verbose_name='شرح طولانی',null=True,blank=True,config_name='special')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(unique=True)
     
     image_uploader = FileUpload('images','service_images')
     service_image = models.ImageField(upload_to=image_uploader.create_address,verbose_name='تصویر خدمات',null=True,blank=True)
