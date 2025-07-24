@@ -180,17 +180,22 @@
 
 
                     {% comment %} -------------------------------------------- {% endcomment %}
-                    <div id="gallery">
-                    <section class="service-hero py-20 md:py-32 text-white">
-                        <div class="container mx-auto px-4">
-                        </div>   
-                    </section>
+                    <div id="gallery" >
+
+                    {% if videos and images %}
+
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6">ویدئوها و تصاویر از سرویس {{specific_service_clicked.service_title}} را ببینید</h2>
+                    
+                    {% else %}
+                        هنوز ویدئو یا تصویری از سرویس {{specific_service_clicked.service_title}} وجود ندارد
+                    {% endif %}
+
                     </div>
                     {% comment %} -------------------------------------------- {% endcomment %}
 
                     
                     
-                    <div  id="faq">
+                    <div id="faq">
                         <h2 class="text-3xl font-bold text-gray-800 mb-6">سوالات متداول درباره ی {{specific_service_clicked.service_title}}</h2>
                         
                         <div class="space-y-4">
