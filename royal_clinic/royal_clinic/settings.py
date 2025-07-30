@@ -97,7 +97,7 @@ INSTALLED_APPS = [
     'apps.gallery.apps.GalleryConfig',
     
     'apps.error_handlers.apps.ErrorHandlersConfig',
-    
+    'apps.notifications.apps.NotificationsConfig',
 ]
 
 MIDDLEWARE = [

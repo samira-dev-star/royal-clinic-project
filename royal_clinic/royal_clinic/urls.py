@@ -36,6 +36,7 @@ urlpatterns = [
     path('offers/',include('apps.offers.offers_urls',namespace='offers')),
     path('gallery/',include('apps.gallery.gallery_urls',namespace='gallery')),
     # path('error_handlers/',include('apps.error_handlers.urls',namespace='error_handlers')),
+    path('notifications/',include('apps.notifications.notifications_urls',namespace='notifications')),
     
     
     path('ckeditor/', include('ckeditor_uploader.urls')),
