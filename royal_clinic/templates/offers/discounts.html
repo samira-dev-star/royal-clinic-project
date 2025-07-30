@@ -6,11 +6,11 @@
 {% endblock title %}
 
 {% block meta_description %}
-لیست تخفیف‌های ویژه کلینیک رویال برای خدمات زیبایی، پوست، مو و لیزر. با قیمت‌های باورنکردنی از خدمات تخصصی بهره‌مند شوید.
+<meta name="description" content="لیست تخفیف‌های ویژه کلینیک رویال برای خدمات زیبایی، پوست، مو و لیزر. با قیمت‌های باورنکردنی از خدمات تخصصی بهره‌مند شوید.">
 {% endblock %}
 
 {% block meta_keywords %}
-تخفیف کلینیک زیبایی, آفر پوست و مو, تخفیف لیزر, خدمات زیبایی با تخفیف, کلینیک رویال
+<meta name="description" content="تخفیف کلینیک زیبایی, آفر پوست و مو, تخفیف لیزر, خدمات زیبایی با تخفیف, کلینیک رویال">
 {% endblock %}
 
 {% block meta_og %}
@@ -18,7 +18,12 @@
 <meta property="og:description" content="جدیدترین آفرها برای خدمات زیبایی، لیزر، پوست و مو با تخفیف‌های استثنایی در کلینیک رویال">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
-<meta property="og:image" content="{{ discounts.0.service_image.url if discounts.0.service_image }}">
+{% if discounts.0.service_image %}
+    <meta property="og:image" content="{{ discounts.0.service_image.url }}">
+{% else %}
+    <meta property="og:image" content="{% static 'img/default.jpg' %}">
+{% endif %}
+
 {% endblock %}
 
 {% block extra_schema %}
