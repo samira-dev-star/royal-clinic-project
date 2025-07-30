@@ -1,4 +1,4 @@
-{% comment %} {% extends "main_template.html" %}
+{% extends "main_template.html" %} 
 
 {% load static %}
 
@@ -32,14 +32,14 @@
     
     <div class="container mx-auto px-4 py-8">
         <div class="form-container">
-            <div class="flex items-center"> {% endcomment %}
-            {% comment %} <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center">
-                <i class="fas fa-crown text-amber-700 text-xl"></i>  {% endcomment %}
-                {% comment %} <img class="w-14 h-14 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center" src="{{media_url}}images/index/IMG-20240528-WA0012.jpg" alt="index-icon"> {% endcomment %}
-            {% comment %} </div>  {% endcomment %}
-            {% comment %} <h1 class="text-2xl font-bold text-amber-800 mr-3">کلینیک رویال</h1> {% endcomment %}
-            
-            {% comment %} </div>
+            <div class="flex items-center"> 
+            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center">
+                {% comment %} <i class="fas fa-crown text-amber-700 text-xl"></i>  {% endcomment %}
+                <img class="w-14 h-14 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center" src="{{media_url}}images/index/IMG-20240528-WA0012.jpg" alt="index-icon"> 
+            </div>  
+            <h1 class="text-2xl font-bold text-amber-800 mr-3">کلینیک رویال</h1> 
+        
+            </div>
             <div class="flex items-center">
             
                 <i class="fas fa-crown text-green-700 text-xl"></i>  
@@ -53,10 +53,10 @@
             <!-- فرم رزرواسیون -->
             <form id="reservationForm" method="post" class="space-y-4">
                 {% csrf_token %}
-                 {% endcomment %}
+                 
                 {% comment %} ----------------------------------------------------------------------------- {% endcomment %}
                 <!-- فیلد نام -->
-                {% comment %} <div class="mb-4">
+                <div class="mb-4">
                     <label for="{{ form.name.id_for_label }}" class="block text-gray-700 mb-2">نام</label>
                     {{ form.name }}
                     {% if form.name.errors %}
@@ -80,17 +80,17 @@
                     {% if form.mobile_number.errors %}
                         <p class="text-red-600 text-sm">{{ form.mobile_number.errors }}</p>
                     {% endif %}
-                </div> {% endcomment %}
+                </div> 
                 {% comment %} ----------------------------------------------------------------------------- {% endcomment %}
                 
-                {% comment %} <div class="mb-4">
+                <div class="mb-4">
                     <label for="id_service" class="block text-sm font-medium text-gray-700 mb-1">سرویس</label>
                     {{ form.service }}
-                </div> {% endcomment %}
+                </div> 
                 {% comment %} ----------------------------------------------------------------------------- {% endcomment %}
                 
                 <!-- فیلد تاریخ -->
-        {% comment %} <div class="mb-4">
+        <div class="mb-4">
             <label for="{{ form.selected_date.id_for_label }}">تاریخ مورد نظر</label>
             {{ form.selected_date }}
             {% if not form.selected_date.field.choices %}
@@ -136,13 +136,13 @@
 
 {% block extra_js %}
 
-<script src="{% static 'js/reservation.js' %}"></script>
+<script src="{% static 'js/reservation.js' %}"></script> 
 
 <script src="{% static 'js/reservation_form_page.js' %}"></script>
 
 
-<script> {% endcomment %}
-{% comment %} 
+ <script> 
+
 // reservation_form_page.js
 function ReservePageServiceIdSender(service_id) {
     $.ajax({
@@ -159,8 +159,8 @@ function ReservePageServiceIdSender(service_id) {
         }
     });
 }
-</script>
-{% endblock extra_js %}   {% endcomment %}
+</script> 
+{% endblock extra_js %}   
 
 
 

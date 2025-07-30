@@ -11,7 +11,7 @@ from django.contrib import messages
 
 from django.urls import reverse
 # from django.http import JsonResponse
-# from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # from django.shortcuts import render, redirect
@@ -107,7 +107,7 @@ from django.urls import reverse
 #     return render(request, template_name, {'form': form, 'service': service})
 
 
-# # --------------------------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------------------
 
 
 # class AppointmentReservationView(LoginRequiredMixin, View):
@@ -213,7 +213,7 @@ from django.urls import reverse
 #             messages.error(request, "رزرو با خطا مواجه شد.", 'error')
 #             return render(request, self.template_name, context)
 
-# 
+
 
 # ----------------------------
 
@@ -371,3 +371,83 @@ def reservation_partial_view(request):
             'form': form,
         }, request=request)
         return JsonResponse({'form_html': rendered_html})
+
+
+# ---------------------------------------------------------
+
+class AppointmentReservationView(LoginRequiredMixin, View):
+    template_name = 'appointment_reservation/appointment_reservation_page.html'
+
+    def get(self, request, *args, **kwargs):
+        service_id = request.GET.get('service_id')
+        service_instance = None
+        if service_id:
+            try:
+                service_instance = Services.objects.get(id=service_id)
+                
+            except Services.DoesNotExist:
+                messages.error(request, "سرویس یافت نشد.")
+                service_instance = None
+
+        form = ReserveAppointmentForm(
+            user_instance=request.user,
+            service_instance=service_instance,
+            initial={'service': service_id},
+        )
+        context = {
+            'form': form,
+            'service': service_instance,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        service_id = request.POST.get('service')
+        service_instance = None
+
+        if service_id:
+            try:
+                service_instance = Services.objects.get(id=service_id)
+                
+            except Services.DoesNotExist:
+                messages.error(request, "سرویس ارسالی نامعتبر است.")
+                service_instance = None
+
+        form = ReserveAppointmentForm(
+            request.POST,
+            user_instance=request.user,
+            service_instance=service_instance,
+            initial={'service': service_id}
+        )
+
+        context = {
+            'form': form,
+            'service_instance': service_instance,
+        }
+
+        if form.is_valid():
+            reservation_obj = form.save(commit=False)
+            reservation_obj.user = request.user
+            reservation_obj.save()
+
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'status': 'success',
+                    'message': 'رزرو شما با موفقیت ثبت شد.',
+                    'redirect_url': reverse('reservation:reservation_main_page')
+                })
+            else:
+                messages.success(request, "رزرو با موفقیت انجام شد.", 'success')
+                return redirect('reservation:reservation_main_page')
+
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({
+                'status': 'error',
+                'message': 'برخی فیلدها صحیح نیستند.',
+                'errors': form.errors.get_json_data()
+            }, status=400)
+
+        else:
+            messages.error(request, "رزرو با خطا مواجه شد.", 'error')
+            return render(request, self.template_name, context)
+
+
