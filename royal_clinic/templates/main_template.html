@@ -9,7 +9,7 @@
 
     
     <!-- این مقدار پیش‌فرضه، می‌تونه خالی باشه یا یه چیز عمومی -->
-    {% block meta_description %}
+{% block meta_description %}
 <meta name="description" content="کلینیک لیزر، زیبایی و لاغری رویال ارائه‌دهنده خدمات درمانی مدرن.">
 {% endblock %}
 
@@ -50,7 +50,62 @@
     
         {% include "partials/footer.html" %}
         <script src="{% static 'js/myscript.js' %}"></script>
-        {% block extra_js %}{% endblock extra_js %}
+
+
+{% block extra_js %}
+
+
+{% if request.user.is_authenticated and request.user.is_staff %}
+<script>
+    const shownNotifications = new Set();  // برای جلوگیری از نمایش تکراری
+
+    setInterval(function() {
+        fetch("/notifications/admin-notifications/")
+        .then(response => response.json())
+        .then(data => {
+            if (data.notifications.length > 0) {
+                data.notifications.forEach(n => {
+                    if (!shownNotifications.has(n.id)) {
+                        showToast(n.message);
+                        shownNotifications.add(n.id);
+                    }
+                });
+            }
+        });
+    }, 10000);
+
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.innerText = message;
+
+        toast.style.position = 'fixed';
+        toast.style.bottom = '20px';
+        toast.style.right = '20px';
+        toast.style.padding = '10px 15px';
+        toast.style.backgroundColor = '#dc3545';
+        toast.style.color = 'white';
+        toast.style.borderRadius = '8px';
+        toast.style.boxShadow = '0 0 10px rgba(0,0,0,0.3)';
+        toast.style.zIndex = 10000;
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.5s ease';
+
+        document.body.appendChild(toast);
+
+        // انیمیشن fade-in
+        setTimeout(() => toast.style.opacity = '1', 10);
+
+        // حذف با fade-out
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 500);
+        }, 5000);
+    }
+</script>
+{% endif %}
+
+
+{% endblock extra_js %}
 
         <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="5d6dc27b-5aa5-4012-b153-84b03621eb93";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 

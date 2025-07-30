@@ -103,11 +103,39 @@
                     }
                 }
             })
-            .catch(error => {
-                console.error('Success:', error);
+                .catch(error => {
+                console.error('Error:', error);
 
-                alert('نوبت شما ثبت شد در اولین فرصت با شما تماس گرفته میشود');
+                if (isAuthenticated) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'ثبت موفق!',
+                        text: 'نوبت شما ثبت شد. در اولین فرصت با شما تماس گرفته می‌شود.',
+                        confirmButtonText: 'باشه',
+                        confirmButtonColor: '#3085d6'
+                    });
+                } 
+                else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'نیاز به ورود یا ثبت‌نام',
+                        text: 'برای ثبت نوبت ابتدا باید وارد شوید یا ثبت‌نام کنید.',
+                        showCancelButton: true,
+                        confirmButtonText: 'ورود',
+                        cancelButtonText: 'ثبت‌نام',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/accounts/login/';  // آدرس صفحه ورود
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            window.location.href = '/accounts/register/'; // آدرس صفحه ثبت‌نام
+                        }
+                    });
+                }
             });
+
+
         };
     
         form.addEventListener('submit', form._submitHandler);

@@ -3,6 +3,7 @@ from apps.accounts.models import Customuser
 from apps.services.models import Services
 from django.core.exceptions import ValidationError
 from django_jalali.db import models as jmodels
+from apps.notifications.models import Notification
 
 # Create your models here.
 
@@ -56,6 +57,7 @@ class ReserveAppointment(models.Model):
         if is_new_appointment and self.service.capacity is not None:
             self.service.capacity = max(self.service.capacity - 1, 0)
             self.service.save()
+            
 
 
     def delete(self, *args, **kwargs):

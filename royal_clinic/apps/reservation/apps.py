@@ -8,3 +8,6 @@ class ReservationConfig(AppConfig):
     verbose_name = 'رزرو نوبت'
     verbose_name_plural = 'رزرو نوبت‌'
     
+    def ready(self):
+        import apps.reservation.signals
+    

@@ -162,3 +162,9 @@
 
 <script src="{% static 'js/reservation.js' %}"></script>
 
+<script>
+    const isAuthenticated = {{ request.user.is_authenticated|yesno:"true,false" }};
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+

@@ -314,9 +314,10 @@ from .models import Services
 #         }, request=request)
 #         return JsonResponse({'form_html': rendered_html})
 
-   
+# from django.contrib.auth.decorators import login_required
+from apps.accounts.models import Customuser
             
-
+# @login_required
 def reservation_partial_view(request):
     service_id = request.GET.get('service_id') if request.method == 'GET' else request.POST.get('service')
     service_instance = None
@@ -340,6 +341,22 @@ def reservation_partial_view(request):
             try:
                 reservation_obj = form.save(commit=False)
                 reservation_obj.user = request.user
+                
+                current_user = Customuser.objects.get(mobile_number = request.user.mobile_number)
+                
+                if current_user.name:
+                    print("این کاربر قبلاً نام دارد:", current_user.name)
+                else:
+                    name_from_form = form.cleaned_data.get('name')
+                    family_from_form = form.cleaned_data.get('family')
+
+                    if name_from_form:
+                        current_user.name = name_from_form
+                    if family_from_form:
+                        current_user.family = family_from_form
+
+                    current_user.save()
+                        
                 reservation_obj.save()
 
                 if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':

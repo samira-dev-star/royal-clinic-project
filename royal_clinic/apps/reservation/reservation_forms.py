@@ -126,6 +126,7 @@
 from django import forms
 from .models import ReserveAppointment
 from jdatetime import date as jdate,timedelta
+from apps.accounts.models import Customuser
 
 
 class ReserveAppointmentForm(forms.ModelForm):
@@ -169,6 +170,8 @@ class ReserveAppointmentForm(forms.ModelForm):
     class Meta:
         model = ReserveAppointment
         fields = ['service', 'name', 'family', 'mobile_number', 'selected_date']
+        
+        
 
     def __init__(self, *args, **kwargs):
         user_instance = kwargs.pop('user_instance', None)
@@ -193,8 +196,8 @@ class ReserveAppointmentForm(forms.ModelForm):
             self.fields['name'].initial = getattr(user_instance, 'name', '')
             self.fields['family'].initial = getattr(user_instance, 'family', '')
             self.fields['mobile_number'].initial = getattr(user_instance, 'mobile_number', '')
-            
-#         
+
+
 
   
 
