@@ -9,7 +9,7 @@ from django.utils.text import slugify
 from django.urls import reverse
 from django.db.models import Q,Avg
 from middlewares.middlewares import RequestMiddleware
-
+from django_jalali.db import models as jmodel
 # Create your models here.
 
 class Services(models.Model):
@@ -25,8 +25,10 @@ class Services(models.Model):
     
     is_available = models.BooleanField(verbose_name='فعال/غیرفعال',null=True,blank=True)
     
-    start_reservation_date =  models.DateTimeField(default=timezone.now,verbose_name='تاریخ شروع نوبت دهی')
-    finish_reservation_date =  models.DateTimeField(default=timezone.now,verbose_name='تاریخ پایان نوبت دهی')
+    # start_reservation_date =  models.DateTimeField(default=timezone.now,verbose_name='تاریخ شروع نوبت دهی')
+    # finish_reservation_date =  models.DateTimeField(default=timezone.now,verbose_name='تاریخ پایان نوبت دهی')
+    start_reservation_date =  jmodel.jDateField(default=timezone.now,verbose_name='تاریخ شروع نوبت دهی')
+    finish_reservation_date =  jmodel.jDateField(default=timezone.now,verbose_name='تاریخ پایان نوبت دهی')
     
     capacity = models.IntegerField(verbose_name='ظرفیت نوبت',null=True,blank=True)
     proper_candidate_description = RichTextField(verbose_name='شرح شرایط کاندید',null=True,blank=True,config_name='special')

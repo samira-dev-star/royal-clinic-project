@@ -2,6 +2,7 @@ from django.db import models
 from apps.accounts.models import Customuser
 from apps.services.models import Services
 from django.core.exceptions import ValidationError
+from django_jalali.db import models as jmodels
 
 # Create your models here.
 
@@ -13,13 +14,26 @@ class ReserveAppointment(models.Model):
     family = models.CharField(max_length=50, verbose_name="نام خانوادگی")
     mobile_number = models.CharField(max_length=13, verbose_name="شماره موبایل")
     
-    selected_date = models.CharField(
-        max_length=10,
-        verbose_name="تاریخ انتخاب",
-        blank=True,null=True
-    )
+    selected_date = jmodels.jDateField(verbose_name='تاریخ انتخاب‌ شده',null=True,blank=True)
+    
+
     created_at = models.DateTimeField(auto_now_add=True,verbose_name="تاریخ ثبت نوبت")  # زمان رزرو
     is_confirmed = models.BooleanField(default=False, verbose_name="تایید شده")
+    
+    
+    def clean(self):
+        """
+        بررسی اینکه تاریخ انتخاب‌ شده در بازه تاریخی سرویس باشه.
+        """
+        if self.service and self.selected_date:
+            start = self.service.start_reservation_date
+            end = self.service.finish_reservation_date
+
+            if not (start <= self.selected_date <= end):
+                from django.core.exceptions import ValidationError
+                raise ValidationError({
+                    'selected_date': f'تاریخ انتخاب‌شده باید بین {start} تا {end} باشد.'
+                })
     
 
     def __str__(self):

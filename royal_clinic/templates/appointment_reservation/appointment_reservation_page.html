@@ -1,4 +1,4 @@
-{% extends "main_template.html" %}
+{% comment %} {% extends "main_template.html" %}
 
 {% load static %}
 
@@ -32,14 +32,14 @@
     
     <div class="container mx-auto px-4 py-8">
         <div class="form-container">
-            <div class="flex items-center">
+            <div class="flex items-center"> {% endcomment %}
             {% comment %} <div class="w-12 h-12 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center">
                 <i class="fas fa-crown text-amber-700 text-xl"></i>  {% endcomment %}
-                <img class="w-14 h-14 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center" src="{{media_url}}images/index/IMG-20240528-WA0012.jpg" alt="index-icon">
+                {% comment %} <img class="w-14 h-14 rounded-full bg-gradient-to-r from-amber-100 to-amber-300 flex items-center justify-center" src="{{media_url}}images/index/IMG-20240528-WA0012.jpg" alt="index-icon"> {% endcomment %}
             {% comment %} </div>  {% endcomment %}
-            <h1 class="text-2xl font-bold text-amber-800 mr-3">کلینیک رویال</h1>
+            {% comment %} <h1 class="text-2xl font-bold text-amber-800 mr-3">کلینیک رویال</h1> {% endcomment %}
             
-            </div>
+            {% comment %} </div>
             <div class="flex items-center">
             
                 <i class="fas fa-crown text-green-700 text-xl"></i>  
@@ -53,10 +53,10 @@
             <!-- فرم رزرواسیون -->
             <form id="reservationForm" method="post" class="space-y-4">
                 {% csrf_token %}
-                
+                 {% endcomment %}
                 {% comment %} ----------------------------------------------------------------------------- {% endcomment %}
                 <!-- فیلد نام -->
-                <div class="mb-4">
+                {% comment %} <div class="mb-4">
                     <label for="{{ form.name.id_for_label }}" class="block text-gray-700 mb-2">نام</label>
                     {{ form.name }}
                     {% if form.name.errors %}
@@ -80,17 +80,17 @@
                     {% if form.mobile_number.errors %}
                         <p class="text-red-600 text-sm">{{ form.mobile_number.errors }}</p>
                     {% endif %}
-                </div>
+                </div> {% endcomment %}
                 {% comment %} ----------------------------------------------------------------------------- {% endcomment %}
                 
-                <div class="mb-4">
+                {% comment %} <div class="mb-4">
                     <label for="id_service" class="block text-sm font-medium text-gray-700 mb-1">سرویس</label>
                     {{ form.service }}
-                </div>
+                </div> {% endcomment %}
                 {% comment %} ----------------------------------------------------------------------------- {% endcomment %}
                 
                 <!-- فیلد تاریخ -->
-        <div class="mb-4">
+        {% comment %} <div class="mb-4">
             <label for="{{ form.selected_date.id_for_label }}">تاریخ مورد نظر</label>
             {{ form.selected_date }}
             {% if not form.selected_date.field.choices %}
@@ -141,8 +141,8 @@
 <script src="{% static 'js/reservation_form_page.js' %}"></script>
 
 
-<script>
-
+<script> {% endcomment %}
+{% comment %} 
 // reservation_form_page.js
 function ReservePageServiceIdSender(service_id) {
     $.ajax({
@@ -160,8 +160,9 @@ function ReservePageServiceIdSender(service_id) {
     });
 }
 </script>
-{% endblock extra_js %}  
+{% endblock extra_js %}   {% endcomment %}
 
 
 
 
+{% comment %} ----------------------------------- {% endcomment %}

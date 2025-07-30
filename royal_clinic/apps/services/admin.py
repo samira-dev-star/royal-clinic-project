@@ -5,6 +5,24 @@ from django_admin_listfilter_dropdown.filters import DropdownFilter
 from django.contrib.admin import SimpleListFilter
 from django.db.models import Q
 
+from jalali_date import datetime2jalali,date2jalali
+
+
+from django import forms
+from jalali_date.widgets import AdminSplitJalaliDateTime
+from .models import Services
+
+class ServicesAdminForm(forms.ModelForm):
+    class Meta:
+        model = Services
+        fields = '__all__'
+        widgets = {
+            'start_reservation_date': AdminSplitJalaliDateTime,
+            'finish_reservation_date': AdminSplitJalaliDateTime,
+        }
+
+
+
 # Register your models here.
 
 # manual-custom filter
@@ -59,13 +77,15 @@ class ServiceRecurringQuestionInline(admin.StackedInline):
 
 @admin.register(Services)
 class ServicesAdmin(admin.ModelAdmin):
-    list_display = ['service_title','slug','is_available','start_reservation_date','finish_reservation_date','capacity']
+    list_display = ['service_title','slug','is_available','start_reservation_date', 'finish_reservation_date','capacity']
     list_filter = [('service_title',DropdownFilter),('slug',DropdownFilter),('updated_at',DropdownFilter)]
     search_fields = ['service_title','slug']
     ordering = ['updated_at']
     list_editable = ['is_available',]
     actions = [de_active_service , active_service]
     inlines = [ServiceFeatureInline,ServiceAdvantageline,ServiceConditionInline,ServiceProcedureInline,ServiceRecurringQuestionInline]
+    # form = ServicesAdminForm
+   
     
 # ------------------------------------------------------------------------------------------
 
