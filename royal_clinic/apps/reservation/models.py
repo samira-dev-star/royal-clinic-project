@@ -3,7 +3,8 @@ from apps.accounts.models import Customuser
 from apps.services.models import Services
 from django.core.exceptions import ValidationError
 from django_jalali.db import models as jmodels
-from apps.notifications.models import Notification
+from django.db.models import F
+from django.db import transaction
 
 # Create your models here.
 
@@ -42,31 +43,36 @@ class ReserveAppointment(models.Model):
     
    
 
-
+    # when a new appointment is made we need to decrease the capacity of the service
     def save(self, *args, **kwargs):
-        is_new_appointment = self._state.adding  # بررسی اینکه شی جدید است یا نه
-    
-        # اگر نوبت جدید باشد، اول چک می‌کنیم که ظرفیت پر نباشد
+        is_new_appointment = self._state.adding
         if is_new_appointment:
-            if self.service.capacity is not None and self.service.capacity <= 0:
-                raise ValidationError("ظرفیت این سرویس پر شده است.")
+            service = Services.objects.get(pk=self.service.pk)
+            if service.capacity is not None:
+                service.capacity = max(service.capacity - 1, 0)
+                print(service.capacity)
+                service.save()
+        super().save(*args, **kwargs) 
+        
     
-        super().save(*args, **kwargs)  # ذخیره‌ی اصلی
     
-        # حالا اگر نوبت جدید بود و سرویس ظرفیت داشت، یکی از ظرفیت کم کنیم
-        if is_new_appointment and self.service.capacity is not None:
-            self.service.capacity = max(self.service.capacity - 1, 0)
-            self.service.save()
-            
+    # def delete(self, *args, **kwargs):
+    #     # اول ظرفیت سرویس رو افزایش بده
+    #     if self.service.capacity is not None:
+    #         service = Services.objects.get(pk=self.service.pk)
+    #         service.capacity+=1
+    #         service.save()
+    #     # سپس نوبت رو حذف کن
+    #     super().delete(*args, **kwargs)
 
 
-    def delete(self, *args, **kwargs):
-        # اگر ظرفیت سرویس محدود بود، یکی بهش اضافه کنیم
-        if self.service.capacity is not None:
-            self.service.capacity += 1
-            self.service.save()
+    # def delete(self, *args, **kwargs):
+    #     # اگر ظرفیت سرویس محدود بود، یکی بهش اضافه کنیم
+    #     if self.service.capacity is not None:
+    #         self.service.capacity += 1
+    #         self.service.save()
 
-        super().delete(*args, **kwargs)  # حذف نهایی شیء
+    #     super().delete(*args, **kwargs)  # حذف نهایی شیء
 
 
     def calq_reservation_capacity(self):
