@@ -57,3 +57,71 @@ body {
 
 /* ------------------------------------------------------------------------------------ */
 
+/* static/css/notifications.css */
+#notification-bell {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#notification-count {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    background: #ff4757;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+
+#notification-box {
+    display: none;
+    position: fixed;
+    top: 60px;
+    left: 20px;
+    width: 350px;
+    max-height: 500px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 999;
+}
+
+.notification-header {
+    padding: 10px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+}
+
+.notification-item {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    transition: background 0.3s;
+}
+
+.notification-item.unread {
+    background: #f1f8ff;
+    font-weight: bold;
+}
+
+.notification-item:hover {
+    background: #f8f9fa;
+}
+
+.notification-item small {
+    display: block;
+    color: #6c757d;
+    margin-top: 5px;
+    font-size: 0.8rem;
+}

@@ -1,20 +1,22 @@
 from django.shortcuts import render
+
+from apps.accounts.models import Customuser
+
 from django.http import JsonResponse
 from .models import Notification
-from apps.accounts.models import Customuser
-# Create your views here.
+from django.utils import timezone
 
-from django.views.decorators.http import require_GET
-from django.views.decorators.csrf import csrf_exempt  # فقط اگر AJAX با CSRF مشکل داشت
-
-@require_GET
 def get_admin_notifications(request):
-    if request.user.is_authenticated and request.user.is_staff:
-        notifs = Notification.objects.filter(recipient=request.user, is_read=False)
-        notif_list = list(notifs.values('id', 'message', 'created_at'))
-
-        # بلافاصله بعد از ارسال، نوتیف‌ها رو read کنیم
-        notifs.update(is_read=True)
-
-        return JsonResponse({'notifications': notif_list})
+    if request.user.is_staff:
+        notifications = Notification.objects.filter(recipient=request.user).order_by('-created_at')[:10]
+        
+        notifications_data = []
+        for notification in notifications:
+            notifications_data.append({
+                'message': notification.message,
+                'is_read': notification.is_read,
+                'timestamp': timezone.localtime(notification.created_at).strftime("%Y-%m-%d %H:%M:%S")
+            })
+        
+        return JsonResponse({'notifications': notifications_data})
     return JsonResponse({'notifications': []})

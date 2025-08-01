@@ -8,6 +8,10 @@
     <title>کلینیک پوست و موی زیبایی رویال | {% block title %}{% endblock title %}</title>
 
     
+
+
+
+
     <!-- این مقدار پیش‌فرضه، می‌تونه خالی باشه یا یه چیز عمومی -->
 {% block meta_description %}
 <meta name="description" content="کلینیک لیزر، زیبایی و لاغری رویال ارائه‌دهنده خدمات درمانی مدرن.">
@@ -40,71 +44,106 @@
 </head>
 
 
+<!-- آیکن زنگ نوتیفیکیشن -->
+        <div id="notification-bell" style="cursor: pointer;">
+            🔔
+            <span id="notification-count" style="position: absolute; top: -5px; right: -5px; background-color: red; color: white; padding: 2px 6px; border-radius: 50%; font-size: 12px; display: none;">0</span>
+        </div>
+
+        <!-- نمایش پیام‌ها -->
+        <div id="notification-box" style="display: none; position: absolute; background: white; border: 1px solid #ccc; padding: 10px; width: 300px; top: 70px; left: 0; z-index: 999;"></div>
+
+
+
     <body class="bg-gray-50">
+
+              
+
+        
         {% include "partials/header.html" with type=1 %}
         
         {% include "partials/messages.html" %}
 
+
+          
+
         {% block content %}
         {% endblock content %}
+
+
+        
     
         {% include "partials/footer.html" %}
         <script src="{% static 'js/myscript.js' %}"></script>
 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-{% block extra_js %}
 
 
-{% if request.user.is_authenticated and request.user.is_staff %}
+
+
+<!-- در main_template.html -->
 <script>
-    const shownNotifications = new Set();  // برای جلوگیری از نمایش تکراری
-
-    setInterval(function() {
-        fetch("/notifications/admin-notifications/")
-        .then(response => response.json())
-        .then(data => {
-            if (data.notifications.length > 0) {
-                data.notifications.forEach(n => {
-                    if (!shownNotifications.has(n.id)) {
-                        showToast(n.message);
-                        shownNotifications.add(n.id);
-                    }
-                });
+$(document).ready(function() {
+    // فقط برای کاربران ادمین اجرا شود
+    {% if request.user.is_staff %}
+    function fetchNotifications() {
+        $.ajax({
+            url: "{% url 'notifications:get-admin-notifications' %}",
+            method: "GET",
+            success: function(response) {
+                const notifications = response.notifications;
+                const count = notifications.length;
+                const $bell = $('#notification-bell');
+                const $count = $('#notification-count');
+                const $box = $('#notification-box');
+                
+                if (count > 0) {
+                    $count.text(count).show();
+                    
+                    let html = '<div class="notification-header">اعلان‌های اخیر</div>';
+                    notifications.forEach(function(n) {
+                        html += `<div class="notification-item ${n.is_read ? '' : 'unread'}">
+                                    <div>${n.message}</div>
+                                    <small>${n.timestamp}</small>
+                                 </div>`;
+                    });
+                    $box.html(html);
+                } else {
+                    $count.hide();
+                    $box.hide();
+                }
             }
         });
-    }, 10000);
-
-    function showToast(message) {
-        const toast = document.createElement('div');
-        toast.innerText = message;
-
-        toast.style.position = 'fixed';
-        toast.style.bottom = '20px';
-        toast.style.right = '20px';
-        toast.style.padding = '10px 15px';
-        toast.style.backgroundColor = '#dc3545';
-        toast.style.color = 'white';
-        toast.style.borderRadius = '8px';
-        toast.style.boxShadow = '0 0 10px rgba(0,0,0,0.3)';
-        toast.style.zIndex = 10000;
-        toast.style.opacity = '0';
-        toast.style.transition = 'opacity 0.5s ease';
-
-        document.body.appendChild(toast);
-
-        // انیمیشن fade-in
-        setTimeout(() => toast.style.opacity = '1', 10);
-
-        // حذف با fade-out
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => toast.remove(), 500);
-        }, 5000);
     }
+
+    // کلیک روی آیکن
+    $('#notification-bell').click(function(e) {
+        e.stopPropagation();
+        $('#notification-box').toggle();
+    });
+
+    // بستن با کلیک بیرون
+    $(document).click(function(e) {
+        if (!$(e.target).closest('#notification-box, #notification-bell').length) {
+            $('#notification-box').hide();
+        }
+    });
+
+    // اجرای اولیه و هر 30 ثانیه
+    fetchNotifications();
+    setInterval(fetchNotifications, 30000);
+    {% endif %}
+});
 </script>
-{% endif %}
 
 
+
+
+
+
+
+{% block extra_js %}
 {% endblock extra_js %}
 
         <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="5d6dc27b-5aa5-4012-b153-84b03621eb93";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>

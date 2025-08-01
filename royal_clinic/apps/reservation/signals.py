@@ -11,18 +11,18 @@ from apps.services.models import Services  # اگر مدل سرویس جای د�
 
 # اگر created == False باشد: یعنی این آبجکت قبلاً وجود داشته و فقط به‌روزرسانی شده است.
 
+# signals.py (اصلاح شده)
 @receiver(post_save, sender=ReserveAppointment)
 def create_notification_for_admin(sender, instance, created, **kwargs):
     if created:
         admins = Customuser.objects.filter(is_staff=True)
         for admin in admins:
+            # استفاده از first_name و last_name به جای name و family
+            full_name = f"{instance.user.name} {instance.user.family}"
             Notification.objects.create(
                 recipient=admin,
-                message=f"نوبت جدید توسط {instance.user.name} {instance.user.family} رزرو شد."
+                message=f"نوبت جدید توسط {full_name} رزرو شد."
             )
-
-
-
 
 
 @receiver(post_delete, sender=ReserveAppointment)
