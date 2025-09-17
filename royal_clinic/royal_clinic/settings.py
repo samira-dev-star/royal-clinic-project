@@ -168,14 +168,15 @@ WSGI_APPLICATION = 'royal_clinic.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE' : 'django.db.backends.mysql',
-        'NAME' : 'royal_clinic',
-        'USER' : 'root',
-        'PASSWORD' : '1375sunny1375',
-        'HOST' : 'localhost' ,
-        'PORT' : '3306',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'your_db_name',
+        'USER': 'your_db_user',
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
+
 
 
 # Password validation
