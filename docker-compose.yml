@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: royal_clinic_web
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./royal_clinic/media:/app/media:z
+      - ./royal_clinic/staticfiles:/app/staticfiles:z
+    environment:
+      - DATABASE=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_NAME=${DB_NAME:-royal_clinic}
+      - DB_USER=${DB_USER:-royal_user}
+      - DB_PASSWORD=${DB_PASSWORD:-change_me_in_prod}
+      - DEBUG=${DEBUG:-True}
+      - SECRET_KEY=${SECRET_KEY:-django-insecure-dev-key-change-me}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1,web}
+      - COLLECT_STATIC=${COLLECT_STATIC:-false}
+      - CREATE_SUPERUSER=${CREATE_SUPERUSER:-false}
+      - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME:-admin}
+      - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL:-admin@royalclinic.com}
+      - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD:-admin123}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - royal_clinic_net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/admin/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  db:
+    image: mysql:8.0
+    container_name: royal_clinic_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME:-royal_clinic}
+      MYSQL_USER: ${DB_USER:-royal_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-change_me_in_prod}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_secure_pass_123}
+    volumes:
+      - mysql_data:/var/lib/mysql  # ✅ Correct volume name
+    networks:
+      - royal_clinic_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root_secure_pass_123}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: royal_clinic_phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_secure_pass_123}
+    depends_on:
+      - db
+    networks:
+      - royal_clinic_net
+    profiles:
+      - dev
+
+volumes:
+  mysql_data:  # ✅ Correct volume name
+    driver: local
+
+networks:
+  royal_clinic_net:
+    driver: bridge

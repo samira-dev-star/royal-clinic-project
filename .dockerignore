@@ -1,0 +1,27 @@
+# .dockerignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+*.log
+*.sqlite3
+media/
+staticfiles/
+node_modules/
+.git
+.gitignore
+*.md
+.env
+!.env.example
+.DS_Store
+# DON'T ignore these critical files:
+!docker-entrypoint.sh
+!Dockerfile
+!docker-compose.yml
+!royal_clinic/requirements.txt
+!royal_clinic/package*.json
+!royal_clinic/manage.py
